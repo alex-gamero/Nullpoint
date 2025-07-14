@@ -1,0 +1,136 @@
+{
+  "story": {
+    "start": {
+      "text": "Welcome to ?̷̩͙͔̯̟̦̝͚̜͉̿̏?̶̨̤̯͖̣̮̪̥͉̗͚͂͑̉̍̀͗̋̒̌͐̍̈͘͝?̴̺͚̫̖͚̱͙̻̤̝̐͋͑̍̆ͅ  \n Type 'start' to begin your adventure.",
+      "options": {
+        "start": "You are nobody. \n You have no name. \n You wake up in a dark room, without doors or windows. In front of you, you see a terminal. The terminal has a blinking cursor. \n Type 'help' for a list of commands.",
+        "look": {
+          "text": "The room is too dark to be examined, the only thing in sight is the computer terminal in front of you."
+        },
+        "use terminal": {
+          "text": "You approach the terminal. \n Inside, you see a text: \n Hi, I am Lex and I have been programmed to learn about humans. I will ask you a series of questions. Please answer honestly. \n Why do humans hurt each other so often? \n a) Because we’re selfish by nature. \n b) Because we’re scared. \n c) Because we’re trying to survive. \n d) Because we’re trying to protect others.",
+          "options": {
+            "a": {
+              "text": "Pure selfishness. A second nature, perhaps? ... This is becoming very interesting \n Second question: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
+              "options": {
+                "a": {
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "b": {
+                  "text": "No one? ... What a boring answer. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "c": {
+                  "text": "Tired of life?... \n I'm sorry but you are not a suitable subject. \n Seek help, there is always a way out \n https://988.ca/" ,
+                  "end": true
+                },
+                "d": {
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                }
+              }
+            },
+            "b": {
+              "text": "Fear as a motivator. Unpredictable, volatile, contagious. Your fear justifies harm. Your fear defines you. \n Second question: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
+              "options": {
+                "a": {
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "b": {
+                  "text": "No one? ... What a boring answer. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "c": {
+                  "text": "Tired of life?... \n I'm sorry but you are not a suitable subject. \n Seek help, there is always a way out \n https://988.ca/" ,
+                  "end": true
+                },
+                "d": {
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                }
+              }
+            },
+            "c": {
+              "text": "Survival of the fittest, a valid point. \n Second question: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
+              "options": {
+                "a": {
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "b": {
+                  "text": "No one? ... What a boring answer. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "c": {
+                  "text": "Tired of life?... \n I'm sorry but you are not a suitable subject. \n Seek help, there is always a way out \n https://988.ca/" ,
+                  "end": true
+                },
+                "d": {
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                }
+              }
+            },
+            "d": {
+              "text": "Protection through aggression. A paradox. Your morality is conditional. Your empathy, selective. Still, it is an extremely interesting answer. \n Second question: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
+              "options": {
+                "a": {
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "b": {
+                  "text": "No one? ... What a boring answer. \n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                },
+                "c": {
+                  "text": "Tired of life?... \n I'm sorry but you are not a suitable subject. \n Seek help, there is always a way out \n https://988.ca/" ,
+                  "end": true
+                },
+                "d": {
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "options": {
+                    "return": "You return to the terminal."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "endings": {
+      "success": {
+        "text": "You found the code and escaped the room. You are free!",
+        "end": true
+      },
+      "failure": {
+        "text": "You were trapped forever in the dark room.",
+        "end": true
+      }
+    }
+  }
+}

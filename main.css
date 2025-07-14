@@ -1,0 +1,126 @@
+body {
+    background: black;
+    color: #ff2222;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url('Terminal.png') center center / cover no-repeat;
+    opacity: 0.30; /* Opacidad */
+    pointer-events: none;
+}
+
+.header-bar {
+    width: 100vw;
+    height: 32px;
+    background: rgba(20, 20, 20, 0.95);
+    border-bottom: 2px solid #ff2222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    font-size: 1.1em;
+    letter-spacing: 2px;
+}
+
+.header-bar .runas {
+    padding-left: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #ff2222;
+    font-size: 1.2em;
+    user-select: none;
+}
+
+.header-bar .title {
+    font-weight: bold;
+    color: #ff2222;
+    padding-right: 16px;
+    font-size: 1.1em;
+    user-select: none;
+}
+
+.terminal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px; 
+    background: transparent;
+    border: 3px solid #ff2222;
+    border-radius: 0;
+    padding: 32px 32px 24px 32px;
+    animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 450px;
+    overflow: hidden;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%) scale(0.98);}
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1);}
+}
+
+.output {
+    font-size: 1.1em;
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
+    height: 340px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ff2222 #141414;
+    background: transparent;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    position: absolute;
+    left: 32px;
+    bottom: 24px;
+    width: calc(100% - 64px);
+    background: transparent;
+}
+
+.input-line .prompt {
+    color: #ff2222;
+    font-weight: bold;
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+.input-line input {
+    background: transparent;
+    border: none;
+    color: #ff2222;
+    font-family: inherit;
+    font-size: 1.1em;
+    outline: none;
+    width: 100%;
+    caret-color: #ff2222;
+    animation: blink-caret 1s steps(1) infinite;
+}
+
+.input-line input:focus {
+    outline: none;
+}
+
+.output, .input-line, .input-line input, .input-line .prompt {
+    font-size: 1.1em;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.4;
+}

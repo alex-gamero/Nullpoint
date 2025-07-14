@@ -2,9 +2,9 @@
   "name": "nullpoint",
   "version": "1.0.0",
   "description": "A terminal-based web game where players input commands to progress through a story.",
-  "main": "src/scripts/game.js",
+  "main": "game.js",
   "scripts": {
-    "start": "live-server src"
+    "start": "live-server ."
   },
   "keywords": [
     "game",
@@ -12,7 +12,7 @@
     "interactive",
     "story"
   ],
-  "author": "Your Name",
+  "author": "Alex Gamero",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
