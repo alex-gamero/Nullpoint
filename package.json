@@ -1,0 +1,21 @@
+{
+  "name": "nullpoint",
+  "version": "1.0.0",
+  "description": "A terminal-based web game where players input commands to progress through a story.",
+  "main": "src/scripts/game.js",
+  "scripts": {
+    "start": "live-server src"
+  },
+  "keywords": [
+    "game",
+    "terminal",
+    "interactive",
+    "story"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
