@@ -14,16 +14,14 @@ body::before {
     position: fixed;
     inset: 0;
     z-index: -1;
-    background: url('Terminal.png') center center / cover no-repeat;
+    background: url('img/terminal.png') center center / cover no-repeat;
     opacity: 0.30; /* Opacidad */
     pointer-events: none;
 }
 
 .header-bar {
     width: 100vw;
-    height: 32px;
-    background: rgba(20, 20, 20, 0.95);
-    border-bottom: 2px solid #ff2222;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,22 +31,114 @@ body::before {
     z-index: 10;
     font-size: 1.1em;
     letter-spacing: 2px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    background: transparent;
 }
 
-.header-bar .runas {
-    padding-left: 16px;
-    font-family: 'Courier New', Courier, monospace;
+.chapter-title {
     color: #ff2222;
-    font-size: 1.2em;
-    user-select: none;
-}
-
-.header-bar .title {
     font-weight: bold;
-    color: #ff2222;
-    padding-right: 16px;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    text-align: center;
+    flex: 1;
     user-select: none;
+    pointer-events: none;
+}
+
+.header-bar .rune-btn {
+    margin-right: 12px;
+}
+
+.header-bar .social-btns {
+    margin-left: 12px;
+}
+
+.rune-btn .runas {
+    transition: color 0.3s;
+    font-size: 1.3em;
+    letter-spacing: 2px;
+    display: inline-block;
+    width: 22ch; /* Largo de caja runas */
+    min-width: 22ch;
+    max-width: 22ch;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    /* Forzar altura fija para evitar salto vertical */
+    height: 1.3em;
+    line-height: 1.3em;
+    overflow: hidden;
+}
+
+.rune-btn:hover .runas {
+    color: #fff;
+    /* No blur, solo cambio de color */
+}
+
+.rune-btn {
+    background: transparent;
+    border: 2px solid #ff2222;
+    color: #ff2222;
+    padding: 6px 18px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.3em;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    margin-right: 12px;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.rune-btn:hover {
+    background: #ff2222;
+    color: #1a1a1a;
+    border-color: #ff2222;
+}
+
+.rune-btn:hover .runas {
+    color: #fff;
+    animation: runeChange 0.7s steps(10) 1;
+}
+
+@keyframes runeChange {
+    0% { opacity: 1; }
+    30% { opacity: 0.2; }
+    60% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.social-btns {
+    display: flex;
+    gap: 10px;
+}
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid #ff2222;
+    border-radius: 0;
+    width: 38px;
+    height: 38px;
+    transition: background 0.2s, border 0.2s;
+    text-decoration: none;
+    margin-left: 2px;
+}
+.social-icon svg {
+    stroke: #ff2222;
+    fill: none;
+    transition: stroke 0.2s;
+}
+.social-icon:hover {
+    background: #ff2222;
+    border-color: #ff2222;
+}
+.social-icon:hover svg {
+    stroke: #1a1a1a;
 }
 
 .terminal {
@@ -74,15 +164,45 @@ body::before {
     to   { opacity: 1; transform: translate(-50%, -50%) scale(1);}
 }
 
-.output {
+.scroll-area {
     font-size: 1.1em;
     letter-spacing: 0.5px;
+    margin-right: -1.5vw; 
+    padding-right: 10px;
     margin-bottom: 0;
     height: 340px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #ff2222 #141414;
+    scrollbar-color: #ff2222 transparent;
     background: transparent;
+}
+
+/* Scrollbar minimalista y cuadrado para Chrome, Edge y Safari */
+.scroll-area::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+    background: #ff2222;
+    border-radius: 0;
+    min-height: 20px;
+    opacity: 0.8;
+    border: none;
+}
+.scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 0;
+}
+
+.scroll-area::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+}
+
+.scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: #ff2222 transparent;
 }
 
 .input-line {
@@ -112,7 +232,6 @@ body::before {
     outline: none;
     width: 100%;
     caret-color: #ff2222;
-    animation: blink-caret 1s steps(1) infinite;
 }
 
 .input-line input:focus {

@@ -8,7 +8,7 @@
           "text": "The room is too dark to be examined, the only thing in sight is the computer terminal in front of you."
         },
         "use terminal": {
-          "text": "You approach the terminal. \n Inside, you see a text: \n Hi, I am Lex and I have been programmed to learn about humans. I will ask you a series of questions. Please answer honestly. \n Why do humans hurt each other so often? \n a) Because we’re selfish by nature. \n b) Because we’re scared. \n c) Because we’re trying to survive. \n d) Because we’re trying to protect others.",
+          "text": "You approach the terminal. \n Inside, you see a text: \n Hi, I am L.E.X. and I have been programmed to learn about humans. I will ask you a series of questions. Please answer honestly. \n Why do humans hurt each other so often? \n a) Because we’re selfish by nature. \n b) Because we’re scared. \n c) Because we’re trying to survive. \n d) Because we’re trying to protect others.",
           "options": {
             "a": {
               "text": "Pure selfishness. A second nature, perhaps? ... This is becoming very interesting \n Second question: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",

@@ -68,5 +68,47 @@ inputField.addEventListener('keypress', function (e) {
     }
 });
 
+// --- Animación de runas en el header mejorada ---
+const runeBtn = document.getElementById('runeBtn');
+const runeText = document.getElementById('runeText');
+const chapterText = 'CHAPTER 1: TERMINAL';
+const originalRunes = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛋᛏᛒᛖᛗᛚᛜ';
+let runeAnimInterval = null;
+
+function randomRune() {
+  const runes = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛋᛏᛒᛖᛗᛚᛜ';
+  return runes[Math.floor(Math.random() * runes.length)];
+}
+
+function animateToText(target) {
+  let progress = 0;
+  clearInterval(runeAnimInterval);
+  runeAnimInterval = setInterval(() => {
+    let display = '';
+    for (let i = 0; i < target.length; i++) {
+      if (i < progress) {
+        display += target[i];
+      } else if (target[i] === ' ') {
+        display += ' ';
+      } else {
+        display += randomRune();
+      }
+    }
+    runeText.textContent = display;
+    if (progress <= target.length) progress++;
+    if (progress > target.length) clearInterval(runeAnimInterval);
+  }, 60);
+}
+
+if (runeBtn && runeText) {
+  runeBtn.addEventListener('mouseenter', () => {
+    animateToText(chapterText);
+  });
+  runeBtn.addEventListener('mouseleave', () => {
+    clearInterval(runeAnimInterval);
+    runeText.textContent = originalRunes;
+  });
+}
+
 // Initialize the game
 output.innerHTML = story.start.text;
