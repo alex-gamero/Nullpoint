@@ -7,6 +7,7 @@ body {
     padding: 0;
     overflow: hidden;
     position: relative;
+    min-height: 100vh;
 }
 
 body::before {
@@ -17,6 +18,50 @@ body::before {
     background: url('img/terminal.png') center center / cover no-repeat;
     opacity: 0.30; /* Opacidad */
     pointer-events: none;
+}
+
+/* Mobile detection overlay */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 10000;
+    color: #ff2222;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mobile-overlay h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.mobile-overlay p {
+    font-size: 1.1em;
+    line-height: 1.4;
+    max-width: 400px;
+}
+
+/* Show mobile overlay on small screens */
+@media (max-width: 480px) {
+    .mobile-overlay {
+        display: flex !important;
+    }
+    
+    .terminal, .header-bar, #secretPixel, #dungeonContainer {
+        display: none !important;
+    }
 }
 
 .header-bar {
@@ -146,17 +191,42 @@ body::before {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 700px;
-    height: 400px;
-    min-height: 400px;
-    max-height: 400px; 
+    width: min(700px, 90vw);
+    height: min(400px, 60vh);
+    min-height: 300px;
+    max-height: 80vh;
     background: transparent;
     border: 3px solid #ff2222;
     border-radius: 0;
-    padding: 32px 32px 24px 32px;
+    padding: clamp(16px, 4vw, 32px);
     animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-top: 450px;
+    margin-top: 0;
     overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-height: 600px) {
+    .terminal {
+        height: 80vh;
+        min-height: 250px;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 1200px) {
+    .terminal {
+        width: 90vw;
+        height: 70vh;
+    }
+}
+
+@media (max-width: 900px) {
+    .terminal {
+        width: 95vw;
+        height: 75vh;
+        padding: 20px;
+    }
 }
 
 @keyframes fadeIn {
@@ -165,16 +235,17 @@ body::before {
 }
 
 .scroll-area {
-    font-size: 1.1em;
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
     letter-spacing: 0.5px;
     margin-right: -1.5vw; 
     padding-right: 10px;
     margin-bottom: 0;
-    height: 340px;
+    height: calc(100% - 60px);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #ff2222 transparent;
     background: transparent;
+    box-sizing: border-box;
 }
 
 /* Scrollbar minimalista y cuadrado para Chrome, Edge y Safari */
@@ -208,19 +279,20 @@ body::before {
 .input-line {
     display: flex;
     align-items: center;
-    font-size: 1.1em;
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
     position: absolute;
-    left: 32px;
-    bottom: 24px;
-    width: calc(100% - 64px);
+    left: clamp(16px, 4vw, 32px);
+    bottom: clamp(12px, 3vw, 24px);
+    width: calc(100% - clamp(32px, 8vw, 64px));
     background: transparent;
+    box-sizing: border-box;
 }
 
 .input-line .prompt {
     color: #ff2222;
     font-weight: bold;
     margin-right: 8px;
-    font-size: 1.1em;
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
 }
 
 .input-line input {
@@ -228,7 +300,7 @@ body::before {
     border: none;
     color: #ff2222;
     font-family: inherit;
-    font-size: 1.1em;
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
     outline: none;
     width: 100%;
     caret-color: #ff2222;
@@ -239,7 +311,113 @@ body::before {
 }
 
 .output, .input-line, .input-line input, .input-line .prompt {
-    font-size: 1.1em;
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
     font-family: 'Courier New', Courier, monospace;
     line-height: 1.4;
+}
+
+/* Responsive header adjustments */
+@media (max-width: 600px) {
+    .header-bar {
+        padding: 0 16px;
+        font-size: 0.9em;
+    }
+    
+    .rune-btn {
+        padding: 4px 12px;
+        font-size: 1.1em;
+    }
+    
+    .rune-btn .runas {
+        font-size: 1.1em;
+        width: 18ch;
+        min-width: 18ch;
+        max-width: 18ch;
+    }
+    
+    .social-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .social-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Dungeon container responsive adjustments */
+#dungeonContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    color: #48ee82;
+    font-family: monospace;
+    font-size: clamp(8px, 2vw, 16px);
+    z-index: 999;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#dungeonDisplay {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 10px; /* Espacio alrededor del mapa */
+    box-sizing: border-box;
+    font-size: clamp(6px, 1.5vw, 12px); /* Tamaño de fuente del mapa */
+    line-height: 1;
+    white-space: pre;
+    overflow: hidden;
+}
+
+#dungeonMessage {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: clamp(12px, 2.5vw, 16px);
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #48ee82;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 1200px) {
+    #dungeonDisplay {
+        font-size: 8px;
+    }
+    #dungeonMessage {
+        font-size: 12px;
+        bottom: 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    #dungeonDisplay {
+        font-size: 6px;
+        padding: 5px;
+    }
+    #dungeonMessage {
+        font-size: 10px;
+        bottom: 10px;
+        padding: 8px;
+    }
+}
+
+@media (max-height: 600px) {
+    #dungeonDisplay {
+        padding: 5px;
+    }
+    #dungeonMessage {
+        bottom: 10px;
+        font-size: 10px;
+    }
 }

@@ -54,13 +54,14 @@ function processInput(input) {
         return;
     }
 
+    // Comando global 'root' 
     if (command === 'root') {
       showUseKeyAnimation();
     }
 
     // Comando global 'use key'
     if (command === 'use key') {
-        if (!gameState.inventory || !gameState.inventory.includes("a key")) {
+        if (!gameState.inventory || !gameState.inventory.includes("key")) {
             output.innerHTML += "You don't have a key.<br><br>";
             //Scroll to the bottom of the terminal
             inputField.value = '';
@@ -68,7 +69,7 @@ function processInput(input) {
             return;
         } else {
             // Remover la llave del inventario después de usarla
-            gameState.inventory = gameState.inventory.filter(item => item !== "a key");
+            gameState.inventory = gameState.inventory.filter(item => item !== "key");
             showUseKeyAnimation();
             return;
         }
@@ -476,12 +477,16 @@ function showKeyAnimation() {
   dungeonContainer.style.background = "black";
   dungeonDisplay.innerHTML = "";
   dungeonMessage.style.textAlign = "center";
-  dungeonMessage.style.fontSize = "24px";
+  dungeonMessage.style.fontSize = "clamp(16px, 4vw, 24px)";
   dungeonMessage.style.position = "absolute";
   dungeonMessage.style.top = "50%";
   dungeonMessage.style.left = "50%";
   dungeonMessage.style.transform = "translate(-50%, -50%)";
   dungeonMessage.style.color = "#48ee82";
+  dungeonMessage.style.bottom = "auto";
+  dungeonMessage.style.padding = "10px";
+  dungeonMessage.style.background = "transparent";
+  dungeonMessage.style.border = "none";
   
   const messages = [
     "You found the ?̶̖͚̠̫̦̼͔̈́̑̾́̂͝?̴̺̘͔̝̖̯̲͉̊̋̊̈́̅̐͘̚̕?   key",
@@ -521,7 +526,7 @@ function showKeyAnimation() {
     let blinkCount = 0;
     const blinkInterval = setInterval(() => {
       if (blinkCount % 2 === 0) {
-        dungeonMessage.innerHTML = "<span style='color:#48ee82;font-size:24px;'>Congratulations Wewi !!!</span>";
+        dungeonMessage.innerHTML = "<span style='color:#48ee82;font-size:clamp(16px, 4vw, 24px);'>Congratulations Wewi !!!</span>";
       } else {
         dungeonMessage.innerHTML = "";
       }
@@ -647,11 +652,48 @@ document.addEventListener('DOMContentLoaded', () => {
       startEnemyMovement();
       dungeonMessage.textContent = "Use arrow keys to move. ESC to exit.";
       drawMap();
+      
+      // Ajustar el tamaño del mapa para diferentes pantallas
+      adjustDungeonSize();
     });
   } else {
     console.log("Secret pixel element not found!");
   }
 });
+
+// Función para ajustar el tamaño del dungeon según el dispositivo
+function adjustDungeonSize() {
+  const container = document.getElementById("dungeonContainer");
+  const display = document.getElementById("dungeonDisplay");
+  const message = document.getElementById("dungeonMessage");
+  
+  if (!container || !display || !message) return;
+  
+  // Obtener dimensiones de la ventana
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  
+  // Ajustar el tamaño de fuente según el dispositivo
+  if (windowWidth < 1200) {
+    display.style.fontSize = "10px";
+    message.style.fontSize = "14px";
+  } else if (windowWidth < 1600) {
+    display.style.fontSize = "12px";
+    message.style.fontSize = "16px";
+  } else {
+    display.style.fontSize = "14px";
+    message.style.fontSize = "18px";
+  }
+  
+  // Ajustar el padding del display para pantallas pequeñas
+  if (windowHeight < 600) {
+    display.style.padding = "5px";
+    message.style.bottom = "10px";
+  } else {
+    display.style.padding = "10px";
+    message.style.bottom = "20px";
+  }
+}
 
 
 // ENDINGS
