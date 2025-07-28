@@ -237,10 +237,10 @@ body::before {
 .scroll-area {
     font-size: clamp(0.9em, 2.5vw, 1.1em);
     letter-spacing: 0.5px;
-    margin-right: -1.5vw; 
-    padding-right: 10px;
-    margin-bottom: 0;
-    height: calc(100% - 60px);
+    margin-right: -1.5vw;  /* Posicion del scroll (que tan a la derecha esta) */
+    padding-right: 10px; /* Espacio entre el scroll y el texto */
+    margin-bottom: 0; 
+    height: calc(100% - 40px); /* Altura del recuadro invisible donde se escriben los comandos (cambiar los px) */
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #ff2222 transparent;
