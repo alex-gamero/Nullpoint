@@ -22,9 +22,6 @@ Players will interact with the game by typing commands into the terminal interfa
 ## 🆘 Contributing
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request.
 
-## ⚖️ License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## ❇️ Endings
 Under development
 ![GOOD ENDING](assetsREADME/website3.gif)
