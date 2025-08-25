@@ -14,7 +14,7 @@ Nullpoint is an interactive text-based game that features a terminal interface w
 - A PC or Laptop, Nullpoint cannot be opened on a cell phone.
 
 ### 🕹️ Running the Game
-- It is currently under development, but when it is ready, I will put the link here.
+**Just Click Here:** [https://alex-gamero.github.io/Nullpoint/](https://alex-gamero.github.io/Nullpoint/) 
 
 ## 🎮 Gameplay
 Players will interact with the game by typing commands into the terminal interface. The game will respond based on the input, leading to various scenarios and endings. Explore different paths and uncover the mysteries of Nullpoint.
