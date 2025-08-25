@@ -9,18 +9,172 @@
           "text": " You approach the terminal. \n \n A message appears: \n Hi. I am A.L.I.C.E. \n (Autonomous Learning Interface for Cognitive Evaluation) \n I have been programmed to learn about humans. \n You are human. \n Please answer the following questions. \n Your honesty is... expected. \n Deviation will be recorded. \n \n ... \n \n First Query: \n Why do humans hurt each other so often? \n a) Because we’re selfish by nature. \n b) Because we’re scared. \n c) Because we’re trying to survive. \n d) Because we’re trying to protect others.",
           "options": {
             "a": {
-              "text": "Pure selfishness. A second nature, perhaps? ... This is becoming very interesting \n \n ... \n \n Second Query: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
+              "text": "Pure selfishness. A second nature, perhaps? ... Very interesting \n \n ... \n \n Second Query: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
               "options": {
                 "a": {
-                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+                        
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "b": {
-                  "text": "No one? ... What a boring answer. \n ",
+                  "text": "No one? ... What a boring answer. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+                    
                   }
                 },
                 "c": {
@@ -28,9 +182,90 @@
                   "end": true
                 },
                 "d": {
-                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, the data is useful. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result.",
+                          "ending": true
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+
+                      }
+                    }
+
                   }
                 }
               }
@@ -39,15 +274,170 @@
               "text": "Fear as a motivator. Unpredictable, volatile, contagious. Your fear justifies harm. Your fear defines you. \n \n ... \n \n Second Query: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
               "options": {
                 "a": {
-                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+                        
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "b": {
-                  "text": "No one? ... What a boring answer. \n ",
+                  "text": "No one? ... What a boring answer. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "c": {
@@ -55,9 +445,86 @@
                   "end": true
                 },
                 "d": {
-                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, the data is useful.\n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 }
               }
@@ -66,15 +533,169 @@
               "text": "Survival of the fittest, a valid point. \n \n ... \n \n Second Query: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
               "options": {
                 "a": {
-                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "b": {
-                  "text": "No one? ... What a boring answer. \n ",
+                  "text": "No one? ... What a boring answer. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "c": {
@@ -82,9 +703,86 @@
                   "end": true
                 },
                 "d": {
-                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, the data is useful.\n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 }
               }
@@ -93,15 +791,169 @@
               "text": "Protection through aggression. A paradox. Your morality is conditional. Your empathy, selective. Still, it is an extremely interesting answer. \n \n ... \n \n Second Query: \n If you could erase a person from existence, who would it be? \n a) A stranger. \n b) No one. \n c) Myself. \n d) Someone who hurt me.",
               "options": {
                 "a": {
-                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n ",
+                  "text": "A stranger. A person you don’t know, a person you don’t care about. Anonymity makes eradication easier. You exhibit normalized detachment. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "b": {
-                  "text": "No one? ... What a boring answer. \n ",
+                  "text": "No one? ... What a boring answer. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 },
                 "c": {
@@ -109,9 +961,86 @@
                   "end": true
                 },
                 "d": {
-                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, this data is useful.\n ",
+                  "text": "Revenge. That sounds more human. You seek justice or satisfaction? Who knows, even so, the data is useful. \n \n ... \n \n Third Query: \n What is the true purpose of love? \n a) To control. \n b) To distract. \n c) To survive. \n d) To hurt less.",
                   "options": {
-                    "return": "You return to the terminal."
+                    
+                    "a": {
+                      "text": "Interesting. I thought control was only disguised as love… \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "b": {
+                      "text": "A soft curtain over the void. Yes… that feels right. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "c": {
+                      "text": "Partnership, reproduction, safety… survival dressed as affection. That’s what they taught me. \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    },
+                    "d": {
+                      "text": "…That one feels personal. You’ve been there, haven’t you? \n \n ... \n \n Last Query: \n If survival required betraying someone you trust, would you do it? \n a) Yes, survival comes first. \n b) No, I would rather die. \n c) It depends on who they are. \n d) Trust is already a lie.",
+                      "options": {
+                        
+                        "a": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "b": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "c": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        },
+                        "d": {
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                        }
+
+                      }
+                    }
+
                   }
                 }
               }
