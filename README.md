@@ -1,5 +1,7 @@
 # Nullpoint Game
 
+**Live Site:** [https://alex-gamero.github.io/Nullpoint/](https://alex-gamero.github.io/Nullpoint/) 
+
 ![Demo of Terminal Nullpoint](assetsREADME/website1.gif)
 
 ## Overview
@@ -21,9 +23,6 @@ Players will interact with the game by typing commands into the terminal interfa
 
 ## 🆘 Contributing
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request.
-
-## ⚖️ License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## ❇️ Endings
 Under development
