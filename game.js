@@ -490,7 +490,7 @@ function showKeyAnimation() {
   
   const messages = [
     "You found the ?̶̖͚̠̫̦̼͔̈́̑̾́̂͝?̴̺̘͔̝̖̯̲͉̊̋̊̈́̅̐͘̚̕?   key",
-    "Congratulations Wewi !!!"
+    "Congratulations !!!"
   ];
   
   let currentMessage = 0;
@@ -526,7 +526,7 @@ function showKeyAnimation() {
     let blinkCount = 0;
     const blinkInterval = setInterval(() => {
       if (blinkCount % 2 === 0) {
-        dungeonMessage.innerHTML = "<span style='color:#48ee82;font-size:clamp(16px, 4vw, 24px);'>Congratulations Wewi !!!</span>";
+        dungeonMessage.innerHTML = "<span style='color:#48ee82;font-size:clamp(16px, 4vw, 24px);'>Congratulations !!!</span>";
       } else {
         dungeonMessage.innerHTML = "";
       }
@@ -812,7 +812,6 @@ function showUseKeyAnimation() {
 
   ];
   const endingTitle = "GOOD ENDING";
-  const endingSubtitle = "HAPPY BIRTHDAY WEWI!";
 
   let currentMessage = 0;
   let currentChar = 0;
@@ -917,4 +916,140 @@ function showUseKeyAnimation() {
   }
 
   typeMessage();
+}
+
+function showEndingScreen(endingText) {
+    
+  // Esperar 5 segundos antes de mostrar el arte y texto
+    setTimeout(() => {
+  // Crear overlay negro
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #222;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 1.2vw;
+        text-align: center;
+        overflow: auto;
+    `;
+    document.body.appendChild(overlay);
+
+        // ASCII ART
+        const asciiArt = `
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣦⣤⣴⣦⣤⣤⠀⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣤⣴⣶⡟⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠉⢉⠟⠀⠀⠀⠀⠉⠛⣿⠛⠷⡄⣀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⣤⠞⣻⠉⠉⠀⠀⠀⠈⢣⡀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠐⠀⠀⠀⠀⣧⠀⡄⢉⡿⠀⠀⠀
+⠀⠀⠀⣴⠋⠀⠀⡇⠀⠀⠀⠐⠀⠀⢸⡇⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠀⠀⠤⣀⠀⠀⠀⢀⡟⠀⠀⠋⠀⠀⠀⠀
+⠀⠀⠈⠈⠃⠀⠀⠧⠀⣀⠀⠠⠔⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+`;
+
+        // Animación de tipeo para el arte
+        const artDiv = document.createElement('pre');
+        artDiv.style.cssText = `
+            color: #ff2222;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2vw;
+            margin-bottom: 2vw;
+            background: transparent;
+            white-space: pre;
+            text-align: center;
+        `;
+        overlay.appendChild(artDiv);
+
+        let artLines = asciiArt.split('\n');
+        let currentLine = 0;
+        function typeArt() {
+            if (currentLine < artLines.length) {
+                artDiv.textContent += artLines[currentLine] + '\n';
+                currentLine++;
+                setTimeout(typeArt, 60);
+            } else {
+                typeEndingText();
+            }
+        }
+
+        // Animación de tipeo para el texto final
+        function typeEndingText() {
+            const textDiv = document.createElement('div');
+            textDiv.style.cssText = `
+                color: #ff2222;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1.3vw;
+                margin-top: 2vw;
+                text-align: center;
+            `;
+            overlay.appendChild(textDiv);
+
+            let i = 0;
+            function type() {
+                if (i < endingText.length) {
+                    textDiv.textContent += endingText[i];
+                    i++;
+                    setTimeout(type, 70);
+                }
+            }
+            type();
+        }
+
+        typeArt();
+    }, 5000);
+}
+
+// Modifica processInput para detectar "ending": true
+function processInput(input) {
+    const command = input.trim().toLowerCase();
+    gameState.history.push(command);
+
+    output.innerHTML += `<br>&gt;${command}<br>`;
+
+    // ...comandos globales...
+
+    let scene = story[gameState.currentScene];
+    if (!scene) {
+        output.innerHTML += "Error: Scene not found.<br><br>";
+        inputField.value = '';
+        output.scrollTop = output.scrollHeight;
+        return;
+    }
+
+    let option = scene.options[command];
+    if (option) {
+        if (typeof option === 'string') {
+            output.innerHTML += option.replace(/\n/g, "<br>") + "<br><br>";
+        } else if (typeof option === 'object') {
+            output.innerHTML += option.text.replace(/\n/g, "<br>") + "<br><br>";
+            if (option.options) {
+                gameState.currentScene = command;
+                story[command] = option;
+            }
+            // Aquí detecta ending
+            if (option.ending) {
+                inputField.disabled = true;
+                output.scrollTop = output.scrollHeight;
+                showEndingScreen("Perfect, simply perfect, you will be a suitable candidate for the next phase. We will see you soon.");
+                return;
+            }
+            if (option.end) {
+                inputField.disabled = true;
+            }
+        }
+    } else {
+        output.innerHTML += "Unknown command. Type 'help' for a list of commands.<br><br>";
+    }
+
+    inputField.value = '';
+    output.scrollTop = output.scrollHeight;
 }
