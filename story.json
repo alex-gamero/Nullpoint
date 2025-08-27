@@ -1010,7 +1010,8 @@
                           "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
                         },
                         "b": {
-                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result.",
+                          "knight":true
                         },
                         "c": {
                           "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
