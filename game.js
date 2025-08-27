@@ -93,6 +93,18 @@ function processInput(input) {
                 gameState.currentScene = command;
                 story[command] = option;
             }
+            if (option.knight) {
+                inputField.disabled = true;
+                output.scrollTop = output.scrollHeight;
+                showKnightScreen();
+                return;
+            }
+            if (option.ending) {
+                inputField.disabled = true;
+                output.scrollTop = output.scrollHeight;
+                showEndingScreen("Perfect, simply perfect, you will be a suitable candidate for the next phase. We will see you soon.");
+                return;
+            }
             if (option.end) {
                 inputField.disabled = true;
             }
@@ -383,42 +395,6 @@ function playKeyMusic() {
   }
   
   playNote();
-}
-
-function playGoodEndingMusic() {
-  // Crear audio context para música de final
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  
-  // Melodía de victoria
-  const victoryFrequencies = [523, 659, 784, 1047, 784, 659, 523, 392];
-  let currentNote = 0;
-  
-  function playVictoryNote() {
-    if (currentNote >= victoryFrequencies.length) {
-      // Repetir en loop
-      currentNote = 0;
-    }
-    
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.setValueAtTime(victoryFrequencies[currentNote], audioContext.currentTime);
-    oscillator.type = 'triangle';
-    
-    gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.8);
-    
-    currentNote++;
-    setTimeout(playVictoryNote, 300);
-  }
-  
-  playVictoryNote();
 }
 
 function drawMap() {
@@ -723,7 +699,9 @@ function showUseKeyAnimation() {
     margin: 0;
   `;
   document.body.appendChild(overlay);
-  playGoodEndingMusic(); // Reproducir música de final
+  const audio = new Audio('music/good_ending.mp3');
+  audio.volume = 0.7; // Puedes ajustar el volumen
+  audio.play();
   const messages = [
     "Without a second's hesitation you get up and run until you can feel a door, you use the key and get out of this nightmare.",
     `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -824,14 +802,14 @@ function showUseKeyAnimation() {
         displayText += messages[0][currentChar];
         overlay.innerHTML = `<div style='margin-bottom:2vw;'>${displayText.replace(/\n/g, '<br>')}</div>`;
         currentChar++;
-        setTimeout(typeMessage, 20);
+        setTimeout(typeMessage, 50);
       } else {
         setTimeout(() => {
           currentMessage = 1;
           currentChar = 0;
           displayText = "";
           typeMessage();
-        }, 7000); // Esperar 7 segundos antes de mostrar el ASCII
+        }, 5000); // Esperar 5 segundos antes de mostrar el ASCII
       }
     } else if (currentMessage === 1) {
       // Arte ASCII: mostrar línea por línea
@@ -944,6 +922,11 @@ function showEndingScreen(endingText) {
     `;
     document.body.appendChild(overlay);
 
+        // Reproducir música de ending
+        const audio = new Audio('music/ending.mp3');
+        audio.volume = 0.3; // Puedes ajustar el volumen
+        audio.play();
+
         // ASCII ART
         const asciiArt = `
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -1008,48 +991,67 @@ function showEndingScreen(endingText) {
     }, 5000);
 }
 
-// Modifica processInput para detectar "ending": true
-function processInput(input) {
-    const command = input.trim().toLowerCase();
-    gameState.history.push(command);
+function showKnightScreen() {
+    // Esperar 5 segundos antes de mostrar la pantalla negra y el contenido
+    setTimeout(() => {
+        // Crear overlay negro
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            overflow: auto;
+        `;
+        document.body.appendChild(overlay);
 
-    output.innerHTML += `<br>&gt;${command}<br>`;
+        // Reproducir música de ending
+        const audio = new Audio('music/knight.mp3');
+        audio.volume = 0.4; // Puedes ajustar el volumen
+        audio.play();
 
-    // ...comandos globales...
+        // Imagen knight centrada
+        const img = document.createElement('img');
+        img.src = 'img/knight.png';
+        img.alt = 'Knight';
+        img.style.cssText = `
+            max-width: 40vw;
+            max-height: 40vh;
+            margin-bottom: 2vw;
+            filter: drop-shadow(0 0 8px #ff2222);
+        `;
+        overlay.appendChild(img);
 
-    let scene = story[gameState.currentScene];
-    if (!scene) {
-        output.innerHTML += "Error: Scene not found.<br><br>";
-        inputField.value = '';
-        output.scrollTop = output.scrollHeight;
-        return;
-    }
+        // Texto animado
+        const knightText = "Oh sweet, sweet knight, do you plan to carry the weight of the world on your shoulders?\n\nYou will be a good candidate, a different one. We will see you soon.";
+        const textDiv = document.createElement('div');
+        textDiv.style.cssText = `
+            color: #ff2222;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3vw;
+            margin-top: 2vw;
+            text-align: center;
+            white-space: pre-line;
+        `;
+        overlay.appendChild(textDiv);
 
-    let option = scene.options[command];
-    if (option) {
-        if (typeof option === 'string') {
-            output.innerHTML += option.replace(/\n/g, "<br>") + "<br><br>";
-        } else if (typeof option === 'object') {
-            output.innerHTML += option.text.replace(/\n/g, "<br>") + "<br><br>";
-            if (option.options) {
-                gameState.currentScene = command;
-                story[command] = option;
-            }
-            // Aquí detecta ending
-            if (option.ending) {
-                inputField.disabled = true;
-                output.scrollTop = output.scrollHeight;
-                showEndingScreen("Perfect, simply perfect, you will be a suitable candidate for the next phase. We will see you soon.");
-                return;
-            }
-            if (option.end) {
-                inputField.disabled = true;
+        let i = 0;
+        function type() {
+            if (i < knightText.length) {
+                textDiv.textContent += knightText[i];
+                i++;
+                setTimeout(type, 70);
             }
         }
-    } else {
-        output.innerHTML += "Unknown command. Type 'help' for a list of commands.<br><br>";
-    }
-
-    inputField.value = '';
-    output.scrollTop = output.scrollHeight;
+        type();
+    }, 5000);
 }
