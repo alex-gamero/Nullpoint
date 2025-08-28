@@ -426,7 +426,8 @@
                           "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
                         },
                         "b": {
-                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result.",
+                          "bbdb": true
                         },
                         "c": {
                           "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
@@ -749,7 +750,8 @@
                       "options": {
                         
                         "a": {
-                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."
+                          "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result.",
+                          "ending": true
                         },
                         "b": {
                           "text": "... \n Input locked. \n Analysis complete. \n ██████ ██DATA RECEIVED \n You may now receive your result."

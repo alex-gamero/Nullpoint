@@ -23,100 +23,6 @@ fetch('story.json')
         output.innerHTML = "Error loading story. Please refresh the page.";
     });
 
-function processInput(input) {
-    const command = input.trim().toLowerCase();
-    gameState.history.push(command);
-
-    output.innerHTML += `<br>&gt;${command}<br>`;
-
-    // Comando global 'help'
-    if (command === 'help') {
-        output.innerHTML += "Available commands: look, use [object], inventory, help<br>";
-        output.innerHTML += "<br>"; 
-        inputField.value = '';
-        output.scrollTop = output.scrollHeight;
-        return;
-    }
-
-    // Comando global 'inventory'
-    if (command === 'inventory') {
-        if (!gameState.inventory || gameState.inventory.length === 0) {
-            output.innerHTML += "Your inventory is empty.<br><br>";
-        } else {
-            output.innerHTML += "Inventory:<br>";
-            gameState.inventory.forEach(item => {
-                output.innerHTML += `- ${item}<br>`;
-            });
-            output.innerHTML += "<br>";
-        }
-        inputField.value = '';
-        output.scrollTop = output.scrollHeight;
-        return;
-    }
-
-    // Comando global 'root' 
-    if (command === 'root') {
-      showUseKeyAnimation();
-    }
-
-    // Comando global 'use key'
-    if (command === 'use key') {
-        if (!gameState.inventory || !gameState.inventory.includes("key")) {
-            output.innerHTML += "You don't have a key.<br><br>";
-            //Scroll to the bottom of the terminal
-            inputField.value = '';
-            output.scrollTop = output.scrollHeight;
-            return;
-        } else {
-            // Remover la llave del inventario después de usarla
-            gameState.inventory = gameState.inventory.filter(item => item !== "key");
-            showUseKeyAnimation();
-            return;
-        }
-    }
-
-    let scene = story[gameState.currentScene];
-    if (!scene) {
-        output.innerHTML += "Error: Scene not found.<br><br>";
-        inputField.value = '';
-        terminal.scrollTop = terminal.scrollHeight;
-        return;
-    }
-
-    let option = scene.options[command];
-    if (option) {
-        if (typeof option === 'string') {
-            output.innerHTML += option.replace(/\n/g, "<br>") + "<br><br>";
-        } else if (typeof option === 'object') {
-            output.innerHTML += option.text.replace(/\n/g, "<br>") + "<br><br>";
-            if (option.options) {
-                gameState.currentScene = command;
-                story[command] = option;
-            }
-            if (option.knight) {
-                inputField.disabled = true;
-                output.scrollTop = output.scrollHeight;
-                showKnightScreen();
-                return;
-            }
-            if (option.ending) {
-                inputField.disabled = true;
-                output.scrollTop = output.scrollHeight;
-                showEndingScreen("Perfect, simply perfect, you will be a suitable candidate for the next phase. We will see you soon.");
-                return;
-            }
-            if (option.end) {
-                inputField.disabled = true;
-            }
-        }
-    } else {
-        output.innerHTML += "Unknown command. Type 'help' for a list of commands.<br><br>";
-    }
-
-    inputField.value = '';
-    output.scrollTop = output.scrollHeight;
-}
-
 inputField.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         processInput(inputField.value);
@@ -1054,4 +960,170 @@ function showKnightScreen() {
         }
         type();
     }, 5000);
+}
+
+function bbdb() {
+    // Esperar 5 segundos antes de mostrar la pantalla negra y el contenido
+    setTimeout(() => {
+        // Crear overlay negro
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            overflow: auto;
+        `;
+        document.body.appendChild(overlay);
+
+        // Reproducir música de ending
+        const audio = new Audio('music/others.mp3');
+        audio.volume = 0.4; // Puedes ajustar el volumen
+        audio.play();
+
+        // Imagen moon centrada
+        const img = document.createElement('img');
+        img.src = 'img/moon.png';
+        img.alt = 'Moon';
+        img.style.cssText = `
+            max-width: 40vw;
+            max-height: 40vh;
+            margin-bottom: 2vw;
+            filter: drop-shadow(0 0 8px #ff2222);
+        `;
+        overlay.appendChild(img);
+
+        // Texto animado
+        const bbdbText = "Oh frightened kitten, frightened of the world and its humanity, you will not be able to bear the awakening.\n...\nSo you cannot be a possible candidate.";
+        const textDiv = document.createElement('div');
+        textDiv.style.cssText = `
+            color: #ff2222;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3vw;
+            margin-top: 2vw;
+            text-align: center;
+            white-space: pre-line;
+        `;
+        overlay.appendChild(textDiv);
+
+        let i = 0;
+        function type() {
+            if (i < bbdbText.length) {
+                textDiv.textContent += bbdbText[i];
+                i++;
+                setTimeout(type, 70);
+            }
+        }
+        type();
+    }, 5000);
+}
+
+// GLOBAL COMMANDS
+function processInput(input) {
+    const command = input.trim().toLowerCase();
+    gameState.history.push(command);
+
+    output.innerHTML += `<br>&gt;${command}<br>`;
+
+    // Comando global 'help'
+    if (command === 'help') {
+        output.innerHTML += "Available commands: look, use [object], inventory, help<br>";
+        output.innerHTML += "<br>"; 
+        inputField.value = '';
+        output.scrollTop = output.scrollHeight;
+        return;
+    }
+
+    // Comando global 'inventory'
+    if (command === 'inventory') {
+        if (!gameState.inventory || gameState.inventory.length === 0) {
+            output.innerHTML += "Your inventory is empty.<br><br>";
+        } else {
+            output.innerHTML += "Inventory:<br>";
+            gameState.inventory.forEach(item => {
+                output.innerHTML += `- ${item}<br>`;
+            });
+            output.innerHTML += "<br>";
+        }
+        inputField.value = '';
+        output.scrollTop = output.scrollHeight;
+        return;
+    }
+
+    // Comando global 'root' 
+    if (command === 'root') {
+      showUseKeyAnimation();
+    }
+
+    // Comando global 'use key'
+    if (command === 'use key') {
+        if (!gameState.inventory || !gameState.inventory.includes("key")) {
+            output.innerHTML += "You don't have a key.<br><br>";
+            //Scroll to the bottom of the terminal
+            inputField.value = '';
+            output.scrollTop = output.scrollHeight;
+            return;
+        } else {
+            // Remover la llave del inventario después de usarla
+            gameState.inventory = gameState.inventory.filter(item => item !== "key");
+            showUseKeyAnimation();
+            return;
+        }
+    }
+
+    let scene = story[gameState.currentScene];
+    if (!scene) {
+        output.innerHTML += "Error: Scene not found.<br><br>";
+        inputField.value = '';
+        terminal.scrollTop = terminal.scrollHeight;
+        return;
+    }
+
+    let option = scene.options[command];
+    if (option) {
+        if (typeof option === 'string') {
+            output.innerHTML += option.replace(/\n/g, "<br>") + "<br><br>";
+        } else if (typeof option === 'object') {
+            output.innerHTML += option.text.replace(/\n/g, "<br>") + "<br><br>";
+            if (option.options) {
+                gameState.currentScene = command;
+                story[command] = option;
+            }
+            if (option.knight) {
+                inputField.disabled = true;
+                output.scrollTop = output.scrollHeight;
+                showKnightScreen();
+                return;
+            }
+            if (option.bbdb) {
+                inputField.disabled = true;
+                output.scrollTop = output.scrollHeight;
+                bbdb();
+                return;
+            }
+            if (option.ending) {
+                inputField.disabled = true;
+                output.scrollTop = output.scrollHeight;
+                showEndingScreen("Perfect, simply perfect, you will be a suitable candidate for the next phase. We will see you soon.");
+                return;
+            }
+            if (option.end) {
+                inputField.disabled = true;
+            }
+        }
+    } else {
+        output.innerHTML += "Unknown command. Type 'help' for a list of commands.<br><br>";
+    }
+
+    inputField.value = '';
+    output.scrollTop = output.scrollHeight;
 }
