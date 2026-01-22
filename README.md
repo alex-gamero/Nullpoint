@@ -9,7 +9,7 @@ Nullpoint is an interactive text-based game that features a terminal interface w
 
 ## Getting Started
 
-### 🚀 Prerequisites
+### Prerequisites
 - A web browser (Chrome, Firefox, Opera, etc.)
 - A PC or Laptop, Nullpoint cannot be opened on a cell phone.
 
