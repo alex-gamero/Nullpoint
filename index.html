@@ -1,49 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nullpoint</title>
-    <link rel="stylesheet" href="main.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nullpoint</title>
+<meta name="description" content="A first-person psychological horror game in your browser. An AI asks four questions, then tests your answers.">
+<link rel="preload" href="fonts/vt323.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
 </head>
-  <body>
-    <!-- Mobile overlay -->
-    <div class="mobile-overlay">
-      <h1>Extension for mobile devices under development</h1>
-      <p>For a complete experience, use a laptop or PC</p>
-    </div>
-    
-    <div class="header-bar">
-      <button class="rune-btn" id="runeBtn">
-        <span class="runas" id="runeText">ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛋᛏᛒᛖᛗᛚᛜ</span>
-      </button>
-      <div class="social-btns">
-        <a href="https://github.com/alex-gamero" class="social-icon" target="_blank" title="GitHub">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ff2222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"></path></svg>
-        </a>
-        <a href="https://www.linkedin.com/in/matias-alex-gamero-gora/" class="social-icon" target="_blank" title="LinkedIn">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ff2222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-6a6 6 0 0 1 6-6z"/><circle cx="8" cy="8" r="2"/></svg>
-        </a>
-        <a href="https://www.instagram.com/alexito_gamerito/" class="social-icon" target="_blank" title="Instagram">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ff2222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
-        </a>
-      </div>
-    </div>
-    <div class="terminal">
-        <div class="scroll-area" id="output"></div>
-        <div class="input-line">
-            <span class="prompt">&gt;</span>
-            <input id="input" autocomplete="off" autofocus />
-        </div>
-    </div>
-    <script src="game.js"></script>
-      <!-- Pixel secreto -->
-    <div id="secretPixel" style="position: fixed; bottom: 20px; right: 20px; width: 10px; height: 10px; background-color: #0f0; cursor: pointer; z-index: 1000;"></div>
-
-      <!-- Contenedor del minijuego -->
-    <div id="dungeonContainer" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; color: #48ee82; font-family: monospace; font-size: 16px; z-index: 999;">
-        <pre id="dungeonDisplay"></pre>
-        <p id="dungeonMessage" style="color: #fff;"></p>
-    </div>
-  </body>
+<body>
+<div id="stage">
+  <canvas id="view" width="320" height="180" aria-label="First-person view of the room"></canvas>
+  <div id="vignette"></div>
+  <div id="subtitle" role="status" aria-live="polite"></div>
+  <div id="prompt"></div>
+  <div id="hud"></div>
+  <div id="lockhint" hidden>Click to look around</div>
+  <div id="note" hidden><h2 id="noteTitle"></h2><p id="noteText"></p><small>Press E to put it down</small></div>
+</div>
+<section id="terminal" hidden>
+  <div id="out" aria-live="polite"></div>
+  <form id="line"><label for="in">&gt;</label><input id="in" autocomplete="off" spellcheck="false" autocapitalize="off"></form>
+  <button id="pixel" aria-label="A green pixel"></button>
+</section>
+<section id="game" hidden></section>
+<section id="ending" hidden></section>
+<section id="title">
+  <h1 id="logo" aria-label="Nullpoint">ᚠᚢᚦᚨᚱᚲᚷᚹᚺ</h1>
+  <div id="titleActions"></div>
+  <p class="warn">Best with headphones. Contains flickering static, a figure that follows you, and questions about hurting people.</p>
+  <nav><a href="https://github.com/alex-gamero" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/alex-gamero" target="_blank" rel="noopener">LinkedIn</a></nav>
+</section>
+<section id="touch"><p>Nullpoint needs a keyboard and a mouse. Open it on a laptop or PC.</p></section>
+<script type="module" src="js/main.js"></script>
+</body>
 </html>

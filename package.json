@@ -1,21 +1,8 @@
 {
   "name": "nullpoint",
-  "version": "1.0.0",
-  "description": "A terminal-based web game where players input commands to progress through a story.",
-  "main": "game.js",
-  "scripts": {
-    "start": "live-server ."
-  },
-  "keywords": [
-    "game",
-    "terminal",
-    "interactive",
-    "story"
-  ],
+  "version": "2.0.0",
+  "description": "A first-person psychological horror game in your browser.",
+  "scripts": { "start": "npx live-server ." },
   "author": "Alex Gamero",
-  "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "live-server": "^1.2.1"
-  }
+  "license": "MIT"
 }

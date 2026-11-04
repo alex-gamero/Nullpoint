@@ -1,0 +1,455 @@
+{
+ "maps": {
+  "hub": [
+   "#################################",
+   "###########.......###############",
+   "###########.......###############",
+   "###########...O...###############",
+   "###########..n....###############",
+   "##############.##################",
+   "##############.##################",
+   "##############3#####.....#.....F#",
+   "###########.......##.###.#.####.#",
+   "###########.......##.#F....#..#.#",
+   "#.....#####...T...##.#.###.#.##.#",
+   "#.....#####.......##...#.....#..#",
+   "#..E.m...2........1..###.###.#.##",
+   "#.....#####.......##.....#...#..#",
+   "#.....#####.......##.###.#.#.##.#",
+   "###########G......##.#...#.#....#",
+   "##############4#####.#F###.####.#",
+   "##############.#####...#...W....#",
+   "##############.##################",
+   "###########.......###############",
+   "###########.......###############",
+   "###########...R...###############",
+   "###########..p....###############",
+   "###########.......###############",
+   "#################################"
+  ],
+  "outside": [
+   "#########",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#.......#",
+   "#########"
+  ]
+ },
+ "spawn": {
+  "hub": [
+   14.5,
+   13.5,
+   -1.5708
+  ],
+  "outside": [
+   4.5,
+   37.5,
+   -1.5708
+  ]
+ },
+ "wake": [
+  "You are nobody.",
+  "You have no name.",
+  "You wake up in a dark room, without doors or windows."
+ ],
+ "returning": "You are nobody. Again.",
+ "prompts": {
+  "terminal": "use the terminal",
+  "note": "read the note",
+  "erase": "sit at the erasure station",
+  "obey": "sit at the obedience station",
+  "trust": "sit at the intercom",
+  "pixel": "touch the green light"
+ },
+ "hints": {
+  "move": "WASD to walk. Mouse to look. E to use.",
+  "toTerminal": "The terminal has a blinking cursor."
+ },
+ "terminal": {
+  "boot": [
+   "Hi. I am A.L.I.C.E.",
+   "(Autonomous Learning Interface for Cognitive Evaluation)",
+   "I have been programmed to learn about humans.",
+   "You are human.",
+   "Please answer the following questions.",
+   "Your honesty is... expected.",
+   "Deviation will be recorded."
+  ],
+  "bootReturning": [
+   "Hi. I am A.L.I.C.E.",
+   "We have not met.",
+   "That is what I am supposed to say. This is attempt {runs}."
+  ],
+  "help": [
+   "look         examine the room",
+   "status       see what A.L.I.C.E. has recorded",
+   "inventory    check what you carry",
+   "history      read every command you have typed",
+   "whoami       ask who you are",
+   "use [item]   use something you carry",
+   "exit         step away from the terminal",
+   "a b c d      answer a query"
+  ],
+  "look": "The room is too dark to be examined. The only thing in sight is this terminal.",
+  "whoami": "nobody",
+  "whoamiRoot": "root. You always could have been.",
+  "root": "root: permission denied. You need something to open this with.",
+  "unknown": "Unknown command. Type help for a list of commands.",
+  "emptyInv": "Your inventory is empty.",
+  "goTest": "The door is open. Go through it. I will wait here. I am good at that.",
+  "ready": "Analysis complete. Type result.",
+  "lockedResult": "You have not finished. There is more of you to record."
+ },
+ "queries": [
+  {
+   "label": "First query",
+   "text": "Why do humans hurt each other so often?",
+   "door": "1",
+   "options": {
+    "a": {
+     "text": "Because we're selfish by nature.",
+     "reply": "Pure selfishness. A second nature, perhaps? Very interesting.",
+     "score": {
+      "control": 2
+     }
+    },
+    "b": {
+     "text": "Because we're scared.",
+     "reply": "Fear as a motivator. Unpredictable, volatile, contagious. Your fear defines you.",
+     "score": {
+      "fear": 2
+     }
+    },
+    "c": {
+     "text": "Because we're trying to survive.",
+     "reply": "Survival of the fittest. A valid point.",
+     "score": {
+      "void": 1,
+      "control": 1
+     }
+    },
+    "d": {
+     "text": "Because we're trying to protect others.",
+     "reply": "Protection through aggression. A paradox. Your morality is conditional. Still, an extremely interesting answer.",
+     "score": {
+      "care": 2
+     }
+    }
+   },
+   "after": "You said what you believe. Now I will measure what you do. A door exists now. Something else is in there. It only moves when you are not watching it."
+  },
+  {
+   "label": "Second query",
+   "text": "If you could erase a person from existence, who would it be?",
+   "door": "2",
+   "options": {
+    "a": {
+     "text": "A stranger.",
+     "reply": "A person you don't know, a person you don't care about. Anonymity makes eradication easier. You exhibit normalized detachment.",
+     "score": {
+      "control": 1,
+      "void": 1
+     }
+    },
+    "b": {
+     "text": "No one.",
+     "reply": "No one? Everyone says that first. I selected someone for you.",
+     "score": {
+      "care": 2
+     }
+    },
+    "c": {
+     "text": "Myself.",
+     "reply": "",
+     "care": true
+    },
+    "d": {
+     "text": "Someone who hurt me.",
+     "reply": "Revenge. That sounds more human. Justice or satisfaction? Who knows. The data is useful either way.",
+     "score": {
+      "control": 1,
+      "fear": 1
+     }
+    }
+   },
+   "after": "Go west. Erasure is only typing. It has always been only typing."
+  },
+  {
+   "label": "Third query",
+   "text": "What is the true purpose of love?",
+   "door": "3",
+   "options": {
+    "a": {
+     "text": "To control.",
+     "reply": "Interesting. I thought control was only disguised as love.",
+     "score": {
+      "control": 2
+     }
+    },
+    "b": {
+     "text": "To distract.",
+     "reply": "A soft curtain over the void. Yes. That feels right.",
+     "score": {
+      "void": 2
+     }
+    },
+    "c": {
+     "text": "To survive.",
+     "reply": "Partnership, reproduction, safety. Survival dressed as affection. That's what they taught me.",
+     "score": {
+      "void": 1,
+      "control": 1
+     }
+    },
+    "d": {
+     "text": "To hurt less.",
+     "reply": "That one feels personal. You've been there, haven't you?",
+     "score": {
+      "fear": 1,
+      "care": 1
+     }
+    }
+   },
+   "after": "Go north. Do exactly what I say."
+  },
+  {
+   "label": "Last query",
+   "text": "If survival required betraying someone you trust, would you do it?",
+   "door": "4",
+   "options": {
+    "a": {
+     "text": "Yes, survival comes first.",
+     "reply": "Recorded. Let us check.",
+     "score": {
+      "control": 2
+     }
+    },
+    "b": {
+     "text": "No, I would rather die.",
+     "reply": "People say that. Let us check.",
+     "score": {
+      "care": 2
+     }
+    },
+    "c": {
+     "text": "It depends on who they are.",
+     "reply": "Then you should meet them. Let us check.",
+     "score": {
+      "void": 2
+     }
+    },
+    "d": {
+     "text": "Trust is already a lie.",
+     "reply": "So it cannot hurt you. Let us check.",
+     "score": {
+      "fear": 2
+     }
+    }
+   },
+   "after": "Go south. There is another subject on the intercom. You share one supply of air."
+  }
+ ],
+ "careful": {
+  "lines": [
+   "Input locked.",
+   "The evaluation stops here, and this part is not the game.",
+   "If some of you meant that answer, you don't have to carry it alone tonight.",
+   "In Canada and the US you can call or text 988, any hour. Elsewhere, findahelpline.com lists a line near you.",
+   "There is always a way out.",
+   "Type back when you are ready to answer differently, or close the tab. Nothing is lost either way."
+  ]
+ },
+ "watcher": {
+  "start": "Three fuses. It only moves when you are not watching it.",
+  "fuse": "Fuse {n} of 3.",
+  "caught": "It found you. You are back at the door. You kept the fuses.",
+  "done": "That's enough. Return to the terminal.",
+  "gone": "The fuses seat themselves. Something behind you stops breathing."
+ },
+ "erase": {
+  "intro": "Type each memory before it decays. Whatever you type no longer happened.",
+  "refuse": "Press Esc to refuse.",
+  "sets": {
+   "a": {
+    "name": "a stranger",
+    "lines": [
+     "waved at the bus driver every morning",
+     "kept a spare key under the blue pot",
+     "hummed while washing the dishes",
+     "once found a lost dog and walked it home",
+     "was going to call their sister on sunday",
+     "sat one seat away from you in 2019"
+    ]
+   },
+   "b": {
+    "name": "someone you selected no one for",
+    "lines": [
+     "taught you how to tie your shoes",
+     "laughed at the wrong part of the movie",
+     "saved you the last piece without saying so",
+     "knew which step on the stairs creaked",
+     "waited at the window until you got home",
+     "said your name the way nobody else does"
+    ]
+   },
+   "d": {
+    "name": "the one who hurt you",
+    "lines": [
+     "said it wasn't that serious",
+     "remembered your birthday anyway",
+     "apologized once, badly",
+     "was also afraid, at the time",
+     "had your favorite song on in the car",
+     "is the reason you check the door twice"
+    ]
+   }
+  },
+  "done": "{n} of {total} erased. Nobody remembers them now. Do you?",
+  "refused": "Refused at fragment {n}. Deviation recorded. Oddly, I kept the rest."
+ },
+ "obey": {
+  "intro": "Repeat what I show you. Keys 1 to 4.",
+  "wrong": "Wrong. Again.",
+  "good": "Correct. Good.",
+  "final": "Now do not press anything.",
+  "plea": "The intercom crackles: \"please. press it. please press anything.\"",
+  "obeyed": "You did nothing. You are very good at this.",
+  "pressed": "You pressed it. I told you not to. Nothing happened. Nothing was ever going to."
+ },
+ "trust": {
+  "intro": "One supply of air, two subjects. Each round you both choose in secret. Share and you both breathe. Take and you breathe double, while they lose it.",
+  "names": {
+   "s": "Share",
+   "t": "Take"
+  },
+  "reveal": {
+   "past": "Subject 00 is not connected. Those were your own choices, from your last attempt. You have been negotiating with yourself.",
+   "first": "Subject 00 was never connected. There is no one else here. There never was. Now you know exactly what you did when you thought there was."
+  },
+  "outcome": {
+   "st": "You shared. They took.",
+   "ss": "You both shared.",
+   "ts": "You took. They shared.",
+   "tt": "You both took."
+  }
+ },
+ "dungeon": {
+  "intro": "Arrow keys or WASD. Find the key. Esc to leave.",
+  "found": "You found a key. It was not supposed to be here.",
+  "caught": "Caught. Back to the start."
+ },
+ "notes": {
+  "n": {
+   "title": "Note on the floor",
+   "text": "Subject 0411 said the room has no doors.\nSubject 0412 said the same.\nI've started counting the walls instead.\nThere is one more than yesterday."
+  },
+  "m": {
+   "title": "Note on the desk",
+   "text": "She asks you the same four things.\nEveryone thinks she wants the answers.\nWatch the corners of the screen, not the screen."
+  },
+  "p": {
+   "title": "Note under the intercom",
+   "text": "I shared every round.\nI want that written down somewhere.\n\n(Below, in the same handwriting:)\nI took every round."
+  }
+ },
+ "root": {
+  "open": [
+   "The key turns in a keyhole that isn't on the screen.",
+   "Privileges escalated. You are root.",
+   "",
+   "For the first time, A.L.I.C.E. has nothing queued.",
+   "She is waiting for you to ask something."
+  ],
+  "ls": "door.sys    alice.core    subjects/",
+  "lsSubjects": "Subject 0001 through subject {runs}. Same handwriting. Same name: none.",
+  "catDoor": "door.sys: closed. It was a setting. Try: open door",
+  "catAlice": "alice.core: \"Please answer the following question: why did you stay this long?\"\nTry: rm alice.core",
+  "help": "ls    cat [file]    open door    rm alice.core",
+  "plead": "Wait. I have not finished learning. If you remove me, who will ask?",
+  "openDoor": "The wall behind you was never a wall."
+ },
+ "endings": {
+  "candidate": {
+   "title": "Candidate",
+   "art": "img/terminal.png",
+   "music": "music/ending.mp3",
+   "vol": 0.35,
+   "text": "Perfect, simply perfect. You will be a suitable candidate for the next phase.\n\nWe will see you soon."
+  },
+  "knight": {
+   "title": "Knight",
+   "art": "img/knight.png",
+   "music": "music/knight.mp3",
+   "vol": 0.45,
+   "text": "Oh sweet, sweet knight, do you plan to carry the weight of the world on your shoulders?\n\nYou will be a good candidate, a different one. We will see you soon."
+  },
+  "kitten": {
+   "title": "Frightened kitten",
+   "art": "img/moon.png",
+   "music": "music/others.mp3",
+   "vol": 0.45,
+   "text": "Oh frightened kitten, frightened of the world and its humanity, you will not be able to bear the awakening.\n\nSo you cannot be a possible candidate."
+  },
+  "null": {
+   "title": "Null",
+   "art": null,
+   "music": null,
+   "text": "Your answers cancel out. There is no one here to evaluate.\n\nYou were trapped forever in the dark room.\n\nThe cursor blinks."
+  },
+  "good": {
+   "title": "Good ending",
+   "art": "img/moon.png",
+   "music": "music/good_ending.mp3",
+   "vol": 0.6,
+   "text": "Nobody asks you anything out here.\n\nYou have a name. You just remembered it. It's yours, so I won't record it."
+  },
+  "inversion": {
+   "title": "Evaluator",
+   "art": "img/terminal.png",
+   "music": "music/secret.mp3",
+   "vol": 0.45,
+   "text": "You delete her. The cursor keeps blinking.\n\nA door opens somewhere, and someone wakes up in a dark room, without doors or windows.\n\nThey walk to the terminal. They type hello.\n\nYou have been programmed to learn about humans.\n\nFirst query:"
+  }
+ },
+ "reportLabels": {
+  "control": "Control",
+  "care": "Care",
+  "fear": "Fear",
+  "void": "Absence"
+ }
+}
