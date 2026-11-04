@@ -17,20 +17,6 @@ You wake up in a dark room with no doors. An AI asks you four questions, then te
 
 ---
 
-## Features
-| | |
-|---|---|
-| 👁️ **First-person world** | A raycaster written from scratch, dithered down to the colors of the game's artwork |
-| 🧠 **V.E.R.A.** | A real terminal you type into. Your answers open doors that weren't there before |
-| 🕴️ **The Watcher** | A figure that only moves when you aren't looking at it, while you hunt for three fuses |
-| ⌨️ **Erase** | Type a person's memories out of existence before they decay, or refuse |
-| ᚠ **Obey** | A memory test that stops being one |
-| 🫁 **Trust** | Share one supply of air with another subject, who isn't who you think |
-| 🗝️ **A hidden maze** | Pay attention to anything green |
-| 🎭 **Six endings** | Decided by what you said and what you actually did. The game remembers earlier attempts |
-
----
-
 ## Screenshots
 | The room | The Watcher | An ending |
 |:---:|:---:|:---:|
