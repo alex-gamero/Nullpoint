@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assetsREADME/title.png" width="720" alt="Nullpoint title screen" />
+<a href="https://lexito-gamerito.itch.io/nullpoint"><img src="assetsREADME/banner.png" width="820" alt="Nullpoint banner with a red moon" /></a>
 
 # Nullpoint
 
@@ -27,7 +27,7 @@ You wake up in a dark room with no doors. An AI asks you four questions, then te
 ---
 
 ## How to play
-Open the **[live site](https://alex-gamero.github.io/Nullpoint/)** on a laptop or PC.
+**[Play it on itch.io](https://lexito-gamerito.itch.io/nullpoint)** on a laptop or PC, and leave a comment while you are there.
 
 | Key | What it does |
 |---|---|
