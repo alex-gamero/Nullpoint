@@ -282,7 +282,7 @@ function rootCommand(cmd) {
 function goOutside() {
   world.load(story.maps.outside, true); world.sprites = []; world.lights = [];
   world.dark = 1; world.falloff = .03; placeSpawn('outside'); setMode('outside');
-  $('lockhint').hidden = false; audio.setDrone(0); audio.play('music/good_ending.mp3', .55);
+  $('lockhint').hidden = false; audio.setDrone(0); audio.play('good');
   world.moon = new Image(); world.moon.src = 'img/moon.png';
   subtitle('Walk.', 3000);
 }
@@ -296,7 +296,7 @@ function finish(id) {
   const e = story.endings[id], score = { ...run.score };
   save.unlock(id); setMode('ending'); term.hide();
   $('stage').hidden = true; audio.setDrone(0); audio.setStatic(0);
-  if (e.music) audio.play(e.music, e.vol);
+  audio.play(e.music, e.vol);
   const el = $('ending'); el.hidden = false; el.classList.toggle('noart', !e.art);
   const max = Math.max(1, ...Object.values(score));
   const rows = Object.keys(story.reportLabels).map(k => `<dt>${story.reportLabels[k]}</dt><dd>${'█'.repeat(Math.round(score[k] / max * 12)) || '·'}</dd>`).join('');

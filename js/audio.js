@@ -1,4 +1,6 @@
-let ctx, master, drone, music, muted = false;
+import { makePlayer } from './music.js';
+
+let ctx, master, drone, player, playing = null, muted = false;
 const tone = (f, d = .12, type = 'square', v = .05, when = 0) => {
   if (!ctx) return;
   const o = ctx.createOscillator(), g = ctx.createGain(), t = ctx.currentTime + when;
@@ -38,13 +40,12 @@ export const audio = {
   melody() { [523, 659, 784, 1047].forEach((f, i) => tone(f, .25, 'square', .05, i * .14)); },
   setStatic(v) { if (this.static) this.static.gain.setTargetAtTime(muted ? 0 : v * .1, ctx.currentTime, .05); },
   setDrone(v) { if (drone) drone.gain.setTargetAtTime(v, ctx.currentTime, .6); },
-  play(src, vol = .4) {
-    this.stopMusic();
-    if (!src) return;
-    music = new Audio(src); music.loop = true; music.volume = 0;
-    music.play().catch(() => {});
-    const m = music, id = setInterval(() => { m.volume = Math.min(vol, m.volume + .02); if (m.volume >= vol) clearInterval(id); }, 80);
+  play(track, vol = 1) {
+    if (!ctx || track === playing) return;
+    player ??= makePlayer(ctx, master);
+    playing = track;
+    if (track) player.start(track, vol); else player.stop();
   },
-  stopMusic() { if (music) { music.pause(); music = null; } },
-  toggleMute() { muted = !muted; if (master) master.gain.value = muted ? 0 : 1; if (music) music.muted = muted; return muted; },
+  stopMusic() { this.play(null); },
+  toggleMute() { muted = !muted; if (master) master.gain.value = muted ? 0 : 1; return muted; },
 };

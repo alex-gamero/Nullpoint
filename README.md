@@ -43,7 +43,7 @@ At the terminal, type `help`. Progress saves automatically in your browser.
 ## 🛠️ Tech Stack
 - **HTML5, CSS3 and vanilla JavaScript.** No frameworks, no build step.
 - **Canvas 2D:** a raycaster with floor casting and ordered dithering
-- **Web Audio** for the ambience and effects
+- **Web Audio** for everything you hear: the ambience, the effects and a soundtrack written in code
 - **JSON-driven story:** every line, map and ending lives in `data/story.json`
 - **Hosting:** GitHub Pages
 
@@ -58,10 +58,10 @@ Nullpoint/
 │   ├── world.js        # Raycaster and dithering
 │   ├── terminal.js     # V.E.R.A.'s console
 │   ├── audio.js
+│   ├── music.js        # The soundtrack, generated live
 │   ├── save.js
 │   └── games/          # Erase, Obey, Trust, the maze
 ├── img/
-├── music/
 └── fonts/
 ```
 

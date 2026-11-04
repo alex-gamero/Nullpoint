@@ -407,42 +407,43 @@
   "candidate": {
    "title": "Candidate",
    "art": "img/terminal.png",
-   "music": "music/ending.mp3",
-   "vol": 0.35,
+   "music": "candidate",
+   "vol": 1,
    "text": "Perfect, simply perfect. You will be a suitable candidate for the next phase.\n\nWe will see you soon."
   },
   "knight": {
    "title": "Knight",
    "art": "img/knight.png",
-   "music": "music/knight.mp3",
-   "vol": 0.45,
+   "music": "knight",
+   "vol": 1,
    "text": "Oh sweet, sweet knight, do you plan to carry the weight of the world on your shoulders?\n\nYou will be a good candidate, a different one. We will see you soon."
   },
   "kitten": {
    "title": "Frightened kitten",
    "art": "img/moon.png",
-   "music": "music/others.mp3",
-   "vol": 0.45,
+   "music": "kitten",
+   "vol": 1,
    "text": "Oh frightened kitten, frightened of the world and its humanity, you will not be able to bear the awakening.\n\nSo you cannot be a possible candidate."
   },
   "null": {
    "title": "Null",
    "art": null,
    "music": null,
-   "text": "Your answers cancel out. There is no one here to evaluate.\n\nYou were trapped forever in the dark room.\n\nThe cursor blinks."
+   "text": "Your answers cancel out. There is no one here to evaluate.\n\nYou were trapped forever in the dark room.\n\nThe cursor blinks.",
+   "vol": 1
   },
   "good": {
    "title": "Good ending",
    "art": "img/moon.png",
-   "music": "music/good_ending.mp3",
-   "vol": 0.6,
+   "music": "good",
+   "vol": 1,
    "text": "Nobody asks you anything out here.\n\nYou have a name. You just remembered it. It's yours, so I won't record it."
   },
   "inversion": {
    "title": "Evaluator",
    "art": "img/terminal.png",
-   "music": "music/secret.mp3",
-   "vol": 0.45,
+   "music": "inversion",
+   "vol": 1,
    "text": "You delete her. The cursor keeps blinking.\n\nA door opens somewhere, and someone wakes up in a dark room, without doors or windows.\n\nThey walk to the terminal. They type hello.\n\nYou have been programmed to learn about humans.\n\nFirst query:"
   }
  },
