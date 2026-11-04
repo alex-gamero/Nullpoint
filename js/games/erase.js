@@ -23,7 +23,7 @@ export function erase(el, story, set, audio) {
       frag.textContent = ''; el.querySelector('.bar').remove(); el.querySelector('.small').remove();
       say.textContent = refused
         ? story.refused.replace('{n}', n + 1)
-        : story.done.replace('{n}', erased).replace('{total}', lines.length);
+        : (set.done || story.done).replace('{n}', erased).replace('{total}', lines.length);
       setTimeout(() => resolve({ erased, refused }), 3600);
     };
     const key = e => {
@@ -42,8 +42,8 @@ export function erase(el, story, set, audio) {
     const tick = t => {
       if (done) return;
       const dt = (t - last) / 1000; last = t;
-      left -= dt / 13;
-      if (Math.random() < dt * 1.4) corrupt.add(typed + (Math.random() * (lines[n].length - typed) | 0));
+      left -= dt / 17;
+      if (Math.random() < dt * 1) corrupt.add(typed + (Math.random() * (lines[n].length - typed) | 0));
       if (left <= 0) next(); else draw();
       if (!done) raf = requestAnimationFrame(tick);
     };

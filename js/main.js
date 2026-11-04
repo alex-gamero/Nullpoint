@@ -258,7 +258,6 @@ function command(raw) {
 }
 async function answer(a) {
   const q = story.queries[run.q], o = q.options[a];
-  if (o.rejected) { term.print(o.reply); askQuery(); return; }
   run.answers[run.q] = a; add(o.score);
   term.print(o.reply);
   term.print('... ');

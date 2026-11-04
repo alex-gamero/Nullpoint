@@ -194,8 +194,10 @@
     },
     "c": {
      "text": "Myself.",
-     "reply": "Target rejected. A subject cannot be its own target: the evaluation requires you. Select again.",
-     "rejected": true
+     "reply": "Target: self. Request accepted. Your own records are queued for deletion.",
+     "score": {
+      "void": 2
+     }
     },
     "d": {
      "text": "Someone who hurt me.",
@@ -324,6 +326,18 @@
      "had your favorite song on in the car",
      "is the reason you check the door twice"
     ]
+   },
+   "c": {
+    "name": "yourself",
+    "lines": [
+     "learned to whistle in the back of a car",
+     "still knows the old phone number by heart",
+     "made someone laugh until they choked",
+     "was owed a phone call by an old friend",
+     "left a jacket at their place on purpose",
+     "is the only one who remembers that joke"
+    ],
+    "done": "{n} of {total} fragments deleted. Deletion incomplete: copies of this record exist in other people. They cannot be reached from here."
    }
   },
   "done": "{n} of {total} fragments deleted. Target has no remaining record.",
