@@ -7,7 +7,7 @@
 **A first-person psychological horror game that runs in your browser.**
 You wake up in a dark room with no doors. An AI asks you four questions, then tests whether you meant your answers.
 
-**Live Site:** [https://alex-gamero.github.io/Nullpoint/](https://alex-gamero.github.io/Nullpoint/)
+**Live site on itch.io:** [lexito-gamerito.itch.io/nullpoint](https://lexito-gamerito.itch.io/nullpoint)
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
