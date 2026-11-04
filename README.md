@@ -95,9 +95,3 @@ You need a local server because the game loads `story.json` with `fetch`.
 
 ## Contributing
 Got an idea or found a bug? Open an **issue** or submit a **pull request**!
-
-<div align="center">
-
-Made with 🖤 by [Alex Gamero](https://github.com/alex-gamero) · Ottawa 🍁
-
-</div>
