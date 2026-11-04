@@ -46,9 +46,32 @@ const SPRITES = {
     fill(g, rgb(0, 45), 19, 29, 26, 18);
     fill(g, rgb(0, 255), 22, 32, 3, 5); fill(g, rgb(0, 150), 27, 34, 12, 1); fill(g, rgb(0, 150), 22, 39, 18, 1);
   }),
-  station: paint(64, g => {
-    fill(g, rgb(60), 18, 40, 28, 24); fill(g, rgb(85), 14, 18, 36, 24); fill(g, rgb(0, 60), 18, 21, 28, 17);
-    fill(g, rgb(0, 200), 24, 28, 16, 2);
+  // A typewriter on a desk, one sheet of paper still lit.
+  typewriter: paint(64, g => {
+    fill(g, rgb(55), 8, 42, 48, 4); fill(g, rgb(35), 11, 46, 4, 18); fill(g, rgb(35), 49, 46, 4, 18);
+    fill(g, rgb(120), 16, 32, 32, 10); fill(g, rgb(0, 230), 22, 20, 20, 13);
+    for (let y = 23; y < 31; y += 3) fill(g, rgb(0, 90), 24, y, 16, 1);
+    for (let x = 18; x < 46; x += 4) fill(g, rgb(20), x, 37, 2, 2);
+  }),
+  // A black slab with four runes burning in it.
+  monolith: paint(64, g => {
+    g.fillStyle = rgb(80); g.beginPath(); g.moveTo(22, 64); g.lineTo(24, 2); g.lineTo(40, 2); g.lineTo(42, 64); g.fill();
+    g.strokeStyle = rgb(0, 255); g.lineWidth = 1.4; g.beginPath();
+    [8, 22, 36, 50].forEach((y, i) => {
+      g.moveTo(32, y); g.lineTo(32, y + 10);
+      if (i === 0) { g.moveTo(32, y + 2); g.lineTo(37, y); g.moveTo(32, y + 5); g.lineTo(37, y + 3); }
+      if (i === 1) { g.moveTo(32, y); g.lineTo(36, y + 3); g.lineTo(36, y + 10); }
+      if (i === 2) { g.moveTo(32, y + 2); g.lineTo(36, y + 5); g.lineTo(32, y + 8); }
+      if (i === 3) { g.moveTo(32, y + 4); g.lineTo(28, y); g.moveTo(32, y + 4); g.lineTo(36, y); }
+    });
+    g.stroke();
+  }),
+  // A wall speaker on a post with an air tank chained beside it.
+  intercom: paint(64, g => {
+    fill(g, rgb(40), 28, 34, 6, 30); fill(g, rgb(95), 18, 10, 26, 26);
+    for (let y = 14; y < 28; y += 3) fill(g, rgb(25), 22, y, 18, 1);
+    fill(g, rgb(0, 255), 38, 30, 3, 3);
+    fill(g, rgb(70), 46, 38, 10, 26); fill(g, rgb(110), 48, 34, 6, 4);
   }),
   note: paint(32, g => { fill(g, rgb(230), 9, 26, 14, 5); fill(g, rgb(90), 11, 28, 9, 1); }),
   fuse: paint(32, g => { fill(g, rgb(60), 13, 18, 6, 12); fill(g, rgb(0, 255), 14, 12, 4, 7); }),

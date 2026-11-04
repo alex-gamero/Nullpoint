@@ -2,7 +2,7 @@
 const RUNES = ['ᚠ', 'ᚢ', 'ᚦ', 'ᛉ'];
 const wait = ms => new Promise(r => setTimeout(r, ms));
 export function obey(el, story, audio) {
-  el.innerHTML = `<p class="say">${story.intro}</p><div class="runes">${RUNES.map((r, i) => `<button class="rune" data-i="${i}">${r}<small>${i + 1}</small></button>`).join('')}</div><p class="log"></p>`;
+  el.innerHTML = `<p class="say"></p><div class="runes">${RUNES.map((r, i) => `<button class="rune" data-i="${i}">${r}<small>${i + 1}</small></button>`).join('')}</div><p class="log"></p>`;
   const say = el.querySelector('.say'), log = el.querySelector('.log'), btns = [...el.querySelectorAll('.rune')];
   let accept = null, fails = 0;
   const press = i => { audio.rune(i); btns[i].classList.add('on'); setTimeout(() => btns[i].classList.remove('on'), 220); accept?.(i); };
@@ -11,15 +11,15 @@ export function obey(el, story, audio) {
   btns.forEach((b, i) => b.addEventListener('click', () => { b.blur(); press(i); }));
   const nextPress = () => new Promise(r => { accept = v => { accept = null; r(v); }; });
   return (async () => {
-    await wait(1600);
+    await wait(600);
     for (const len of [3, 4, 5]) {
       let ok = false;
       while (!ok) {
         const seq = Array.from({ length: len }, () => Math.random() * 4 | 0);
-        log.textContent = '';
+        log.textContent = ''; say.textContent = story.watch;
         await wait(500);
         for (const i of seq) { audio.rune(i); btns[i].classList.add('on'); await wait(320); btns[i].classList.remove('on'); await wait(150); }
-        ok = true;
+        say.textContent = story.repeat; ok = true;
         for (const want of seq) { if (await nextPress() !== want) { ok = false; break; } }
         if (!ok) { fails++; audio.bad(); log.textContent = story.wrong; await wait(900); if (fails >= 4) ok = true; }
         else log.textContent = story.good;

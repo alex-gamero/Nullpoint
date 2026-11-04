@@ -6,6 +6,7 @@ import { erase } from './games/erase.js';
 import { obey } from './games/obey.js';
 import { trust } from './games/trust.js';
 import { dungeon } from './games/dungeon.js';
+import { brief } from './games/brief.js';
 
 const $ = id => document.getElementById(id);
 const story = await (await fetch('data/story.json')).json();
@@ -25,14 +26,14 @@ const subtitle = (text, ms = 4500) => {
   const el = $('subtitle'); el.textContent = text; clearTimeout(subtitle.t);
   if (ms) subtitle.t = setTimeout(() => { el.textContent = ''; }, ms);
 };
-const SPR = { O: ['obey', 'station'], E: ['erase', 'station'], R: ['trust', 'station'] };
+const SPR = { O: ['obey', 'monolith'], E: ['erase', 'typewriter'], R: ['trust', 'intercom'] };
 function loadHub() {
   world.load(story.maps.hub);
   world.sprites = []; world.lights = [];
   world.rows.forEach((r, y) => r.forEach((c, x) => {
     const at = { x: x + .5, y: y + .5 };
     if (c === 'T') { world.sprites.push({ ...at, id: 'terminal', sprite: 'terminal', block: true, glow: .15 }); world.lights.push({ ...at, i: .55, k: .55 }); }
-    if (SPR[c]) { world.sprites.push({ ...at, id: SPR[c][0], sprite: 'station', block: true, glow: .1 }); world.lights.push({ ...at, i: .3, k: .8 }); }
+    if (SPR[c]) { world.sprites.push({ ...at, id: SPR[c][0], sprite: SPR[c][1], block: true, glow: .1 }); world.lights.push({ ...at, i: .3, k: .8 }); }
     if ('nmp'.includes(c)) world.sprites.push({ ...at, id: 'note', note: c, sprite: 'note', scale: .6 });
     if (c === 'G') world.sprites.push({ ...at, id: 'pixel', sprite: 'pixel', scale: .5 });
     if (c === 'F') world.sprites.push({ ...at, id: 'fuse', sprite: 'fuse', scale: .45, hidden: true, glow: .9 });
@@ -91,8 +92,9 @@ function startHunt() {
   hunt = { w, got: 0, caught: 0, stared: 0, path: null, repath: 0 };
   w.hidden = false; w.x = w.home.x; w.y = w.home.y;
   world.sprites.filter(s => s.id === 'fuse').forEach(s => { s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4 }); });
-  subtitle(story.watcher.start, 6000);
   $('hud').textContent = '0 of 3';
+  const box = $('brief'); box.hidden = false; mode = 'brief'; keys.clear();
+  brief(box, story.briefs.watcher, story.briefStart).then(() => { box.hidden = true; box.innerHTML = ''; mode = 'world'; last = performance.now(); subtitle(story.watcher.start); });
 }
 function nextStep(from, to) {
   const key = (x, y) => y * 64 + x, sx = from.x | 0, sy = from.y | 0, tx = to.x | 0, ty = to.y | 0;
@@ -161,7 +163,7 @@ function completeTest() {
 /* ---------- stations ---------- */
 function setMode(m) {
   mode = m; keys.clear();
-  if (m !== 'world' && m !== 'outside' && document.pointerLockElement) document.exitPointerLock();
+  if (m !== 'world' && m !== 'outside' && m !== 'brief' && document.pointerLockElement) document.exitPointerLock();
   $('prompt').textContent = '';
   game.hidden = m !== 'game';
   $('note').hidden = m !== 'note';
@@ -172,6 +174,7 @@ async function station(id) {
   const want = { erase: 1, obey: 2, trust: 3 }[id];
   if (run.q !== want || run.stage !== 'test') return subtitle('It is switched off.', 2000);
   setMode('game');
+  await brief(game, story.briefs[id], story.briefStart);
   if (id === 'erase') {
     const a = run.answers[1]; const r = await erase(game, story.erase, story.erase.sets[a] || story.erase.sets.a, audio);
     add(r.refused ? { care: 3 } : r.erased >= 4 ? { control: 2 } : { void: 1 });
@@ -189,6 +192,7 @@ async function station(id) {
 async function secret() {
   if (run.inventory.includes('key') || run.flags.keyFound) return subtitle('Nothing else is here.', 2000);
   const from = mode; setMode('game');
+  await brief(game, story.briefs.dungeon, story.briefStart);
   const r = await dungeon(game, story.dungeon, audio);
   game.innerHTML = '';
   if (r.found) { run.flags.keyFound = true; run.inventory.push('key'); save.write(); }
@@ -278,9 +282,9 @@ function rootCommand(cmd) {
   if (cmd === 'ls') return term.print(r.ls, 'root');
   if (cmd === 'ls subjects' || cmd === 'ls subjects/' || cmd === 'cat subjects') return term.print(r.lsSubjects.replace('{runs}', String(410 + save.data.meta.runs).padStart(4, '0')), 'root');
   if (cmd === 'cat door.sys') return term.print(r.catDoor, 'root');
-  if (cmd === 'cat alice.core') return term.print(r.catAlice, 'root');
+  if (cmd === 'cat vera.core') return term.print(r.catCore, 'root');
   if (cmd === 'open door') { term.print(r.openDoor, 'root'); return setTimeout(goOutside, 1800); }
-  if (cmd === 'rm alice.core' || cmd === 'rm alice') {
+  if (cmd === 'rm vera.core' || cmd === 'rm vera') {
     if (!confirmRm) { confirmRm = true; return term.print(r.plead, 'sys'); }
     return finish('inversion');
   }
@@ -339,7 +343,7 @@ document.addEventListener('pointerlockchange', () => {
   else if (mode === 'world' || mode === 'outside') $('lockhint').hidden = false;
 });
 document.addEventListener('mousemove', e => {
-  if (document.pointerLockElement !== canvas) return;
+  if (document.pointerLockElement !== canvas || mode === 'brief') return;
   world.p.a += e.movementX * SENS;
   world.p.pitch = Math.max(-45, Math.min(45, world.p.pitch - e.movementY * .22));
 });
@@ -349,7 +353,7 @@ term.onCommand = command;
 function loop(t) {
   const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
   if (mode === 'world' || mode === 'outside') { update(dt); world.render(t / 1000); }
-  else if (mode === 'note') world.render(t / 1000);
+  else if (mode === 'note' || mode === 'brief') world.render(t / 1000);
   requestAnimationFrame(loop);
 }
 

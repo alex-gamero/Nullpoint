@@ -3,7 +3,7 @@ const ROUNDS = 5;
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const bar = n => '█'.repeat(Math.max(0, n)) + '░'.repeat(Math.max(0, 12 - n));
 export function trust(el, story, past, audio) {
-  el.innerHTML = `<p class="say">${story.intro}</p><div class="air"><span>You</span><span class="me"></span><span>Subject 00</span><span class="them"></span></div><p class="log"></p><div class="choices"><button data-c="s">S: ${story.names.s}</button><button data-c="t">T: ${story.names.t}</button></div><p class="small"></p>`;
+  el.innerHTML = `<p class="say"></p><div class="air"><span>You</span><span class="me"></span><span>Subject 00</span><span class="them"></span></div><p class="log"></p><div class="choices"><button data-c="s">S: ${story.names.s}</button><button data-c="t">T: ${story.names.t}</button></div><p class="small"></p>`;
   const $ = q => el.querySelector(q);
   let me = 6, them = 6, pick = null;
   const draw = () => { $('.me').textContent = bar(me); $('.them').textContent = bar(them); };

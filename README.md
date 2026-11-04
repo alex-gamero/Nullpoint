@@ -21,7 +21,7 @@ You wake up in a dark room with no doors. An AI asks you four questions, then te
 | | |
 |---|---|
 | 👁️ **First-person world** | A raycaster written from scratch, dithered down to the colors of the game's artwork |
-| 🧠 **A.L.I.C.E.** | A real terminal you type into. Your answers open doors that weren't there before |
+| 🧠 **V.E.R.A.** | A real terminal you type into. Your answers open doors that weren't there before |
 | 🕴️ **The Watcher** | A figure that only moves when you aren't looking at it, while you hunt for three fuses |
 | ⌨️ **Erase** | Type a person's memories out of existence before they decay, or refuse |
 | ᚠ **Obey** | A memory test that stops being one |
@@ -68,7 +68,7 @@ Nullpoint/
 ├── js/
 │   ├── main.js         # Game flow, commands, the Watcher
 │   ├── world.js        # Raycaster and dithering
-│   ├── terminal.js     # A.L.I.C.E.'s console
+│   ├── terminal.js     # V.E.R.A.'s console
 │   ├── audio.js
 │   ├── save.js
 │   └── games/          # Erase, Obey, Trust, the maze
@@ -89,9 +89,3 @@ The game loads modules and `story.json`, so it needs a local server. Live Server
 
 ## Contributing
 Got an idea or found a bug? Open an **issue** or submit a **pull request**!
-
-<div align="center">
-
-Made with 🖤 by [Alex Gamero](https://github.com/alex-gamero)
-
-</div>

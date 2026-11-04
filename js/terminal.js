@@ -1,4 +1,4 @@
-// The A.L.I.C.E. console: typed output with skip, a plain input line, a command callback.
+// The V.E.R.A. console: typed output with skip, a plain input line, a command callback.
 export class Terminal {
   constructor(root, onKey) {
     this.root = root; this.out = root.querySelector('#out'); this.input = root.querySelector('#in');

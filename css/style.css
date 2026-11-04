@@ -45,7 +45,7 @@ a{color:inherit}
 #game .air{display:grid;grid-template-columns:auto auto;gap:.1em 1em;text-align:left;color:var(--ember)}
 #game .choices{display:flex;gap:2em;font-size:1.3em}
 #game .log{color:var(--dust);min-height:1.4em}
-#game pre{font:inherit;line-height:1;margin:0;color:var(--secret);font-size:clamp(14px,1.45vw,22px)}
+#game canvas{width:min(92vw,calc((100vh - 120px)*61/31));image-rendering:pixelated;display:block}
 #game.green .say{color:var(--secret)}
 #ending{background:var(--ink);overflow-y:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
 #ending .art{background-size:cover;background-position:center;image-rendering:pixelated;min-height:100%}
@@ -68,3 +68,10 @@ a{color:inherit}
 @media (pointer:coarse) and (max-width:900px){#touch{display:flex}}
 @media (max-width:760px){#ending{grid-template-columns:1fr}#ending .art{min-height:40vh}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#brief{position:absolute;inset:0;background:rgba(13,13,20,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:clamp(22px,1.9vw,30px)}
+.brief{width:min(36em,88vw);text-align:left;display:flex;flex-direction:column;gap:.7em}
+.brief h2{font-size:clamp(48px,6vw,84px);line-height:1;font-weight:400;color:var(--red);margin:0}
+.brief .voice{color:var(--ember);margin:0}
+.brief ul{list-style:none;margin:.3em 0;padding:0;color:var(--bone)}
+.brief li{margin-bottom:.45em}
+.brief button{align-self:flex-start;background:var(--bone);color:var(--ink);margin-top:.4em}

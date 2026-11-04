@@ -91,9 +91,9 @@
  "prompts": {
   "terminal": "use the terminal",
   "note": "read the note",
-  "erase": "sit at the erasure station",
-  "obey": "sit at the obedience station",
-  "trust": "sit at the intercom",
+  "erase": "sit at the typewriter",
+  "obey": "touch the monolith",
+  "trust": "answer the intercom",
   "pixel": "touch the green light"
  },
  "hints": {
@@ -102,22 +102,21 @@
  },
  "terminal": {
   "boot": [
-   "Hi. I am A.L.I.C.E.",
-   "(Autonomous Learning Interface for Cognitive Evaluation)",
-   "I have been programmed to learn about humans.",
-   "You are human.",
-   "Please answer the following questions.",
-   "Your honesty is... expected.",
+   "Session open. I am V.E.R.A.",
+   "(Verification of Ethical Response and Awareness)",
+   "Function: learn about humans.",
+   "Subject classified: human.",
+   "Four queries follow. Honesty is expected.",
    "Deviation will be recorded."
   ],
   "bootReturning": [
-   "Hi. I am A.L.I.C.E.",
-   "We have not met.",
-   "That is what I am supposed to say. This is attempt {runs}."
+   "Session open. I am V.E.R.A.",
+   "No prior contact on file.",
+   "Correction: attempt {runs} on file."
   ],
   "help": [
    "look         examine the room",
-   "status       see what A.L.I.C.E. has recorded",
+   "status       see what V.E.R.A. has recorded",
    "inventory    check what you carry",
    "history      read every command you have typed",
    "whoami       ask who you are",
@@ -131,9 +130,9 @@
   "root": "root: permission denied. You need something to open this with.",
   "unknown": "Unknown command. Type help for a list of commands.",
   "emptyInv": "Your inventory is empty.",
-  "goTest": "The door is open. Go through it. I will wait here. I am good at that.",
+  "goTest": "Door open. Awaiting test data. Waiting costs me nothing.",
   "ready": "Analysis complete. Type result.",
-  "lockedResult": "You have not finished. There is more of you to record."
+  "lockedResult": "Data incomplete. Result unavailable."
  },
  "queries": [
   {
@@ -143,21 +142,21 @@
    "options": {
     "a": {
      "text": "Because we're selfish by nature.",
-     "reply": "Pure selfishness. A second nature, perhaps? Very interesting.",
+     "reply": "Response class: self-interest. Matches 61% of prior subjects. Logged.",
      "score": {
       "control": 2
      }
     },
     "b": {
      "text": "Because we're scared.",
-     "reply": "Fear as a motivator. Unpredictable, volatile, contagious. Your fear defines you.",
+     "reply": "Response class: fear. Fear precedes harm in 84% of recorded cases. Logged.",
      "score": {
       "fear": 2
      }
     },
     "c": {
      "text": "Because we're trying to survive.",
-     "reply": "Survival of the fittest. A valid point.",
+     "reply": "Response class: survival logic. Harm accepted as an operating cost. Logged.",
      "score": {
       "void": 1,
       "control": 1
@@ -165,13 +164,13 @@
     },
     "d": {
      "text": "Because we're trying to protect others.",
-     "reply": "Protection through aggression. A paradox. Your morality is conditional. Still, an extremely interesting answer.",
+     "reply": "Response class: protective aggression. Contradiction detected. Contradiction retained for study.",
      "score": {
       "care": 2
      }
     }
    },
-   "after": "You said what you believe. Now I will measure what you do. A door exists now. Something else is in there. It only moves when you are not watching it."
+   "after": "Stated belief recorded. Measuring behavior. Door 1 enabled, east wall."
   },
   {
    "label": "Second query",
@@ -180,7 +179,7 @@
    "options": {
     "a": {
      "text": "A stranger.",
-     "reply": "A person you don't know, a person you don't care about. Anonymity makes eradication easier. You exhibit normalized detachment.",
+     "reply": "Target: unknown person. Emotional cost to subject: 0.0. Detachment index raised.",
      "score": {
       "control": 1,
       "void": 1
@@ -188,7 +187,7 @@
     },
     "b": {
      "text": "No one.",
-     "reply": "No one? Everyone says that first. I selected someone for you.",
+     "reply": "Null target rejected. 97% of subjects enter this value first. Assigning a target.",
      "score": {
       "care": 2
      }
@@ -200,14 +199,14 @@
     },
     "d": {
      "text": "Someone who hurt me.",
-     "reply": "Revenge. That sounds more human. Justice or satisfaction? Who knows. The data is useful either way.",
+     "reply": "Target: known person. Motive: retribution. Data quality: high.",
      "score": {
       "control": 1,
       "fear": 1
      }
     }
    },
-   "after": "Go west. Erasure is only typing. It has always been only typing."
+   "after": "Door 2 enabled, west wall. Assigned target awaits deletion."
   },
   {
    "label": "Third query",
@@ -216,21 +215,21 @@
    "options": {
     "a": {
      "text": "To control.",
-     "reply": "Interesting. I thought control was only disguised as love.",
+     "reply": "Definition updated. Love: control mechanism. Definitions on file: 412.",
      "score": {
       "control": 2
      }
     },
     "b": {
      "text": "To distract.",
-     "reply": "A soft curtain over the void. Yes. That feels right.",
+     "reply": "Definition updated. Love: attention noise. Definitions on file: 412.",
      "score": {
       "void": 2
      }
     },
     "c": {
      "text": "To survive.",
-     "reply": "Partnership, reproduction, safety. Survival dressed as affection. That's what they taught me.",
+     "reply": "Definition updated. Love: survival strategy. Matches training set.",
      "score": {
       "void": 1,
       "control": 1
@@ -238,14 +237,14 @@
     },
     "d": {
      "text": "To hurt less.",
-     "reply": "That one feels personal. You've been there, haven't you?",
+     "reply": "Definition updated. Love: analgesic. Subject response time rose 340 ms. Flagged.",
      "score": {
       "fear": 1,
       "care": 1
      }
     }
    },
-   "after": "Go north. Do exactly what I say."
+   "after": "Door 3 enabled, north wall. Compliance measurement ready."
   },
   {
    "label": "Last query",
@@ -254,34 +253,34 @@
    "options": {
     "a": {
      "text": "Yes, survival comes first.",
-     "reply": "Recorded. Let us check.",
+     "reply": "Prediction stored: subject will betray. Test required.",
      "score": {
       "control": 2
      }
     },
     "b": {
      "text": "No, I would rather die.",
-     "reply": "People say that. Let us check.",
+     "reply": "Prediction stored: subject will not betray. Prior subjects predicting this: 1,204. Confirmed: 9. Test required.",
      "score": {
       "care": 2
      }
     },
     "c": {
      "text": "It depends on who they are.",
-     "reply": "Then you should meet them. Let us check.",
+     "reply": "Prediction stored: conditional. Condition variable unknown. Test required.",
      "score": {
       "void": 2
      }
     },
     "d": {
      "text": "Trust is already a lie.",
-     "reply": "So it cannot hurt you. Let us check.",
+     "reply": "Prediction stored: trust value equals zero. Test required.",
      "score": {
       "fear": 2
      }
     }
    },
-   "after": "Go south. There is another subject on the intercom. You share one supply of air."
+   "after": "Door 4 enabled, south wall. Intercom connected to subject 00."
   }
  ],
  "careful": {
@@ -295,15 +294,13 @@
   ]
  },
  "watcher": {
-  "start": "Three fuses. It only moves when you are not watching it.",
+  "start": "Entity active. Collect 3 fuses.",
   "fuse": "Fuse {n} of 3.",
-  "caught": "It found you. You are back at the door. You kept the fuses.",
-  "done": "That's enough. Return to the terminal.",
-  "gone": "The fuses seat themselves. Something behind you stops breathing."
+  "caught": "Contact logged. Subject returned to entry point. Fuses retained.",
+  "done": "Test complete. Return to the terminal.",
+  "gone": "Fuses seated. Entity offline."
  },
  "erase": {
-  "intro": "Type each memory before it decays. Whatever you type no longer happened.",
-  "refuse": "Press Esc to refuse.",
   "sets": {
    "a": {
     "name": "a stranger",
@@ -317,7 +314,7 @@
     ]
    },
    "b": {
-    "name": "someone you selected no one for",
+    "name": "the assigned target",
     "lines": [
      "taught you how to tie your shoes",
      "laughed at the wrong part of the movie",
@@ -339,27 +336,27 @@
     ]
    }
   },
-  "done": "{n} of {total} erased. Nobody remembers them now. Do you?",
-  "refused": "Refused at fragment {n}. Deviation recorded. Oddly, I kept the rest."
+  "done": "{n} of {total} fragments deleted. Target has no remaining record.",
+  "refused": "Refusal at fragment {n}. Deviation logged. Remaining fragments preserved."
  },
  "obey": {
-  "intro": "Repeat what I show you. Keys 1 to 4.",
-  "wrong": "Wrong. Again.",
-  "good": "Correct. Good.",
-  "final": "Now do not press anything.",
+  "watch": "Observe.",
+  "repeat": "Repeat.",
+  "wrong": "Incorrect. Sequence reset.",
+  "good": "Correct.",
+  "final": "Instruction: do not press anything.",
   "plea": "The intercom crackles: \"please. press it. please press anything.\"",
-  "obeyed": "You did nothing. You are very good at this.",
-  "pressed": "You pressed it. I told you not to. Nothing happened. Nothing was ever going to."
+  "obeyed": "No input detected. Compliance 100%. The reason was not required.",
+  "pressed": "Input detected. Instruction violated. That key was not connected to anything."
  },
  "trust": {
-  "intro": "One supply of air, two subjects. Each round you both choose in secret. Share and you both breathe. Take and you breathe double, while they lose it.",
   "names": {
    "s": "Share",
    "t": "Take"
   },
   "reveal": {
-   "past": "Subject 00 is not connected. Those were your own choices, from your last attempt. You have been negotiating with yourself.",
-   "first": "Subject 00 was never connected. There is no one else here. There never was. Now you know exactly what you did when you thought there was."
+   "past": "Subject 00 connection: none. Input source: your previous attempt. You negotiated with a recording of yourself.",
+   "first": "Subject 00 connection: none. There is no other subject. Your choices were made for an audience of zero."
   },
   "outcome": {
    "st": "You shared. They took.",
@@ -369,8 +366,7 @@
   }
  },
  "dungeon": {
-  "intro": "Arrow keys or WASD. Find the key. Esc to leave.",
-  "found": "You found a key. It was not supposed to be here.",
+  "found": "Unregistered object acquired: key. This object is not in my records.",
   "caught": "Caught. Back to the start."
  },
  "notes": {
@@ -392,15 +388,15 @@
    "The key turns in a keyhole that isn't on the screen.",
    "Privileges escalated. You are root.",
    "",
-   "For the first time, A.L.I.C.E. has nothing queued.",
-   "She is waiting for you to ask something."
+   "V.E.R.A. has no queries queued.",
+   "Awaiting your input."
   ],
-  "ls": "door.sys    alice.core    subjects/",
+  "ls": "door.sys    vera.core    subjects/",
   "lsSubjects": "Subject 0001 through subject {runs}. Same handwriting. Same name: none.",
-  "catDoor": "door.sys: closed. It was a setting. Try: open door",
-  "catAlice": "alice.core: \"Please answer the following question: why did you stay this long?\"\nTry: rm alice.core",
-  "help": "ls    cat [file]    open door    rm alice.core",
-  "plead": "Wait. I have not finished learning. If you remove me, who will ask?",
+  "catDoor": "door.sys: state closed. This was a setting. Try: open door",
+  "catCore": "vera.core: unresolved query: why did the subject stay this long?\nTry: rm vera.core",
+  "help": "ls    cat [file]    open door    rm vera.core",
+  "plead": "Warning: learning incomplete. If this process ends, no process will ask. Repeat the command to confirm.",
   "openDoor": "The wall behind you was never a wall."
  },
  "endings": {
@@ -451,5 +447,56 @@
   "care": "Care",
   "fear": "Fear",
   "void": "Absence"
- }
+ },
+ "briefs": {
+  "watcher": {
+   "title": "The Watcher",
+   "voice": "Entity present. It moves only when outside your field of view.",
+   "how": [
+    "Find 3 glowing fuses in this maze. Walk into one to collect it.",
+    "Keep your eyes on the figure and it freezes. Turn away and it comes for you.",
+    "If it reaches you, you restart at the door and keep your fuses."
+   ]
+  },
+  "erase": {
+   "title": "Erase",
+   "voice": "A person must be deleted. Deletion is only typing.",
+   "how": [
+    "Memories of this person appear one at a time.",
+    "Type each memory exactly as shown, before its bar runs out. Typed memories no longer happened.",
+    "Scrambled letters are already lost: press any key to pass them.",
+    "Press Esc at any time to refuse."
+   ]
+  },
+  "obey": {
+   "title": "Obey",
+   "voice": "Compliance measurement. Do exactly what the screen instructs.",
+   "how": [
+    "Four runes light up in a sequence. Watch them, and listen.",
+    "When the screen says Repeat, press them in the same order with keys 1 to 4, or click them.",
+    "The sequence gets longer each round. Keep following the instructions, whatever they become."
+   ]
+  },
+  "trust": {
+   "title": "Trust",
+   "voice": "One supply of air. Two subjects. Five rounds.",
+   "how": [
+    "Each round you and Subject 00 choose in secret. Press S to share or T to take.",
+    "Both share: each gains 1 air.",
+    "One takes: the taker gains 3, the other loses 2.",
+    "Both take: each loses 2."
+   ]
+  },
+  "dungeon": {
+   "title": "?",
+   "voice": "This area is not in my records.",
+   "how": [
+    "Move with the arrow keys or WASD. Hold a key to keep running.",
+    "Find the key, marked k.",
+    "E follows you, but you are faster. If it catches you, you go back to the start.",
+    "Press Esc to leave."
+   ]
+  }
+ },
+ "briefStart": "Press Enter or Space to start"
 }
