@@ -231,11 +231,6 @@ function command(raw) {
   const cmd = raw.toLowerCase().replace(/\s+/g, ' ');
   run.history.push(cmd); term.echo(raw);
   if (rootMode) return rootCommand(cmd);
-  if (run.stage === 'care') {
-    if (cmd === 'back') { run.stage = 'query'; term.clear(); askQuery(); }
-    else term.print(story.careful.lines[5]);
-    return;
-  }
   const t = story.terminal;
   if (cmd === 'help') return t.help.forEach(l => term.print(l));
   if (cmd === 'look') return term.print(t.look);
@@ -263,11 +258,7 @@ function command(raw) {
 }
 async function answer(a) {
   const q = story.queries[run.q], o = q.options[a];
-  if (o.care) {
-    run.stage = 'care'; term.clear();
-    story.careful.lines.forEach(l => term.print(l, 'sys'));
-    return;
-  }
+  if (o.rejected) { term.print(o.reply); askQuery(); return; }
   run.answers[run.q] = a; add(o.score);
   term.print(o.reply);
   term.print('... ');

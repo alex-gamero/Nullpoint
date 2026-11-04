@@ -194,8 +194,8 @@
     },
     "c": {
      "text": "Myself.",
-     "reply": "",
-     "care": true
+     "reply": "Target rejected. A subject cannot be its own target: the evaluation requires you. Select again.",
+     "rejected": true
     },
     "d": {
      "text": "Someone who hurt me.",
@@ -283,16 +283,6 @@
    "after": "Door 4 enabled, south wall. Intercom connected to subject 00."
   }
  ],
- "careful": {
-  "lines": [
-   "Input locked.",
-   "The evaluation stops here, and this part is not the game.",
-   "If some of you meant that answer, you don't have to carry it alone tonight.",
-   "In Canada and the US you can call or text 988, any hour. Elsewhere, findahelpline.com lists a line near you.",
-   "There is always a way out.",
-   "Type back when you are ready to answer differently, or close the tab. Nothing is lost either way."
-  ]
- },
  "watcher": {
   "start": "Entity active. Collect 3 fuses.",
   "fuse": "Fuse {n} of 3.",
