@@ -486,16 +486,6 @@
     "One takes: the taker gains 3, the other loses 2.",
     "Both take: each loses 2."
    ]
-  },
-  "dungeon": {
-   "title": "?",
-   "voice": "This area is not in my records.",
-   "how": [
-    "Move with the arrow keys or WASD. Hold a key to keep running.",
-    "Find the key, marked k.",
-    "E follows you, but you are faster. If it catches you, you go back to the start.",
-    "Press Esc to leave."
-   ]
   }
  },
  "briefStart": "Press Enter or Space to start"

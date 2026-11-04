@@ -2,7 +2,7 @@
 // so what chases you can always be outrun.
 const CW = 20, CH = 10, COLS = CW * 3 + 1, ROWS = CH * 3 + 1, T = 16;
 const NEAR = 7, FAR = 16, RUN = 125, FOE_STEP = 300, CHASE = 20;
-const WALL = '#48ee82', OLD = '#1b6a3e', FLOOR = '#10241c', BG = '#0d0d14', FOE = '#e0705a', KEY = '#e9c9b4';
+const WALL = '#48ee82', OLD = '#1b6a3e', FLOOR = '#10241c', BG = '#0d0d14', FOE = '#e0705a', KEY = '#ffd93b';
 const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
 function rng(s) { return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
 function build() {

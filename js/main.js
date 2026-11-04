@@ -192,7 +192,6 @@ async function station(id) {
 async function secret() {
   if (run.inventory.includes('key') || run.flags.keyFound) return subtitle('Nothing else is here.', 2000);
   const from = mode; setMode('game');
-  await brief(game, story.briefs.dungeon, story.briefStart);
   const r = await dungeon(game, story.dungeon, audio);
   game.innerHTML = '';
   if (r.found) { run.flags.keyFound = true; run.inventory.push('key'); save.write(); }
