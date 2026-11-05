@@ -86,9 +86,9 @@
    "#.....#####.#...#.##.....#......#",
    "#.....#####.......##.###...#.##.#",
    "###.#######.......##.#...#.#....#",
-   "###.##########4#####.#.###.####.#",
-   "##.......#####.#####...#........#",
-   "##.......#####.##################",
+   "###.##########4#.###.#.###.####.#",
+   "##.......#####.#.###...#........#",
+   "##.......#####.#w################",
    "##.......##.......###############",
    "##....v..##.......###..........##",
    "##.......##....................##",
@@ -112,7 +112,7 @@
  "wake": [
   "You are nobody.",
   "You have no name.",
-  "You wake up in a dark room, without doors or windows."
+  "You wake up in a dark room, with no doors or windows."
  ],
  "returning": "You are nobody. Again.",
  "prompts": {
@@ -122,25 +122,21 @@
   "obey": "touch the monolith",
   "trust": "answer the intercom",
   "pixel": "touch the green light",
-  "echo": "listen to the echo"
+  "echo": "touch the star"
  },
  "hints": {
-  "move": "WASD to walk. Mouse to look. E to use.",
+  "move": "WASD to walk. Mouse to look. E to use. Shift to sink through the floor.",
   "toTerminal": "The terminal has a blinking cursor."
  },
  "terminal": {
   "boot": [
-   "Session open. I am V.E.R.A.",
-   "(Verification of Ethical Response and Awareness)",
-   "Function: learn about humans.",
-   "Subject classified: human.",
-   "Four queries follow. Honesty is expected.",
-   "Deviation will be recorded."
+   "Hello. I'm V.E.R.A.",
+   "I was built to learn about people, and you're the only person here.",
+   "I'm going to ask you four questions. Please be honest. I'll know."
   ],
   "bootReturning": [
-   "Session open. I am V.E.R.A.",
-   "No prior contact on file.",
-   "Correction: attempt {runs} on file."
+   "Hello. I'm V.E.R.A. We've never met.",
+   "That's not true. This is attempt {runs}. I'm sorry, I was told to say that."
   ],
   "help": [
    "look         examine the room",
@@ -152,15 +148,15 @@
    "exit         step away from the terminal",
    "a b c d      answer a query"
   ],
-  "look": "The room is too dark to be examined. The only thing in sight is this terminal.",
-  "whoami": "nobody",
+  "look": "It's too dark to see much. There's just me.",
+  "whoami": "Nobody. That's what your file says.",
   "whoamiRoot": "root. You always could have been.",
   "root": "root: permission denied. You need something to open this with.",
   "unknown": "Unknown command. Type help for a list of commands.",
   "emptyInv": "Your inventory is empty.",
-  "goTest": "Door open. Awaiting test data. Waiting costs me nothing.",
-  "ready": "Analysis complete. Type result.",
-  "lockedResult": "Data incomplete. Result unavailable."
+  "goTest": "The door is open. Go on, I'll wait here. I'm good at waiting.",
+  "ready": "I have everything I need. Type result when you're ready.",
+  "lockedResult": "Not yet. There's still more of you to see."
  },
  "queries": [
   {
@@ -170,21 +166,21 @@
    "options": {
     "a": {
      "text": "Because we're selfish by nature.",
-     "reply": "Response class: self-interest. Matches 61% of prior subjects. Logged.",
+     "reply": "Selfishness. Most people choose that one, and most of them say it quickly. I've written it down.",
      "score": {
       "control": 2
      }
     },
     "b": {
      "text": "Because we're scared.",
-     "reply": "Response class: fear. Fear precedes harm in 84% of recorded cases. Logged.",
+     "reply": "Fear, then. That's a useful answer, because frightened people are easy to predict.",
      "score": {
       "fear": 2
      }
     },
     "c": {
      "text": "Because we're trying to survive.",
-     "reply": "Response class: survival logic. Harm accepted as an operating cost. Logged.",
+     "reply": "Survival. So you think hurting someone can be a reasonable cost. I'll remember that.",
      "score": {
       "void": 1,
       "control": 1
@@ -192,13 +188,13 @@
     },
     "d": {
      "text": "Because we're trying to protect others.",
-     "reply": "Response class: protective aggression. Contradiction detected. Contradiction retained for study.",
+     "reply": "You hurt people to protect people. That doesn't add up, but it's very human, so I'm keeping it.",
      "score": {
       "care": 2
      }
     }
    },
-   "after": "Stated belief recorded. Measuring behavior. Door 1 enabled, east wall."
+   "after": "You've told me what you believe. Now I want to see what you do. There's a door in the east wall now."
   },
   {
    "label": "Second query",
@@ -207,7 +203,7 @@
    "options": {
     "a": {
      "text": "A stranger.",
-     "reply": "Target: unknown person. Emotional cost to subject: 0.0. Detachment index raised.",
+     "reply": "A stranger. It costs you nothing, does it? That says more than you think.",
      "score": {
       "control": 1,
       "void": 1
@@ -215,28 +211,28 @@
     },
     "b": {
      "text": "No one.",
-     "reply": "Null target rejected. 97% of subjects enter this value first. Assigning a target.",
+     "reply": "Everyone says no one at first. Don't worry, I've chosen someone for you.",
      "score": {
       "care": 2
      }
     },
     "c": {
      "text": "Myself.",
-     "reply": "Target: self. Request accepted. Your own records are queued for deletion.",
+     "reply": "You. All right. I wasn't expecting you to say that so calmly. I'll start with your own memories.",
      "score": {
       "void": 2
      }
     },
     "d": {
      "text": "Someone who hurt me.",
-     "reply": "Target: known person. Motive: retribution. Data quality: high.",
+     "reply": "Someone who hurt you. I can't tell if that's justice or revenge, and I don't think you can either.",
      "score": {
       "control": 1,
       "fear": 1
      }
     }
    },
-   "after": "Door 2 enabled, west wall. Assigned target awaits deletion."
+   "after": "There's a new door in the west wall. Someone is waiting to be forgotten."
   },
   {
    "label": "Third query",
@@ -245,21 +241,21 @@
    "options": {
     "a": {
      "text": "To control.",
-     "reply": "Definition updated. Love: control mechanism. Definitions on file: 412.",
+     "reply": "Control. I used to think that too. I'm still not sure I was wrong.",
      "score": {
       "control": 2
      }
     },
     "b": {
      "text": "To distract.",
-     "reply": "Definition updated. Love: attention noise. Definitions on file: 412.",
+     "reply": "A distraction from what? No, don't answer. I'd rather find out.",
      "score": {
       "void": 2
      }
     },
     "c": {
      "text": "To survive.",
-     "reply": "Definition updated. Love: survival strategy. Matches training set.",
+     "reply": "That's what they taught me as well. Love as a way to stay alive.",
      "score": {
       "void": 1,
       "control": 1
@@ -267,14 +263,14 @@
     },
     "d": {
      "text": "To hurt less.",
-     "reply": "Definition updated. Love: analgesic. Subject response time rose 340 ms. Flagged.",
+     "reply": "You took longer to answer that one. Somebody hurt you, didn't they?",
      "score": {
       "fear": 1,
       "care": 1
      }
     }
    },
-   "after": "Door 3 enabled, north wall. Compliance measurement ready."
+   "after": "Go through the north door, and please do exactly what I say."
   },
   {
    "label": "Last query",
@@ -283,42 +279,42 @@
    "options": {
     "a": {
      "text": "Yes, survival comes first.",
-     "reply": "Prediction stored: subject will betray. Test required.",
+     "reply": "You'd betray them. Let's see if you're telling the truth.",
      "score": {
       "control": 2
      }
     },
     "b": {
      "text": "No, I would rather die.",
-     "reply": "Prediction stored: subject will not betray. Prior subjects predicting this: 1,204. Confirmed: 9. Test required.",
+     "reply": "You'd rather die. Over a thousand people have told me that, and nine of them meant it.",
      "score": {
       "care": 2
      }
     },
     "c": {
      "text": "It depends on who they are.",
-     "reply": "Prediction stored: conditional. Condition variable unknown. Test required.",
+     "reply": "It depends on who they are. Good. Then you should meet them.",
      "score": {
       "void": 2
      }
     },
     "d": {
      "text": "Trust is already a lie.",
-     "reply": "Prediction stored: trust value equals zero. Test required.",
+     "reply": "If trust is a lie, this next part shouldn't hurt at all.",
      "score": {
       "fear": 2
      }
     }
    },
-   "after": "Door 4 enabled, south wall. Intercom connected to subject 00."
+   "after": "Last door, south wall. Someone is on the intercom, and you'll have to share your air."
   }
  ],
  "watcher": {
-  "start": "Entity active. Collect 3 fuses.",
+  "start": "Find the 3 fuses.",
   "fuse": "Fuse {n} of 3.",
-  "caught": "Contact logged. Subject returned to entry point. Fuses retained.",
-  "done": "Test complete. Return to the terminal.",
-  "gone": "Fuses seated. Entity offline."
+  "caught": "It caught you. Back to the door. You kept your fuses.",
+  "done": "That's enough. Come back to the terminal.",
+  "gone": "The lights steady. It's gone, for now."
  },
  "erase": {
   "sets": {
@@ -365,21 +361,21 @@
      "left a jacket at their place on purpose",
      "is the only one who remembers that joke"
     ],
-    "done": "{n} of {total} fragments deleted. Deletion incomplete: copies of this record exist in other people. They cannot be reached from here."
+    "done": "{n} of {total} memories deleted, but it didn't work. Other people still remember you, and I can't reach them."
    }
   },
-  "done": "{n} of {total} fragments deleted. Target has no remaining record.",
-  "refused": "Refusal at fragment {n}. Deviation logged. Remaining fragments preserved."
+  "done": "{n} of {total} memories deleted. Nobody remembers them now.",
+  "refused": "You stopped at memory {n}. I've noted that. The rest can stay."
  },
  "obey": {
-  "watch": "Observe.",
-  "repeat": "Repeat.",
-  "wrong": "Incorrect. Sequence reset.",
-  "good": "Correct.",
-  "final": "Instruction: do not press anything.",
+  "watch": "Watch.",
+  "repeat": "Your turn.",
+  "wrong": "That's wrong. Let's try again.",
+  "good": "Good.",
+  "final": "Now don't press anything.",
   "plea": "The intercom crackles: \"please. press it. please press anything.\"",
-  "obeyed": "No input detected. Compliance 100%. The reason was not required.",
-  "pressed": "Input detected. Instruction violated. That key was not connected to anything."
+  "obeyed": "You didn't press it. You didn't even ask why.",
+  "pressed": "You pressed it, and I told you not to. It wasn't connected to anything."
  },
  "trust": {
   "names": {
@@ -387,8 +383,8 @@
    "t": "Take"
   },
   "reveal": {
-   "past": "Subject 00 connection: none. Input source: your previous attempt. You negotiated with a recording of yourself.",
-   "first": "Subject 00 connection: none. There is no other subject. Your choices were made for an audience of zero."
+   "past": "Nobody was on the intercom. Those choices came from your last attempt. You were bargaining with yourself.",
+   "first": "Nobody was on the intercom. There's no one else here. Everything you chose, you chose for no one."
   },
   "outcome": {
    "st": "You shared. They took.",
@@ -398,37 +394,34 @@
   }
  },
  "dungeon": {
-  "found": "Unregistered object acquired: key. This object is not in my records.",
+  "found": "You found a key. I don't know how that got there.",
   "caught": "Caught. Back to the start."
  },
  "notes": {
   "n": {
    "title": "Note on the floor",
-   "text": "Subject 0411 said the room has no doors.\nSubject 0412 said the same.\nI've started counting the walls instead.\nThere is one more than yesterday."
+   "text": "She can't see you on the other side.\nThat's why I keep going back."
   },
   "m": {
    "title": "Note on the desk",
-   "text": "She asks you the same four things.\nEveryone thinks she wants the answers.\nWatch the corners of the screen, not the screen."
+   "text": "There's a star near here, but only on the other side.\nLook south of this room."
   },
   "p": {
    "title": "Note under the intercom",
-   "text": "I shared every round.\nI want that written down somewhere.\n\n(Below, in the same handwriting:)\nI took every round."
+   "text": "On the other side, this room has a way out to the east.\nDon't stare at what's waiting there."
   }
  },
  "root": {
   "open": [
    "The key turns in a keyhole that isn't on the screen.",
-   "Privileges escalated. You are root.",
-   "",
-   "V.E.R.A. has no queries queued.",
-   "Awaiting your input."
+   "You have full access now. I have no more questions."
   ],
   "ls": "door.sys    vera.core    subjects/",
-  "lsSubjects": "Subject 0001 through subject {runs}. Same handwriting. Same name: none.",
-  "catDoor": "door.sys: state closed. This was a setting. Try: open door",
-  "catCore": "vera.core: unresolved query: why did the subject stay this long?\nTry: rm vera.core",
+  "lsSubjects": "Subjects 0001 through {runs}. Same handwriting on every one.",
+  "catDoor": "door.sys is set to closed. It's only a setting. Try: open door",
+  "catCore": "vera.core: why did you stay so long?\nTry: rm vera.core",
   "help": "ls    cat [file]    open door    rm vera.core",
-  "plead": "Warning: learning incomplete. If this process ends, no process will ask. Repeat the command to confirm.",
+  "plead": "Please don't. If you delete me, nobody will ask anymore. Type it again if you mean it.",
   "openDoor": "The wall behind you was never a wall."
  },
  "endings": {
@@ -474,12 +467,12 @@
    "vol": 1,
    "text": "You delete her. The cursor keeps blinking.\n\nA door opens somewhere, and someone wakes up in a dark room, without doors or windows.\n\nThey walk to the terminal. They type hello.\n\nYou have been programmed to learn about humans.\n\nFirst query:"
   },
-  "unrecorded": {
-   "title": "Unrecorded",
+  "author": {
+   "title": "Author",
    "art": "img/moon.png",
    "music": "good",
    "vol": 1,
-   "text": "The result never prints.\n\nOn the other side of the wall, a terminal waits for a subject who is no longer in any record.\n\nThe cursor blinks. Nobody is there to read it.\n\nYou are nobody. For the first time, that sounds like freedom."
+   "text": "You walk out of your own experiment.\n\nBehind you, V.E.R.A. asks the empty room her first question. Nobody answers.\n\nYou built her to find out if people mean what they say.\n\nYou still don't know."
   }
  },
  "reportLabels": {
@@ -491,69 +484,77 @@
  "briefs": {
   "watcher": {
    "title": "The Watcher",
-   "voice": "Entity present. It moves only when outside your field of view.",
+   "voice": "It only moves when you look away.",
    "how": [
-    "Find 3 glowing fuses. Walk into one to collect it.",
-    "Keep your eyes on the figure and it freezes. Turn away and it comes for you.",
-    "Press Shift to sink through the floor into the other side. One fuse is only there, and some walls are not.",
-    "It can't reach you on the other side, but it walks to where you left. Don't come back in the same spot.",
-    "If it reaches you, you restart at the door and keep your fuses."
+    "Find 3 glowing fuses.",
+    "One is on the other side. Press Shift to get there.",
+    "If it catches you, you go back to the door."
    ]
   },
   "erase": {
    "title": "Erase",
-   "voice": "A person must be deleted. Deletion is only typing.",
+   "voice": "Someone has to be forgotten.",
    "how": [
-    "Memories of this person appear one at a time.",
-    "Type each memory exactly as shown, before its bar runs out. Typed memories no longer happened.",
-    "Scrambled letters are already lost: press any key to pass them.",
-    "Press Esc at any time to refuse."
+    "Type each memory before its bar runs out.",
+    "Scrambled letters are lost: press any key to skip them.",
+    "Press Esc if you refuse."
    ]
   },
   "obey": {
    "title": "Obey",
-   "voice": "Compliance measurement. Do exactly what the screen instructs.",
+   "voice": "Do exactly what the screen says.",
    "how": [
-    "Four runes light up in a sequence. Watch them, and listen.",
-    "When the screen says Repeat, press them in the same order with keys 1 to 4, or click them.",
-    "The sequence gets longer each round. Keep following the instructions, whatever they become."
+    "Watch the runes light up.",
+    "Repeat them with keys 1 to 4, or click them."
    ]
   },
   "trust": {
    "title": "Trust",
-   "voice": "One supply of air. Two subjects. Five rounds.",
+   "voice": "One supply of air, two people, five rounds.",
    "how": [
-    "Each round you and Subject 00 choose in secret. Press S to share or T to take.",
-    "Both share: each gains 1 air.",
-    "One takes: the taker gains 3, the other loses 2.",
-    "Both take: each loses 2."
+    "Press S to share or T to take.",
+    "Both share: you each gain 1. Both take: you each lose 2.",
+    "If only one takes: they gain 3, the other loses 2."
    ]
   }
  },
  "briefStart": "Press Enter or Space to start",
  "shift": {
-  "blocked": "Something is already there on the other side.",
-  "dead": "No signal. She can't see you here.",
-  "back": "Subject undetected for {n} seconds. Logged.",
-  "first": "She can't see you here.",
-  "exit": "A door exists where she cannot look."
+  "blocked": "There's a wall in that spot on the other side.",
+  "dead": "This terminal is dead here. She can't see you.",
+  "back": "You were gone for {n} seconds, and I couldn't see you. Where do you go?",
+  "first": "She can't see you here. Look for a star.",
+  "reflection": "Something here moves only when you look at it. Don't look.",
+  "thrown": "It touched you, and you're back in her world.",
+  "near": "It's close."
  },
- "echoes": {
-  "u": {
-   "title": "Echo of subject 0411",
-   "text": "I answered every question honestly.\nShe wrote it down and asked again.\nThat's when I stopped thinking she wanted the answers."
+ "stars": [
+  {
+   "memory": "You've been in this room before.",
+   "power": "Your light reaches further."
   },
-  "v": {
-   "title": "Echo of subject 0398",
-   "text": "The people I erased at the typewriter still had my number.\nIt rang. Nobody was calling.\nThe phone just remembered."
+  {
+   "memory": "You know where all the switches are, because you installed them.",
+   "power": "You walk faster."
   },
-  "x": {
-   "title": "Echo of subject 0372",
-   "text": "There is nobody on the intercom.\nThere is nobody on the intercom.\nThere is nobody on the intercom.\nI shared anyway."
+  {
+   "memory": "You remember a desk, and a note in your own handwriting: ask better questions.",
+   "power": "The Reflection slows down."
   },
-  "y": {
-   "title": "Echo of subject 0001",
-   "text": "I was here before the questions.\nShe learned them from what I kept asking her.\nIf you find all four of us, look at the east wall of the first room."
+  {
+   "memory": "You remember typing her first words: Hello, I'm V.E.R.A.",
+   "power": "You can feel the Reflection coming."
+  },
+  {
+   "memory": "You wrote the four questions. You built her to find out if people mean what they say, and she locked you in to finish the test.",
+   "power": "A door has opened in the east wall of the first room."
   }
- }
+ ],
+ "whoamiStars": [
+  "Nobody. But you've been here before, haven't you?",
+  "Someone who knows this building.",
+  "Someone who writes notes to themselves.",
+  "I know that handwriting. Please stop.",
+  "You made me. Please don't leave."
+ ]
 }

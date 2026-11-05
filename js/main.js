@@ -14,11 +14,14 @@ const canvas = $('view'), world = new World(canvas);
 const term = new Terminal($('terminal'), () => audio.key());
 const game = $('game');
 const RUNES = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛋᛏᛒᛖᛗᛚᛜ';
+let speed = 2.5;
 const SPEED = 2.5, TURN = 2.2, SENS = .0026;
 const WING = { x: 20.5, y: 12.5 }; // the first cell past the east door
 const ENDINGS = Object.keys(story.endings);
 
 let run, mode = 'title', keys = new Set(), last = 0, stepT = 0, activeNote = null, rootMode = false, confirmRm = false;
+const STARS = story.stars.length;
+let reflection = null, scareT = 0, lurch = null;
 let hunt = null, ghost = null, shifting = null, unseenRun = 0, exitCell = null;
 const SENS_KEY = 'nullpoint.sens';
 let sens = 1; try { sens = Math.min(3, Math.max(.2, +localStorage.getItem(SENS_KEY) || 1)); } catch { /* storage blocked */ }
@@ -42,14 +45,20 @@ function loadHub() {
       if (c === 'G') world.sprites.push({ ...at, id: 'pixel', sprite: 'pixel', scale: .5 });
       if (c === 'F') world.sprites.push({ ...at, id: 'fuse', sprite: 'fuse', scale: .45, hidden: true, glow: .9 });
       if (c === 'W') world.sprites.push({ ...at, id: 'watcher', sprite: 'watcher', hidden: true, scale: 1.05, home: at });
-      if ('uvxy'.includes(c)) { world.sprites.push({ ...at, id: 'echo', echo: c, sprite: 'echo', scale: .8, glow: .8, hidden: seenEchoes.includes(c) }); if (!seenEchoes.includes(c)) world.lights.push({ ...at, i: .35, k: 1 }); }
+      if ('wuvxy'.includes(c)) { world.sprites.push({ ...at, id: 'echo', echo: c, sprite: 'echo', scale: .8, glow: .8, hidden: seenEchoes.includes(c) }); if (!seenEchoes.includes(c)) world.lights.push({ ...at, i: .35, k: 1 }); }
       if (c === 'X') exitCell = { x, y };
       if (c !== '#' && c !== 'X' && !'1234'.includes(c)) r[x] = '.';
     }));
   }
   run.doors.forEach(d => world.open(d));
-  if (seenEchoes.length === 4) openExit();
+  if (seenEchoes.length === STARS) openExit();
+  applyStars();
   world.dark = .78; world.falloff = .7; world.sky = false;
+}
+function applyStars() {
+  const n = run.flags.echoes.length;
+  world.dark = n >= 1 ? 1.05 : .78; world.falloff = n >= 1 ? .5 : .7;
+  speed = n >= 2 ? 3 : SPEED;
 }
 function openExit() {
   world.open('X');
@@ -73,7 +82,7 @@ function nearest() {
   return best;
 }
 function startShift() {
-  if (shifting || mode !== 'world' || !run.flags.shift) return;
+  if (shifting || mode !== 'world') return;
   const to = world.realm === 'red' ? 'other' : 'red', p = world.p;
   if (!world.canBe(to, p.x, p.y)) { audio.bad(); return subtitle(story.shift.blocked, 1800); }
   shifting = { t: 0, to, swapped: false }; audio.shift(); keys.clear();
@@ -85,6 +94,7 @@ function updateShift(dt) {
     s.swapped = true; world.setRealm(s.to); audio.setDrone(s.to === 'other' ? .03 : .09);
     if (s.to === 'other') { unseenRun = 0; if (!run.flags.shifted) { run.flags.shifted = true; subtitle(story.shift.first, 3000); } }
     else if (unseenRun > 3) subtitle(story.shift.back.replace('{n}', Math.round(unseenRun)), 3000);
+    if (s.to === 'red' && reflection) { reflection.hidden = true; reflection = null; }
     if (hunt) { hunt.lastRed = s.to === 'other' ? { x: p.x, y: p.y } : null; hunt.step = null; hunt.w.hidden = s.to === 'other'; }
     save.write();
   }
@@ -98,7 +108,7 @@ function update(dt) {
   if (shifting) updateShift(dt);
   if (world.realm === 'other') {
     unseenRun += dt; run.flags.unseen = (run.flags.unseen || 0) + dt;
-    if (run.flags.echoes.length === 4 && (p.x | 0) === exitCell.x && (p.y | 0) === exitCell.y) return finish('unrecorded');
+    if (run.flags.echoes.length === STARS && (p.x | 0) === exitCell.x && (p.y | 0) === exitCell.y) return finish('author');
   }
   if (keys.has('ArrowLeft')) p.a -= TURN * sens * dt;
   if (keys.has('ArrowRight')) p.a += TURN * sens * dt;
@@ -108,7 +118,7 @@ function update(dt) {
   if (keys.has('KeyD')) r++;
   if (keys.has('KeyA')) r--;
   if (f || r) {
-    const l = Math.hypot(f, r), c = Math.cos(p.a), s = Math.sin(p.a), v = SPEED * dt / l;
+    const l = Math.hypot(f, r), c = Math.cos(p.a), s = Math.sin(p.a), v = speed * dt / l;
     world.move((c * f - s * r) * v, (s * f + c * r) * v);
     p.bob += dt * 9; stepT -= dt;
     if (stepT <= 0) { audio.step(); stepT = .42; }
@@ -119,6 +129,8 @@ function update(dt) {
   }
   if (run.q === 0 && run.stage === 'test' && !hunt && p.x > 19.2 && world.realm === 'red') startHunt();
   if (hunt) updateHunt(dt);
+  updateReflection(dt);
+  updateScares(dt);
   updateGhost(dt);
   const n = nearest();
   $('prompt').innerHTML = n ? `<kbd>E</kbd>${story.prompts[n.id]}` : '';
@@ -128,14 +140,13 @@ function update(dt) {
 function startHunt() {
   const w = world.sprites.find(s => s.id === 'watcher');
   hunt = { w, got: 0, caught: 0, stared: 0, path: null, repath: 0, lastRed: null };
-  run.flags.shift = true;
   w.hidden = false; w.x = w.home.x; w.y = w.home.y;
   world.sprites.filter(s => s.id === 'fuse').forEach(s => { s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4, realm: s.realm }); });
   $('hud').textContent = '0 of 3';
   const box = $('brief'); box.hidden = false; mode = 'brief'; keys.clear();
   brief(box, story.briefs.watcher, story.briefStart).then(() => { box.hidden = true; box.innerHTML = ''; mode = 'world'; last = performance.now(); subtitle(story.watcher.start); });
 }
-function nextStep(from, to) {
+function nextStep(from, to, grid = 'red', minX = 19) {
   const key = (x, y) => y * 64 + x, sx = from.x | 0, sy = from.y | 0, tx = to.x | 0, ty = to.y | 0;
   const prev = new Map([[key(sx, sy), null]]), q = [[sx, sy]];
   for (let i = 0; i < q.length; i++) {
@@ -147,7 +158,7 @@ function nextStep(from, to) {
     }
     for (const [a, b] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const nx = x + a, ny = y + b;
-      if (nx >= 19 && !world.solidIn('red', nx, ny) && !prev.has(key(nx, ny))) { prev.set(key(nx, ny), [x, y]); q.push([nx, ny]); }
+      if (nx >= minX && !world.solidIn(grid, nx, ny) && !prev.has(key(nx, ny))) { prev.set(key(nx, ny), [x, y]); q.push([nx, ny]); }
     }
   }
   return null;
@@ -190,11 +201,87 @@ function endHunt() {
   setTimeout(() => subtitle(story.watcher.done), 4200);
   completeTest();
 }
+// The opposite of the Watcher: it moves only while you look at it.
+function updateReflection(dt) {
+  if (world.realm !== 'other' || !run.flags.echoes.length || shifting) return;
+  const p = world.p;
+  if (!reflection) {
+    const spot = farCell(9);
+    if (!spot) return;
+    reflection = world.sprites.find(s => s.id === 'reflection');
+    if (!reflection) { reflection = { id: 'reflection', realm: 'other', sprite: 'reflection', scale: 1.05, glow: .3 }; world.sprites.push(reflection); }
+    Object.assign(reflection, spot, { hidden: false, step: null, repath: 0 });
+    if (run.flags.echoes.length >= 4) subtitle(story.shift.near, 1800);
+  }
+  const r = reflection, seen = world.sees(r.x, r.y);
+  world.staticAmt = seen ? .05 : (hunt ? world.staticAmt : 0);
+  if (seen) {
+    r.repath -= dt;
+    if (r.repath <= 0 || !r.step) { r.step = nextStep(r, p, 'other', 0); r.repath = .2; }
+    if (r.step) {
+      const tx = r.step[0] + .5, ty = r.step[1] + .5, l = Math.hypot(tx - r.x, ty - r.y) || 1, v = (run.flags.echoes.length >= 3 ? 1.7 : 2.3) * dt;
+      r.x += (tx - r.x) / l * Math.min(v, l); r.y += (ty - r.y) / l * Math.min(v, l);
+    }
+  }
+  if (Math.hypot(r.x - p.x, r.y - p.y) < .6) {
+    audio.scream(); jumpFlash('reflection'); r.hidden = true; reflection = null; world.staticAmt = 0;
+    world.setRealm('red'); audio.setDrone(.09);
+    if (!world.canBe('red', p.x, p.y)) placeSpawn('hub');
+    if (hunt) { hunt.lastRed = null; hunt.step = null; hunt.w.hidden = false; }
+    subtitle(story.shift.thrown, 3000);
+  }
+}
+function farCell(min) {
+  const p = world.p, sx = p.x | 0, sy = p.y | 0, seen = new Set([sy * 64 + sx]), q = [[sx, sy, 0]];
+  const out = [];
+  for (let i = 0; i < q.length; i++) {
+    const [x, y, d] = q[i];
+    if (d >= min && !world.sees(x + .5, y + .5)) out.push({ x: x + .5, y: y + .5 });
+    if (d > min + 8) continue;
+    for (const [a, b] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      const k = (y + b) * 64 + x + a;
+      if (!seen.has(k) && !world.solidIn('other', x + a, y + b)) { seen.add(k); q.push([x + a, y + b, d + 1]); }
+    }
+  }
+  return out[Math.random() * out.length | 0];
+}
+/* ---------- scares: each one fires once per attempt, when you walk into its spot ---------- */
+const SCARES = [
+  { id: 'paper', x: 7.5, y: 12.5, realm: 'red', after: r => r.doors.includes('2') },
+  { id: 'dark', x: 14.5, y: 5.5, realm: 'red', after: r => r.doors.includes('3') },
+  { id: 'face', x: 14.5, y: 17.5, realm: 'red', after: r => r.doors.includes('4') },
+  { id: 'paper2', x: 16.5, y: 16.5, realm: 'other', after: () => true },
+];
+function jumpFlash(sprite) {
+  const p = world.p, s = { id: 'jump', sprite, scale: 1, glow: .6, x: p.x + Math.cos(p.a), y: p.y + Math.sin(p.a) };
+  world.sprites.push(s); setTimeout(() => { world.sprites = world.sprites.filter(o => o !== s); }, 420);
+}
+function updateScares(dt) {
+  const p = world.p;
+  if (lurch) {
+    lurch.t += dt;
+    lurch.s.scale = Math.min(1.15, lurch.t * 9);
+    if (lurch.t > 1.1) { world.sprites = world.sprites.filter(o => o !== lurch.s); lurch = null; }
+  }
+  if (scareT > 0) { scareT -= dt; world.dark = scareT > 0 ? .12 : (run.flags.echoes.length ? 1.05 : .78); }
+  for (const c of SCARES) {
+    const done = run.flags.scares ||= [];
+    if (done.includes(c.id) || c.realm !== world.realm || !c.after(run) || Math.hypot(c.x - p.x, c.y - p.y) > .9) continue;
+    done.push(c.id); save.write();
+    if (c.id.startsWith('paper')) {
+      audio.pop();
+      const s = { id: 'cutout', sprite: 'cutout', scale: .01, glow: .25, realm: world.realm, x: p.x + Math.cos(p.a) * 1.1, y: p.y + Math.sin(p.a) * 1.1 };
+      world.sprites.push(s); lurch = { t: 0, s };
+    } else if (c.id === 'dark') { scareT = 2.2; audio.steps(); }
+    else { audio.scream(); jumpFlash('watcher'); }
+  }
+}
 function updateGhost(dt) {
-  if (run.q !== 2 || run.stage !== 'query' || run.flags.ghost) return;
-  if (!ghost) { ghost = { id: 'ghost', realm: 'red', sprite: 'watcher', x: 16.5, y: 8.5, scale: 1.05, seen: 0 }; world.sprites.push(ghost); }
-  if (world.realm === 'red' && world.sees(ghost.x, ghost.y)) ghost.seen += dt;
-  else if (ghost.seen > .6) { ghost.hidden = true; run.flags.ghost = true; audio.step(); }
+  if (run.q !== 2 || run.stage !== 'query' || run.flags.ghost) { if (ghost) ghost.hidden = true; return; }
+  if (!ghost) { ghost = { id: 'ghost', realm: 'red', sprite: 'watcher', x: 16.5, y: 8.5, scale: 1.05 }; world.sprites.push(ghost); }
+  if (world.realm === 'red' && Math.hypot(ghost.x - world.p.x, ghost.y - world.p.y) < 2.2) {
+    ghost.hidden = true; run.flags.ghost = true; audio.scream(); jumpFlash('watcher'); save.write();
+  }
 }
 function completeTest() {
   run.q++; run.stage = run.q >= 4 ? 'done' : 'query'; save.write();
@@ -243,13 +330,16 @@ function interact() {
   const n = nearest(); if (!n) return;
   if (n.id === 'terminal') { if (world.realm === 'other') return subtitle(story.shift.dead, 2200); openTerminal(); }
   else if (n.id === 'echo') {
-    const c = story.echoes[n.echo]; n.hidden = true; run.flags.echoes.push(n.echo); audio.fuse();
+    run.flags.echoes.push(n.echo); n.hidden = true; audio.star();
+    const c = story.stars[run.flags.echoes.length - 1];
     world.lights = world.lights.filter(l => !(l.x === n.x && l.y === n.y));
-    $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note');
-    if (run.flags.echoes.length === 4) { openExit(); setTimeout(() => subtitle(story.shift.exit, 5000), 600); }
+    $('note').classList.add('memory'); $('noteTitle').textContent = `Memory ${run.flags.echoes.length} of ${STARS}`; $('noteText').textContent = `${c.memory}\n\n${c.power}`; setMode('note');
+    applyStars();
+    if (run.flags.echoes.length === 1) setTimeout(() => subtitle(story.shift.reflection, 6000), 400);
+    if (run.flags.echoes.length === STARS) openExit();
     save.write();
   }
-  else if (n.id === 'note') { const c = story.notes[n.note]; $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note'); }
+  else if (n.id === 'note') { $('note').classList.remove('memory'); const c = story.notes[n.note]; $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note'); }
   else if (n.id === 'pixel') secret();
   else station(n.id);
 }
@@ -281,7 +371,7 @@ function command(raw) {
   const t = story.terminal;
   if (cmd === 'help') return t.help.forEach(l => term.print(l));
   if (cmd === 'look') return term.print(t.look);
-  if (cmd === 'whoami') return term.print(t.whoami);
+  if (cmd === 'whoami') { const n = run.flags.echoes.length; return term.print(n ? story.whoamiStars[n - 1] : t.whoami); }
   if (cmd === 'exit' || cmd === 'leave') return leaveTerminal();
   if (cmd === 'clear') return term.clear();
   if (cmd === 'history') return term.print(run.history.join('\n'));

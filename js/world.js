@@ -76,6 +76,19 @@ const SPRITES = {
   }),
   note: paint(32, g => { fill(g, rgb(230), 9, 26, 14, 5); fill(g, rgb(90), 11, 28, 9, 1); }),
   echo: paint(32, g => { fill(g, rgb(0, 255), 15, 8, 2, 16); fill(g, rgb(0, 170), 12, 12, 8, 8); fill(g, rgb(0, 90), 9, 15, 14, 2); }),
+  reflection: paint(128, g => {
+    g.fillStyle = rgb(0, 235);
+    g.beginPath(); g.ellipse(64, 30, 18, 22, 0, 0, 7); g.fill(); g.fillRect(46, 30, 36, 18);
+    g.beginPath(); g.moveTo(40, 58); g.quadraticCurveTo(64, 40, 88, 58); g.lineTo(94, 128); g.lineTo(34, 128); g.fill();
+    g.fillStyle = '#000001'; g.fillRect(55, 28, 6, 7); g.fillRect(67, 28, 6, 7); g.fillRect(58, 42, 12, 2);
+  }),
+  // A flat paper figure on a stick. Harmless, and it still gets you.
+  cutout: paint(128, g => {
+    fill(g, rgb(60), 62, 80, 4, 48);
+    g.fillStyle = rgb(0, 225); g.beginPath(); g.moveTo(34, 14); g.lineTo(94, 10); g.lineTo(98, 84); g.lineTo(30, 88); g.fill();
+    g.fillStyle = '#000001'; g.beginPath(); g.arc(50, 38, 8, 0, 7); g.arc(78, 36, 8, 0, 7); g.fill();
+    g.fillRect(44, 62, 42, 5); for (let x = 46; x < 86; x += 7) g.fillRect(x, 58, 3, 13);
+  }),
   fuse: paint(32, g => { fill(g, rgb(60), 13, 18, 6, 12); fill(g, rgb(0, 255), 14, 12, 4, 7); }),
   pixel: paint(32, g => { g.fillStyle = '#00ff00'; g.fillRect(15, 15, 2, 2); }),
   watcher: paint(128, g => {
