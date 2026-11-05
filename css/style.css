@@ -27,6 +27,7 @@ a{color:inherit}
 #out .q{color:var(--bone)}
 #out .root{color:var(--secret)}
 #line{display:flex;gap:.5em;padding-top:.5em}
+#in.lit{color:var(--secret);text-shadow:0 0 6px var(--secret)}
 #in{flex:1;font:inherit;color:var(--bone);background:none;border:0;outline:0;caret-color:var(--ember);min-width:0}
 #pixel{position:fixed;right:18px;bottom:18px;width:6px;height:6px;padding:0;background:var(--secret);z-index:3}
 #pixel:hover,#pixel:focus-visible{background:var(--secret);outline:1px solid var(--secret);outline-offset:3px}
@@ -87,5 +88,5 @@ a{color:inherit}
 #scare{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;z-index:4}
 #hud{white-space:pre-line;background:rgba(13,13,20,.72);padding:.1em .5em}
 #hud:empty{display:none}
-.secretWord{padding:0;color:var(--secret);text-shadow:0 0 6px var(--secret);text-decoration:underline dotted}
+.secretWord{padding:0;color:var(--secret);text-shadow:0 0 6px var(--secret)}
 .secretWord:hover,.secretWord:focus-visible{background:none;color:#fff}

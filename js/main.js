@@ -439,7 +439,7 @@ async function answer(a) {
   term.print(o.reply);
   term.print('... ');
   term.print(q.after, 'sys');
-  if (run.q === 1) term.printSecret(story.secret, 9000, secret);
+  if (run.q === 1) term.printSecret(story.secret, 8000, secret);
   run.stage = 'test'; openDoor(q.door); save.write();
 }
 function rootCommand(cmd) {
@@ -527,6 +527,10 @@ $('settingsDone').addEventListener('click', () => toggleSettings(false));
 $('sens').addEventListener('input', e => setSens(+e.target.value));
 setSens(sens);
 term.onCommand = command;
+$('pixel').addEventListener('click', secret);
+const lightWord = () => $('in').classList.toggle('lit', $('in').value.trim().toLowerCase() === story.secret.word);
+$('in').addEventListener('input', lightWord);
+$('line').addEventListener('submit', () => $('in').classList.remove('lit'));
 
 let savedAt = 0;
 function savePosition(now) {
