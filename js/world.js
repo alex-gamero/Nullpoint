@@ -76,18 +76,33 @@ const SPRITES = {
   }),
   note: paint(32, g => { fill(g, rgb(230), 9, 26, 14, 5); fill(g, rgb(90), 11, 28, 9, 1); }),
   echo: paint(32, g => { fill(g, rgb(0, 255), 15, 8, 2, 16); fill(g, rgb(0, 170), 12, 12, 8, 8); fill(g, rgb(0, 90), 9, 15, 14, 2); }),
+  // A standing mirror with your own shape caught inside it, sliding toward you.
   reflection: paint(128, g => {
-    g.fillStyle = rgb(0, 235);
-    g.beginPath(); g.ellipse(64, 30, 18, 22, 0, 0, 7); g.fill(); g.fillRect(46, 30, 36, 18);
-    g.beginPath(); g.moveTo(40, 58); g.quadraticCurveTo(64, 40, 88, 58); g.lineTo(94, 128); g.lineTo(34, 128); g.fill();
-    g.fillStyle = '#000001'; g.fillRect(55, 28, 6, 7); g.fillRect(67, 28, 6, 7); g.fillRect(58, 42, 12, 2);
+    g.fillStyle = rgb(0, 255); g.beginPath(); g.ellipse(64, 60, 31, 56, 0, 0, 7); g.fill();
+    g.fillStyle = '#000001'; g.beginPath(); g.ellipse(64, 60, 26, 51, 0, 0, 7); g.fill();
+    g.fillStyle = rgb(0, 120); g.beginPath(); g.ellipse(64, 44, 11, 14, 0, 0, 7); g.fill(); g.fillRect(50, 58, 28, 44);
+    g.fillStyle = '#000001'; g.fillRect(58, 40, 4, 5); g.fillRect(67, 40, 4, 5); g.fillRect(62, 50, 5, 8);
+    g.strokeStyle = rgb(0, 255); g.lineWidth = 1.6; g.beginPath();
+    [[64, 60, 44, 28], [64, 60, 86, 34], [64, 60, 42, 92], [64, 60, 84, 96], [64, 60, 90, 62], [64, 60, 60, 12]].forEach(([a, b, c, d]) => { g.moveTo(a, b); g.lineTo((a + c) / 2 + 3, (b + d) / 2 - 2); g.lineTo(c, d); });
+    g.stroke();
+    fill(g, rgb(0, 170), 50, 114, 28, 5); fill(g, rgb(0, 170), 60, 112, 8, 16);
   }),
-  // A flat paper figure on a stick. Harmless, and it still gets you.
+  // Torn cardboard on a stick, drawn on with marker. Cheap, stupid, and it still gets you.
   cutout: paint(128, g => {
-    fill(g, rgb(60), 62, 80, 4, 48);
-    g.fillStyle = rgb(0, 225); g.beginPath(); g.moveTo(34, 14); g.lineTo(94, 10); g.lineTo(98, 84); g.lineTo(30, 88); g.fill();
-    g.fillStyle = '#000001'; g.beginPath(); g.arc(50, 38, 8, 0, 7); g.arc(78, 36, 8, 0, 7); g.fill();
-    g.fillRect(44, 62, 42, 5); for (let x = 46; x < 86; x += 7) g.fillRect(x, 58, 3, 13);
+    fill(g, rgb(70), 61, 86, 6, 42);
+    g.fillStyle = rgb(0, 175); g.beginPath(); [[30, 18], [46, 12], [58, 17], [76, 9], [97, 16], [103, 42], [97, 66], [101, 88], [78, 94], [60, 90], [40, 96], [27, 82], [33, 58], [25, 38]].forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.fill();
+    g.fillStyle = rgb(0, 118); g.fillRect(30, 20, 70, 2); g.fillRect(33, 74, 64, 2); // cardboard creases
+    g.strokeStyle = '#000001'; g.lineWidth = 3; g.fillStyle = '#000001';
+    g.beginPath(); g.arc(49, 40, 9, 0, 7); g.moveTo(90, 38); g.arc(81, 38, 9, 0, 7); g.stroke();
+    g.fillRect(47, 38, 4, 5); g.fillRect(80, 40, 4, 4);
+    g.beginPath(); g.moveTo(37, 58); g.quadraticCurveTo(66, 92, 94, 56); g.stroke();
+    g.lineWidth = 2; [44, 53, 62, 71, 80, 88].forEach((x, i) => { g.beginPath(); g.moveTo(x, 58 + (i % 2) * 3); g.lineTo(x + 1, 76 - Math.abs(x - 66) * .3); g.stroke(); });
+    fill(g, rgb(0, 235), 72, 4, 16, 8); // tape
+  }),
+  // A doorway made of light.
+  door: paint(128, g => {
+    fill(g, rgb(0, 255), 30, 8, 68, 120); fill(g, rgb(0, 150), 37, 15, 54, 113);
+    g.fillStyle = rgb(0, 255); g.fillRect(62, 34, 4, 94); g.fillRect(44, 66, 40, 4);
   }),
   fuse: paint(32, g => { fill(g, rgb(60), 13, 18, 6, 12); fill(g, rgb(0, 255), 14, 12, 4, 7); }),
   pixel: paint(32, g => { g.fillStyle = '#00ff00'; g.fillRect(15, 15, 2, 2); }),

@@ -122,7 +122,8 @@
   "obey": "touch the monolith",
   "trust": "answer the intercom",
   "pixel": "touch the green light",
-  "echo": "touch the star"
+  "echo": "touch the star",
+  "exit": "walk out"
  },
  "hints": {
   "move": "WASD to walk. Mouse to look. E to use. Shift to sink through the floor.",
@@ -526,7 +527,8 @@
   "first": "She can't see you here. Look for a star.",
   "reflection": "Something here moves only when you look at it. Don't look.",
   "thrown": "It touched you, and you're back in her world.",
-  "near": "It's close."
+  "near": "It's close.",
+  "exit": "Go back to the first room. Look at the east wall."
  },
  "stars": [
   {
@@ -547,7 +549,7 @@
   },
   {
    "memory": "You wrote the four questions. You built her to find out if people mean what they say, and she locked you in to finish the test.",
-   "power": "A door has opened in the east wall of the first room."
+   "power": "A door of light has opened in the east wall of the first room."
   }
  ],
  "whoamiStars": [
@@ -556,5 +558,18 @@
   "Someone who writes notes to themselves.",
   "I know that handwriting. Please stop.",
   "You made me. Please don't leave."
- ]
+ ],
+ "objectives": {
+  "query": "Go to the terminal.",
+  "test": [
+   "Go through the east door.",
+   "Go through the west door.",
+   "Go through the north door.",
+   "Go through the south door."
+  ],
+  "done": "Go to the terminal and type result.",
+  "hunt": "Find the fuses: {n} of 3",
+  "stars": "Stars: {n} of 5",
+  "exit": "Walk through the door of light."
+ }
 }

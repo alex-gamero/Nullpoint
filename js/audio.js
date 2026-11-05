@@ -36,7 +36,10 @@ export const audio = {
   fuse() { tone(880, .1); tone(1320, .2, 'square', .04, .1); },
   shift() { noise(.8, .4, 500); tone(55, .8, 'sine', .22); tone(330, .7, 'sine', .05, .3); tone(495, .6, 'sine', .04, .42); },
   star() { [784, 988, 1175, 1568].forEach((f, i) => tone(f, .5, 'sine', .09, i * .09)); },
-  scream() { noise(.55, .55, 3200); tone(740, .5, 'sawtooth', .16); tone(1110, .45, 'square', .08); tone(70, .6, 'sawtooth', .2); },
+  scream() {
+    noise(.8, .7, 4200); tone(62, .85, 'sawtooth', .28);
+    [660, 932, 1245].forEach((f, i) => { tone(f, .75, 'sawtooth', .13); tone(f * 1.06, .75, 'square', .07, .03 * i); });
+  },
   pop() { noise(.12, .35, 2600); tone(1400, .12, 'square', .09); tone(1900, .1, 'square', .07, .1); },
   steps() { for (let i = 0; i < 5; i++) setTimeout(() => noise(.1, .22, 260), 350 + i * 300); },
   sting() { noise(.5, .35, 2400); tone(92, .8, 'sawtooth', .16); },

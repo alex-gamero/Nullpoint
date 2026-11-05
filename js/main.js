@@ -7,6 +7,7 @@ import { obey } from './games/obey.js';
 import { trust } from './games/trust.js';
 import { dungeon } from './games/dungeon.js';
 import { brief } from './games/brief.js';
+import { screamer } from './scare.js';
 
 const $ = id => document.getElementById(id);
 const story = await (await fetch('data/story.json')).json();
@@ -27,10 +28,34 @@ const SENS_KEY = 'nullpoint.sens';
 let sens = 1; try { sens = Math.min(3, Math.max(.2, +localStorage.getItem(SENS_KEY) || 1)); } catch { /* storage blocked */ }
 
 /* ---------- world setup ---------- */
-const subtitle = (text, ms = 4500) => {
-  const el = $('subtitle'); el.textContent = text; clearTimeout(subtitle.t);
-  if (ms) subtitle.t = setTimeout(() => { el.textContent = ''; }, ms);
+// One message at a time, long enough to read, and only while you can read it.
+const messages = []; let messageUntil = 0;
+const subtitle = (text, ms, urgent) => {
+  if (urgent) { messages.length = 0; messageUntil = 0; }
+  if (!messages.some(m => m.text === text)) messages.push({ text, ms: Math.max(ms || 0, 2400 + text.length * 45) });
 };
+function updateMessages(now) {
+  const el = $('subtitle');
+  if (mode !== 'world' && mode !== 'outside') { messageUntil += 16; el.textContent = ''; return; }
+  if (now < messageUntil) { if (!el.textContent && messages.current) el.textContent = messages.current; return; }
+  const next = messages.shift();
+  messages.current = next ? next.text : '';
+  el.textContent = messages.current;
+  messageUntil = next ? now + next.ms : 0;
+}
+let objectiveShown = '';
+function updateObjective() {
+  if (!run || mode === 'title' || mode === 'ending') return;
+  const o = story.objectives, n = run.flags.echoes?.length || 0, lines = [];
+  if (n === STARS) lines.push(o.exit);
+  else if (hunt) lines.push(o.hunt.replace('{n}', hunt.got));
+  else if (run.stage === 'query') lines.push(o.query);
+  else if (run.stage === 'test') lines.push(o.test[run.q]);
+  else if (run.stage === 'done') lines.push(o.done);
+  if (n && n < STARS) lines.push(o.stars.replace('{n}', n));
+  const text = lines.join('\n');
+  if (text !== objectiveShown) { objectiveShown = text; $('hud').textContent = text; }
+}
 const SPR = { O: ['obey', 'monolith'], E: ['erase', 'typewriter'], R: ['trust', 'intercom'] };
 function loadHub() {
   world.loadRealms(story.maps.hub, story.maps.other);
@@ -51,6 +76,7 @@ function loadHub() {
     }));
   }
   run.doors.forEach(d => world.open(d));
+  (run.flags.cutouts || []).forEach(c => world.sprites.push({ id: 'cutout', sprite: 'cutout', scale: 1, ...c }));
   if (seenEchoes.length === STARS) openExit();
   applyStars();
   world.dark = .78; world.falloff = .7; world.sky = false;
@@ -62,7 +88,8 @@ function applyStars() {
 }
 function openExit() {
   world.open('X');
-  world.lights.push({ x: exitCell.x + .5, y: exitCell.y + .5, realm: 'other', i: 1.1, k: .5 });
+  world.sprites.push({ id: 'exit', sprite: 'door', realm: 'other', x: exitCell.x + .5, y: exitCell.y + .5, block: true, scale: 1.05, glow: .4 });
+  world.lights.push({ x: exitCell.x + .5, y: exitCell.y + .5, realm: 'other', i: 1.4, k: .35 });
 }
 function placeSpawn(name) {
   const [x, y, a] = story.spawn[name];
@@ -75,7 +102,7 @@ const add = (obj, by = 1) => Object.keys(obj).forEach(k => { run.score[k] = (run
 function nearest() {
   const p = world.p; let best = null, bd = 1.35;
   for (const s of world.sprites) {
-    if (s.hidden || !['terminal', 'erase', 'obey', 'trust', 'note', 'pixel', 'echo'].includes(s.id) || !world.inRealm(s)) continue;
+    if (s.hidden || !['terminal', 'erase', 'obey', 'trust', 'note', 'pixel', 'echo', 'exit'].includes(s.id) || !world.inRealm(s)) continue;
     const d = Math.hypot(s.x - p.x, s.y - p.y);
     if (d < bd && world.sees(s.x, s.y)) { bd = d; best = s; }
   }
@@ -100,7 +127,8 @@ function updateShift(dt) {
   }
   const f = s.t < D ? s.t / D : (s.t - D) / D;
   world.fade = s.t < D ? 1 - f : f;
-  p.sink = s.t < D ? -130 * f * f : 130 * (1 - f) * (1 - f);
+  p.sink = s.leaving ? 0 : s.t < D ? -130 * f * f : 130 * (1 - f) * (1 - f);
+  if (s.leaving && s.t >= D) { shifting = null; world.fade = 1; p.sink = 0; return finish('author'); }
   if (s.t >= D * 2) { shifting = null; world.fade = 1; p.sink = 0; }
 }
 function update(dt) {
@@ -108,7 +136,6 @@ function update(dt) {
   if (shifting) updateShift(dt);
   if (world.realm === 'other') {
     unseenRun += dt; run.flags.unseen = (run.flags.unseen || 0) + dt;
-    if (run.flags.echoes.length === STARS && (p.x | 0) === exitCell.x && (p.y | 0) === exitCell.y) return finish('author');
   }
   if (keys.has('ArrowLeft')) p.a -= TURN * sens * dt;
   if (keys.has('ArrowRight')) p.a += TURN * sens * dt;
@@ -142,7 +169,7 @@ function startHunt() {
   hunt = { w, got: 0, caught: 0, stared: 0, path: null, repath: 0, lastRed: null };
   w.hidden = false; w.x = w.home.x; w.y = w.home.y;
   world.sprites.filter(s => s.id === 'fuse').forEach(s => { s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4, realm: s.realm }); });
-  $('hud').textContent = '0 of 3';
+  messages.length = 0;
   const box = $('brief'); box.hidden = false; mode = 'brief'; keys.clear();
   brief(box, story.briefs.watcher, story.briefStart).then(() => { box.hidden = true; box.innerHTML = ''; mode = 'world'; last = performance.now(); subtitle(story.watcher.start); });
 }
@@ -170,8 +197,6 @@ function updateHunt(dt) {
     if (s.id !== 'fuse' || s.hidden || !world.inRealm(s) || Math.hypot(s.x - p.x, s.y - p.y) > .6) continue;
     s.hidden = true; hunt.got++; audio.fuse();
     world.lights = world.lights.filter(l => !(l.x === s.x && l.y === s.y));
-    $('hud').textContent = `${hunt.got} of 3`;
-    subtitle(story.watcher.fuse.replace('{n}', hunt.got), 2200);
   }
   if (hunt.got === 3) return endHunt();
   const inWing = p.x > 19, d = Math.hypot(w.x - p.x, w.y - p.y), seen = !away && inWing && world.sees(w.x, w.y);
@@ -187,13 +212,13 @@ function updateHunt(dt) {
     w.x += (tx - w.x) / l * Math.min(v, l); w.y += (ty - w.y) / l * Math.min(v, l);
   }
   if (!away && Math.hypot(w.x - p.x, w.y - p.y) < .55) {
-    hunt.caught++; audio.sting(); subtitle(story.watcher.caught, 3500);
+    hunt.caught++; scare('watcher', hunt.caught === 1 ? 780 : 420); subtitle(story.watcher.caught, 0, true);
     Object.assign(p, { x: WING.x, y: WING.y }); w.x = w.home.x; w.y = w.home.y; hunt.step = null;
   }
 }
 function endHunt() {
   const { w, caught, stared } = hunt;
-  w.hidden = true; world.staticAmt = 0; audio.setStatic(0); $('hud').textContent = '';
+  w.hidden = true; world.staticAmt = 0; audio.setStatic(0);
   subtitle(story.watcher.gone, 4000);
   add(caught > 1 ? { fear: 2 } : caught ? { fear: 1 } : { control: 1 });
   if (stared > 25) add({ fear: 1 });
@@ -206,12 +231,20 @@ function updateReflection(dt) {
   if (world.realm !== 'other' || !run.flags.echoes.length || shifting) return;
   const p = world.p;
   if (!reflection) {
-    const spot = farCell(9);
-    if (!spot) return;
     reflection = world.sprites.find(s => s.id === 'reflection');
-    if (!reflection) { reflection = { id: 'reflection', realm: 'other', sprite: 'reflection', scale: 1.05, glow: .3 }; world.sprites.push(reflection); }
-    Object.assign(reflection, spot, { hidden: false, step: null, repath: 0 });
-    if (run.flags.echoes.length >= 4) subtitle(story.shift.near, 1800);
+    if (!reflection) { reflection = { id: 'reflection', realm: 'other', sprite: 'reflection', scale: 1.05, glow: .3, hidden: true }; world.sprites.push(reflection); }
+    reflection.hidden = true; reflection.wait = .6;
+    if (run.flags.echoes.length >= 4) subtitle(story.shift.near);
+  }
+  // While you aren't looking, it repositions just out of sight, so it is always near.
+  if (reflection.hidden || !world.sees(reflection.x, reflection.y)) {
+    reflection.wait = (reflection.wait ?? 0) - dt;
+    if (reflection.wait <= 0) {
+      const spot = farCell(5) || farCell(3);
+      reflection.wait = spot ? 5 : .4;
+      if (spot) Object.assign(reflection, spot, { hidden: false, step: null, repath: 0 });
+    }
+    if (reflection.hidden) return;
   }
   const r = reflection, seen = world.sees(r.x, r.y);
   world.staticAmt = seen ? .05 : (hunt ? world.staticAmt : 0);
@@ -224,11 +257,11 @@ function updateReflection(dt) {
     }
   }
   if (Math.hypot(r.x - p.x, r.y - p.y) < .6) {
-    audio.scream(); jumpFlash('reflection'); r.hidden = true; reflection = null; world.staticAmt = 0;
+    scare('mirror'); r.hidden = true; reflection = null; world.staticAmt = 0;
     world.setRealm('red'); audio.setDrone(.09);
     if (!world.canBe('red', p.x, p.y)) placeSpawn('hub');
     if (hunt) { hunt.lastRed = null; hunt.step = null; hunt.w.hidden = false; }
-    subtitle(story.shift.thrown, 3000);
+    subtitle(story.shift.thrown, 0, true);
   }
 }
 function farCell(min) {
@@ -237,7 +270,7 @@ function farCell(min) {
   for (let i = 0; i < q.length; i++) {
     const [x, y, d] = q[i];
     if (d >= min && !world.sees(x + .5, y + .5)) out.push({ x: x + .5, y: y + .5 });
-    if (d > min + 8) continue;
+    if (d > min + 4) continue;
     for (const [a, b] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const k = (y + b) * 64 + x + a;
       if (!seen.has(k) && !world.solidIn('other', x + a, y + b)) { seen.add(k); q.push([x + a, y + b, d + 1]); }
@@ -250,18 +283,18 @@ const SCARES = [
   { id: 'paper', x: 7.5, y: 12.5, realm: 'red', after: r => r.doors.includes('2') },
   { id: 'dark', x: 14.5, y: 5.5, realm: 'red', after: r => r.doors.includes('3') },
   { id: 'face', x: 14.5, y: 17.5, realm: 'red', after: r => r.doors.includes('4') },
-  { id: 'paper2', x: 16.5, y: 16.5, realm: 'other', after: () => true },
+  { id: 'paper2', x: 9.5, y: 3.5, realm: 'other', after: () => true },
 ];
-function jumpFlash(sprite) {
-  const p = world.p, s = { id: 'jump', sprite, scale: 1, glow: .6, x: p.x + Math.cos(p.a), y: p.y + Math.sin(p.a) };
-  world.sprites.push(s); setTimeout(() => { world.sprites = world.sprites.filter(o => o !== s); }, 420);
+function scare(kind, ms) {
+  audio.scream(); const was = mode; mode = 'scare'; keys.clear();
+  screamer(kind, ms).then(() => { if (mode === 'scare') { mode = was; last = performance.now(); } });
 }
 function updateScares(dt) {
   const p = world.p;
   if (lurch) {
     lurch.t += dt;
-    lurch.s.scale = Math.min(1.15, lurch.t * 9);
-    if (lurch.t > 1.1) { world.sprites = world.sprites.filter(o => o !== lurch.s); lurch = null; }
+    lurch.s.scale = Math.min(1, lurch.t * 9);
+    if (lurch.t > .2) lurch = null;
   }
   if (scareT > 0) { scareT -= dt; world.dark = scareT > 0 ? .12 : (run.flags.echoes.length ? 1.05 : .78); }
   for (const c of SCARES) {
@@ -270,17 +303,19 @@ function updateScares(dt) {
     done.push(c.id); save.write();
     if (c.id.startsWith('paper')) {
       audio.pop();
-      const s = { id: 'cutout', sprite: 'cutout', scale: .01, glow: .25, realm: world.realm, x: p.x + Math.cos(p.a) * 1.1, y: p.y + Math.sin(p.a) * 1.1 };
+      const spot = { realm: world.realm, x: p.x + Math.cos(p.a) * 1.1, y: p.y + Math.sin(p.a) * 1.1 };
+      const s = { id: 'cutout', sprite: 'cutout', scale: .01, ...spot };
       world.sprites.push(s); lurch = { t: 0, s };
+      (run.flags.cutouts ||= []).push(spot); save.write();
     } else if (c.id === 'dark') { scareT = 2.2; audio.steps(); }
-    else { audio.scream(); jumpFlash('watcher'); }
+    else scare('watcher', 380);
   }
 }
 function updateGhost(dt) {
   if (run.q !== 2 || run.stage !== 'query' || run.flags.ghost) { if (ghost) ghost.hidden = true; return; }
   if (!ghost) { ghost = { id: 'ghost', realm: 'red', sprite: 'watcher', x: 16.5, y: 8.5, scale: 1.05 }; world.sprites.push(ghost); }
   if (world.realm === 'red' && Math.hypot(ghost.x - world.p.x, ghost.y - world.p.y) < 2.2) {
-    ghost.hidden = true; run.flags.ghost = true; audio.scream(); jumpFlash('watcher'); save.write();
+    ghost.hidden = true; run.flags.ghost = true; save.write(); scare('watcher');
   }
 }
 function completeTest() {
@@ -328,6 +363,7 @@ function interact() {
   if (mode === 'note') { setMode('world'); return; }
   if (mode !== 'world') return;
   const n = nearest(); if (!n) return;
+  if (n.id === 'exit') { audio.shift(); shifting = { t: 0, to: 'other', swapped: true, leaving: true }; return; }
   if (n.id === 'terminal') { if (world.realm === 'other') return subtitle(story.shift.dead, 2200); openTerminal(); }
   else if (n.id === 'echo') {
     run.flags.echoes.push(n.echo); n.hidden = true; audio.star();
@@ -335,8 +371,8 @@ function interact() {
     world.lights = world.lights.filter(l => !(l.x === n.x && l.y === n.y));
     $('note').classList.add('memory'); $('noteTitle').textContent = `Memory ${run.flags.echoes.length} of ${STARS}`; $('noteText').textContent = `${c.memory}\n\n${c.power}`; setMode('note');
     applyStars();
-    if (run.flags.echoes.length === 1) setTimeout(() => subtitle(story.shift.reflection, 6000), 400);
-    if (run.flags.echoes.length === STARS) openExit();
+    if (run.flags.echoes.length === 1) subtitle(story.shift.reflection);
+    if (run.flags.echoes.length === STARS) { openExit(); subtitle(story.shift.exit); }
     save.write();
   }
   else if (n.id === 'note') { $('note').classList.remove('memory'); const c = story.notes[n.note]; $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note'); }
@@ -490,8 +526,9 @@ term.onCommand = command;
 
 function loop(t) {
   const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
+  updateMessages(t); updateObjective();
   if (mode === 'world' || mode === 'outside') { update(dt); world.render(t / 1000); }
-  else if (mode === 'note' || mode === 'brief') world.render(t / 1000);
+  else if (mode === 'note' || mode === 'brief' || mode === 'scare') world.render(t / 1000);
   requestAnimationFrame(loop);
 }
 
@@ -502,8 +539,8 @@ function begin(fresh) {
   $('title').hidden = true; $('settings').hidden = true; $('gear').hidden = false; loadHub(); placeSpawn('hub'); setMode('world');
   $('lockhint').hidden = false;
   const lines = save.data.meta.runs > 1 ? [story.returning, story.wake[2]] : story.wake;
-  lines.forEach((l, i) => setTimeout(() => subtitle(l, 2800), 300 + i * 3000));
-  setTimeout(() => { if (mode === 'world' && run.q === 0 && run.stage === 'query') subtitle(story.hints.move, 6000); }, 300 + lines.length * 3000);
+  lines.forEach(l => subtitle(l));
+  if (run.q === 0 && run.stage === 'query') subtitle(story.hints.move);
 }
 const logo = $('logo'), NAME = 'NULLPOINT';
 function resolveLogo() {
