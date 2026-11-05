@@ -21,6 +21,16 @@ export class Terminal {
     const s = document.createElement('span'); if (cls) s.className = cls; s.textContent = text;
     this.out.append(s); this.out.scrollTop = this.out.scrollHeight; return s;
   }
+  // One line with a word that glows and can be clicked for a while, then goes quiet.
+  printSecret({ before, word, after }, ms, onClick) {
+    this.print(before + word + after, 'sys');
+    this.queue = this.queue.then(() => {
+      const line = this.out.lastElementChild, b = document.createElement('button'); b.className = 'secretWord'; b.textContent = word; b.onclick = onClick;
+      line.textContent = before; line.append(b, `${after}\n`); this.out.scrollTop = this.out.scrollHeight;
+      setTimeout(() => b.replaceWith(word), ms);
+    });
+    return this.queue;
+  }
   // Queued so that several prints always read in order. A later Enter finishes the line at once.
   print(text, cls) {
     this.pending++;

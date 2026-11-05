@@ -16,7 +16,7 @@
    "#..E.m...2........1..###.###.#.##",
    "#.....#####.......##.....#...#..#",
    "#.....#####.......##.###.#.#.##.#",
-   "###########G......##.#...#.#....#",
+   "###########.......##.#...#.#....#",
    "##############4#####.#F###.####.#",
    "##############.#####...#...W....#",
    "##############.##################",
@@ -121,7 +121,6 @@
   "erase": "sit at the typewriter",
   "obey": "touch the monolith",
   "trust": "answer the intercom",
-  "pixel": "touch the green light",
   "echo": "touch the star",
   "exit": "walk out"
  },
@@ -571,5 +570,11 @@
   "hunt": "Find the fuses: {n} of 3",
   "stars": "Stars: {n} of 5",
   "exit": "Walk through the door of light."
+ },
+ "secret": {
+  "before": "I don't keep anything hidden ",
+  "word": "beneath",
+  "after": " this screen.",
+  "used": "Nothing else is down there."
  }
 }

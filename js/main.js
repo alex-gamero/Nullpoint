@@ -7,7 +7,7 @@ import { obey } from './games/obey.js';
 import { trust } from './games/trust.js';
 import { dungeon } from './games/dungeon.js';
 import { brief } from './games/brief.js';
-import { screamer } from './scare.js';
+import { screamer, prepareScares } from './scare.js';
 
 const $ = id => document.getElementById(id);
 const story = await (await fetch('data/story.json')).json();
@@ -67,7 +67,6 @@ function loadHub() {
       if (c === 'T') { world.sprites.push({ ...at, realm: null, id: 'terminal', sprite: 'terminal', block: true, glow: .15 }); world.lights.push({ ...at, realm: null, i: .55, k: .55 }); }
       if (SPR[c]) { world.sprites.push({ ...at, id: SPR[c][0], sprite: SPR[c][1], block: true, glow: .1 }); world.lights.push({ ...at, i: .3, k: .8 }); }
       if ('nmp'.includes(c)) world.sprites.push({ ...at, id: 'note', note: c, sprite: 'note', scale: .6 });
-      if (c === 'G') world.sprites.push({ ...at, id: 'pixel', sprite: 'pixel', scale: .5 });
       if (c === 'F') world.sprites.push({ ...at, id: 'fuse', sprite: 'fuse', scale: .45, hidden: true, glow: .9 });
       if (c === 'W') world.sprites.push({ ...at, id: 'watcher', sprite: 'watcher', hidden: true, scale: 1.05, home: at });
       if ('wuvxy'.includes(c)) { world.sprites.push({ ...at, id: 'echo', echo: c, sprite: 'echo', scale: .8, glow: .8, hidden: seenEchoes.includes(c) }); if (!seenEchoes.includes(c)) world.lights.push({ ...at, i: .35, k: 1 }); }
@@ -102,7 +101,7 @@ const add = (obj, by = 1) => Object.keys(obj).forEach(k => { run.score[k] = (run
 function nearest() {
   const p = world.p; let best = null, bd = 1.35;
   for (const s of world.sprites) {
-    if (s.hidden || !['terminal', 'erase', 'obey', 'trust', 'note', 'pixel', 'echo', 'exit'].includes(s.id) || !world.inRealm(s)) continue;
+    if (s.hidden || !['terminal', 'erase', 'obey', 'trust', 'note', 'echo', 'exit'].includes(s.id) || !world.inRealm(s)) continue;
     const d = Math.hypot(s.x - p.x, s.y - p.y);
     if (d < bd && world.sees(s.x, s.y)) { bd = d; best = s; }
   }
@@ -154,7 +153,7 @@ function update(dt) {
     if (p.y < 6) finish('good');
     return;
   }
-  if (run.q === 0 && run.stage === 'test' && !hunt && p.x > 19.2 && world.realm === 'red') startHunt();
+  if (run.q === 0 && run.stage === 'test' && !hunt && p.x > 19.2 && (world.realm === 'red' || run.flags.huntBriefed)) startHunt();
   if (hunt) updateHunt(dt);
   updateReflection(dt);
   updateScares(dt);
@@ -166,10 +165,14 @@ function update(dt) {
 /* ---------- test one: the Watcher, played in the world itself ---------- */
 function startHunt() {
   const w = world.sprites.find(s => s.id === 'watcher');
-  hunt = { w, got: 0, caught: 0, stared: 0, path: null, repath: 0, lastRed: null };
+  const got = run.flags.fuses ||= [];
+  hunt = { w, got: got.length, caught: 0, stared: 0, path: null, repath: 0, lastRed: null };
   w.hidden = false; w.x = w.home.x; w.y = w.home.y;
-  world.sprites.filter(s => s.id === 'fuse').forEach(s => { s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4, realm: s.realm }); });
+  world.sprites.filter(s => s.id === 'fuse').forEach(s => { if (got.includes(`${s.x},${s.y}`)) return; s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4, realm: s.realm }); });
   messages.length = 0;
+  if (world.realm === 'other') { w.hidden = true; hunt.lastRed = { x: world.p.x, y: world.p.y }; }
+  if (run.flags.huntBriefed) return subtitle(story.watcher.start);
+  run.flags.huntBriefed = true; save.write();
   const box = $('brief'); box.hidden = false; mode = 'brief'; keys.clear();
   brief(box, story.briefs.watcher, story.briefStart).then(() => { box.hidden = true; box.innerHTML = ''; mode = 'world'; last = performance.now(); subtitle(story.watcher.start); });
 }
@@ -195,7 +198,7 @@ function updateHunt(dt) {
   // fuses
   for (const s of world.sprites) {
     if (s.id !== 'fuse' || s.hidden || !world.inRealm(s) || Math.hypot(s.x - p.x, s.y - p.y) > .6) continue;
-    s.hidden = true; hunt.got++; audio.fuse();
+    s.hidden = true; hunt.got++; run.flags.fuses.push(`${s.x},${s.y}`); save.write(); audio.fuse();
     world.lights = world.lights.filter(l => !(l.x === s.x && l.y === s.y));
   }
   if (hunt.got === 3) return endHunt();
@@ -212,7 +215,7 @@ function updateHunt(dt) {
     w.x += (tx - w.x) / l * Math.min(v, l); w.y += (ty - w.y) / l * Math.min(v, l);
   }
   if (!away && Math.hypot(w.x - p.x, w.y - p.y) < .55) {
-    hunt.caught++; scare('watcher', hunt.caught === 1 ? 780 : 420); subtitle(story.watcher.caught, 0, true);
+    hunt.caught++; scare('watcher', hunt.caught === 1 ? 560 : 380); subtitle(story.watcher.caught, 0, true);
     Object.assign(p, { x: WING.x, y: WING.y }); w.x = w.home.x; w.y = w.home.y; hunt.step = null;
   }
 }
@@ -286,7 +289,7 @@ const SCARES = [
   { id: 'face', x: 14.5, y: 17.5, realm: 'red', after: r => r.doors.includes('4') },
   { id: 'paper2', x: 9.5, y: 3.5, realm: 'other', after: () => true },
 ];
-function scare(kind, ms) {
+function scare(kind, ms = 560) {
   audio.scream(); const was = mode; mode = 'scare'; keys.clear();
   screamer(kind, ms).then(() => { if (mode === 'scare') { mode = was; last = performance.now(); } });
 }
@@ -353,7 +356,7 @@ async function station(id) {
   completeTest(); backToWorld();
 }
 async function secret() {
-  if (run.inventory.includes('key') || run.flags.keyFound) return subtitle('Nothing else is here.', 2000);
+  if (run.inventory.includes('key') || run.flags.keyFound) return term.print(story.secret.used);
   const from = mode; setMode('game');
   const r = await dungeon(game, story.dungeon, audio);
   game.innerHTML = '';
@@ -377,7 +380,6 @@ function interact() {
     save.write();
   }
   else if (n.id === 'note') { $('note').classList.remove('memory'); const c = story.notes[n.note]; $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note'); }
-  else if (n.id === 'pixel') secret();
   else station(n.id);
 }
 
@@ -414,6 +416,7 @@ function command(raw) {
   if (cmd === 'history') return term.print(run.history.join('\n'));
   if (cmd === 'inventory') return term.print(run.inventory.length ? run.inventory.join('\n') : t.emptyInv);
   if (cmd === 'status') return term.print(`Queries answered: ${run.answers.filter(Boolean).length} of 4\nDeviations: recorded\nTime subject undetected: ${Math.round(run.flags.unseen || 0)} s\nAttempt: ${save.data.meta.runs}`);
+  if (cmd === story.secret.word) return secret();
   if (cmd === 'root' || cmd === 'sudo su') return term.print(t.root);
   if (cmd === 'use key') {
     if (!run.inventory.includes('key')) return term.print("You don't have a key.");
@@ -436,6 +439,7 @@ async function answer(a) {
   term.print(o.reply);
   term.print('... ');
   term.print(q.after, 'sys');
+  if (run.q === 1) term.printSecret(story.secret, 9000, secret);
   run.stage = 'test'; openDoor(q.door); save.write();
 }
 function rootCommand(cmd) {
@@ -512,7 +516,6 @@ document.addEventListener('mousemove', e => {
   world.p.a += e.movementX * SENS * sens;
   world.p.pitch = Math.max(-45, Math.min(45, world.p.pitch - e.movementY * .22 * sens));
 });
-$('pixel').addEventListener('click', secret);
 function setSens(v) {
   sens = Math.round(Math.min(3, Math.max(.2, v)) * 10) / 10;
   $('sens').value = sens; $('sensValue').textContent = `${sens.toFixed(1)}x`;
@@ -525,9 +528,15 @@ $('sens').addEventListener('input', e => setSens(+e.target.value));
 setSens(sens);
 term.onCommand = command;
 
+let savedAt = 0;
+function savePosition(now) {
+  if (mode !== 'world' || now - savedAt < 3000) return;
+  savedAt = now; const p = world.p; run.pos = { x: p.x, y: p.y, a: p.a, realm: world.realm }; save.write();
+}
+addEventListener('beforeunload', () => { if (run && mode === 'world') { const p = world.p; run.pos = { x: p.x, y: p.y, a: p.a, realm: world.realm }; save.write(); } });
 function loop(t) {
   const dt = Math.min(.05, (t - last) / 1000 || 0); last = t;
-  updateMessages(t); updateObjective();
+  updateMessages(t); updateObjective(); if (run) savePosition(t);
   if (mode === 'world' || mode === 'outside') { update(dt); world.render(t / 1000); }
   else if (mode === 'note' || mode === 'brief' || mode === 'scare') world.render(t / 1000);
   requestAnimationFrame(loop);
@@ -537,11 +546,13 @@ function loop(t) {
 function begin(fresh) {
   audio.start();
   run = fresh || !save.data.run ? save.newRun() : save.data.run;
-  $('title').hidden = true; $('settings').hidden = true; $('gear').hidden = false; loadHub(); placeSpawn('hub'); setMode('world');
+  $('title').hidden = true; $('settings').hidden = true; $('gear').hidden = false; loadHub(); placeSpawn('hub'); prepareScares();
+  const resumed = !fresh && run.pos;
+  if (resumed) { world.setRealm(run.pos.realm); Object.assign(world.p, { x: run.pos.x, y: run.pos.y, a: run.pos.a }); } setMode('world');
   $('lockhint').hidden = false;
   const lines = save.data.meta.runs > 1 ? [story.returning, story.wake[2]] : story.wake;
-  lines.forEach(l => subtitle(l));
-  if (run.q === 0 && run.stage === 'query') subtitle(story.hints.move);
+  if (!resumed) lines.forEach(l => subtitle(l));
+  if (!resumed && run.q === 0 && run.stage === 'query') subtitle(story.hints.move);
 }
 const logo = $('logo'), NAME = 'NULLPOINT';
 function resolveLogo() {
