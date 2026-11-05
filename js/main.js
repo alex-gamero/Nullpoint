@@ -76,7 +76,7 @@ function loadHub() {
     }));
   }
   run.doors.forEach(d => world.open(d));
-  (run.flags.cutouts || []).forEach(c => world.sprites.push({ id: 'cutout', sprite: 'cutout', scale: 1, ...c }));
+  (run.flags.cutouts || []).forEach(c => world.sprites.push({ id: 'cutout', sprite: 'cutout', plane: true, scale: 1, ...c }));
   if (seenEchoes.length === STARS) openExit();
   applyStars();
   world.dark = .78; world.falloff = .7; world.sky = false;
@@ -232,7 +232,7 @@ function updateReflection(dt) {
   const p = world.p;
   if (!reflection) {
     reflection = world.sprites.find(s => s.id === 'reflection');
-    if (!reflection) { reflection = { id: 'reflection', realm: 'other', sprite: 'reflection', scale: 1.05, glow: .3, hidden: true }; world.sprites.push(reflection); }
+    if (!reflection) { reflection = { id: 'reflection', realm: 'other', sprite: 'reflection', scale: 1.3, glow: .02, hidden: true }; world.sprites.push(reflection); }
     reflection.hidden = true; reflection.wait = .6;
     if (run.flags.echoes.length >= 4) subtitle(story.shift.near);
   }
@@ -249,6 +249,7 @@ function updateReflection(dt) {
   const r = reflection, seen = world.sees(r.x, r.y);
   world.staticAmt = seen ? .05 : (hunt ? world.staticAmt : 0);
   if (seen) {
+    r.flip = (r.flip || 0) + dt; r.sprite = Math.floor(r.flip * 7) % 2 ? 'reflection2' : 'reflection';
     r.repath -= dt;
     if (r.repath <= 0 || !r.step) { r.step = nextStep(r, p, 'other', 0); r.repath = .2; }
     if (r.step) {
@@ -303,8 +304,8 @@ function updateScares(dt) {
     done.push(c.id); save.write();
     if (c.id.startsWith('paper')) {
       audio.pop();
-      const spot = { realm: world.realm, x: p.x + Math.cos(p.a) * 1.1, y: p.y + Math.sin(p.a) * 1.1 };
-      const s = { id: 'cutout', sprite: 'cutout', scale: .01, ...spot };
+      const spot = { realm: world.realm, ang: p.a + Math.PI, x: p.x + Math.cos(p.a) * 1.1, y: p.y + Math.sin(p.a) * 1.1 };
+      const s = { id: 'cutout', sprite: 'cutout', plane: true, scale: .01, ...spot };
       world.sprites.push(s); lurch = { t: 0, s };
       (run.flags.cutouts ||= []).push(spot); save.write();
     } else if (c.id === 'dark') { scareT = 2.2; audio.steps(); }

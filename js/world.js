@@ -41,6 +41,49 @@ function paint(size, fn) {
 }
 const fill = (g, col, x, y, w, h) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
 const rgb = (r, b = 0) => `rgb(${r},0,${b})`;
+const CARD = [[30, 18], [46, 12], [58, 17], [76, 9], [97, 16], [103, 42], [97, 66], [101, 88], [78, 94], [60, 90], [40, 96], [27, 82], [33, 58], [25, 38]];
+function cardboard(g, front) {
+  fill(g, rgb(front ? 110 : 150), 61, 86, 6, 42);
+  g.fillStyle = rgb(front ? 225 : 150); g.beginPath(); CARD.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.fill();
+  g.fillStyle = rgb(front ? 165 : 105); g.fillRect(30, 20, 70, 2); g.fillRect(33, 74, 64, 2);
+  if (!front) { [38, 52, 66, 80, 92].forEach(x => { g.fillStyle = rgb(120); g.fillRect(x, 20, 1, 56); }); fill(g, rgb(230), 58, 44, 12, 10); fill(g, rgb(230), 72, 4, 16, 8); return; }
+  g.strokeStyle = '#000001'; g.lineWidth = 3; g.fillStyle = '#000001';
+  g.beginPath(); g.arc(49, 40, 9, 0, 7); g.moveTo(90, 38); g.arc(81, 38, 9, 0, 7); g.stroke();
+  g.fillRect(47, 38, 4, 5); g.fillRect(80, 40, 4, 4);
+  g.beginPath(); g.moveTo(37, 58); g.quadraticCurveTo(66, 92, 94, 56); g.stroke();
+  g.lineWidth = 2; [44, 53, 62, 71, 80, 88].forEach((x, i) => { g.beginPath(); g.moveTo(x, 58 + (i % 2) * 3); g.lineTo(x + 1, 76 - Math.abs(x - 66) * .3); g.stroke(); });
+  fill(g, rgb(255), 72, 4, 16, 8);
+}
+function limb(g, pts, width, v) {
+  g.strokeStyle = rgb(0, v); g.lineWidth = width; g.lineCap = 'round'; g.lineJoin = 'round';
+  g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.stroke();
+  g.strokeStyle = rgb(0, Math.max(0, v - 90)); g.lineWidth = width * .3; g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x + width * .28, y) : g.moveTo(x + width * .28, y)); g.stroke();
+}
+function figure(g, pose) {
+  const swing = pose ? 7 : -5, tilt = pose ? .3 : .16;
+  // legs, thin and too long
+  limb(g, [[88, 112], [84 - swing * .4, 150], [80, 188]], 8, 165);
+  limb(g, [[106, 112], [112 + swing * .4, 150], [118, 188]], 8, 145);
+  fill(g, rgb(0, 190), 72, 184, 15, 4); fill(g, rgb(0, 170), 112, 184, 15, 4);
+  // torso with the ribs showing
+  const f = g.createLinearGradient(70, 0, 124, 0); f.addColorStop(0, 'rgb(0,0,235)'); f.addColorStop(1, 'rgb(0,0,95)');
+  g.fillStyle = f; g.beginPath(); g.moveTo(74, 44); g.quadraticCurveTo(97, 34, 122, 44); g.lineTo(112, 116); g.quadraticCurveTo(97, 123, 84, 116); g.fill();
+  for (let i = 0; i < 6; i++) { g.strokeStyle = 'rgb(0,0,41)'; g.lineWidth = 2; g.beginPath(); g.moveTo(79 + i * .6, 56 + i * 8); g.quadraticCurveTo(97, 52 + i * 8, 116 - i * .6, 56 + i * 8); g.stroke(); }
+  g.fillStyle = 'rgb(0,0,41)'; g.fillRect(96, 44, 2, 62);
+  // arms that reach the floor, with fingers that go past it
+  limb(g, [[77, 48], [58, 92 + swing], [52 - swing, 150]], 6, 205);
+  limb(g, [[119, 48], [138, 90 - swing], [146 + swing, 148]], 6, 130);
+  [[-6, 33], [-2, 37], [2, 36], [6, 30]].forEach(([dx, l]) => { limb(g, [[52 - swing, 150], [52 - swing + dx, 150 + l]], 2, 225); limb(g, [[146 + swing, 148], [146 + swing + dx, 148 + l]], 2, 145); });
+  // head snapped to one side, long face, nothing in the eyes
+  g.save(); g.translate(99, 36); g.rotate(tilt);
+  limb(g, [[0, 16], [0, 4]], 7, 170);
+  const h = g.createLinearGradient(-15, 0, 15, 0); h.addColorStop(0, 'rgb(0,0,250)'); h.addColorStop(1, 'rgb(0,0,110)');
+  g.fillStyle = h; g.beginPath(); g.ellipse(0, -13, 15, 25, 0, 0, 7); g.fill();
+  g.fillStyle = '#000001'; g.beginPath(); g.ellipse(-6, -19, 4.6, 7.5, 0, 0, 7); g.ellipse(7, -19, 4, 7, 0, 0, 7); g.fill();
+  g.fillRect(-6.5, -13, 1.2, 15); g.fillRect(6.5, -13, 1.2, 12);
+  g.beginPath(); g.ellipse(1, 3, 5.5, 8.5, 0, 0, 7); g.fill();
+  g.restore();
+}
 const SPRITES = {
   terminal: paint(64, g => {
     fill(g, rgb(70), 26, 56, 12, 8); fill(g, rgb(90), 16, 26, 32, 24);
@@ -76,29 +119,12 @@ const SPRITES = {
   }),
   note: paint(32, g => { fill(g, rgb(230), 9, 26, 14, 5); fill(g, rgb(90), 11, 28, 9, 1); }),
   echo: paint(32, g => { fill(g, rgb(0, 255), 15, 8, 2, 16); fill(g, rgb(0, 170), 12, 12, 8, 8); fill(g, rgb(0, 90), 9, 15, 14, 2); }),
-  // A standing mirror with your own shape caught inside it, sliding toward you.
-  reflection: paint(128, g => {
-    g.fillStyle = rgb(0, 255); g.beginPath(); g.ellipse(64, 60, 31, 56, 0, 0, 7); g.fill();
-    g.fillStyle = '#000001'; g.beginPath(); g.ellipse(64, 60, 26, 51, 0, 0, 7); g.fill();
-    g.fillStyle = rgb(0, 120); g.beginPath(); g.ellipse(64, 44, 11, 14, 0, 0, 7); g.fill(); g.fillRect(50, 58, 28, 44);
-    g.fillStyle = '#000001'; g.fillRect(58, 40, 4, 5); g.fillRect(67, 40, 4, 5); g.fillRect(62, 50, 5, 8);
-    g.strokeStyle = rgb(0, 255); g.lineWidth = 1.6; g.beginPath();
-    [[64, 60, 44, 28], [64, 60, 86, 34], [64, 60, 42, 92], [64, 60, 84, 96], [64, 60, 90, 62], [64, 60, 60, 12]].forEach(([a, b, c, d]) => { g.moveTo(a, b); g.lineTo((a + c) / 2 + 3, (b + d) / 2 - 2); g.lineTo(c, d); });
-    g.stroke();
-    fill(g, rgb(0, 170), 50, 114, 28, 5); fill(g, rgb(0, 170), 60, 112, 8, 16);
-  }),
+  // Your shape, stretched and starved. Two poses, so it twitches instead of walking.
+  reflection: paint(192, g => figure(g, 0)),
+  reflection2: paint(192, g => figure(g, 1)),
   // Torn cardboard on a stick, drawn on with marker. Cheap, stupid, and it still gets you.
-  cutout: paint(128, g => {
-    fill(g, rgb(70), 61, 86, 6, 42);
-    g.fillStyle = rgb(0, 175); g.beginPath(); [[30, 18], [46, 12], [58, 17], [76, 9], [97, 16], [103, 42], [97, 66], [101, 88], [78, 94], [60, 90], [40, 96], [27, 82], [33, 58], [25, 38]].forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.fill();
-    g.fillStyle = rgb(0, 118); g.fillRect(30, 20, 70, 2); g.fillRect(33, 74, 64, 2); // cardboard creases
-    g.strokeStyle = '#000001'; g.lineWidth = 3; g.fillStyle = '#000001';
-    g.beginPath(); g.arc(49, 40, 9, 0, 7); g.moveTo(90, 38); g.arc(81, 38, 9, 0, 7); g.stroke();
-    g.fillRect(47, 38, 4, 5); g.fillRect(80, 40, 4, 4);
-    g.beginPath(); g.moveTo(37, 58); g.quadraticCurveTo(66, 92, 94, 56); g.stroke();
-    g.lineWidth = 2; [44, 53, 62, 71, 80, 88].forEach((x, i) => { g.beginPath(); g.moveTo(x, 58 + (i % 2) * 3); g.lineTo(x + 1, 76 - Math.abs(x - 66) * .3); g.stroke(); });
-    fill(g, rgb(0, 235), 72, 4, 16, 8); // tape
-  }),
+  cutout: paint(128, g => cardboard(g, true)),
+  cutoutBack: paint(128, g => cardboard(g, false)),
   // A doorway made of light.
   door: paint(128, g => {
     fill(g, rgb(0, 255), 30, 8, 68, 120); fill(g, rgb(0, 150), 37, 15, 54, 113);
@@ -213,6 +239,7 @@ export class World {
     const p = this.p, list = this.sprites.filter(s => !s.hidden && s.sprite && this.inRealm(s))
       .map(s => ({ s, d: (s.x - p.x) * cos + (s.y - p.y) * sin })).filter(o => o.d > .15).sort((a, b) => b.d - a.d);
     for (const { s, d } of list) {
+      if (s.plane) { this.drawPlane(s, cos, sin, plane, horizon, hs); continue; }
       const lat = -(s.x - p.x) * sin + (s.y - p.y) * cos, sp = SPRITES[s.sprite];
       const sx = W / 2 + lat / d * (W / 2) / plane, size = hs * 2 / d * (s.scale || 1);
       const floorY = horizon + hs / d, x0 = sx - size / 2 | 0, y0 = floorY - size | 0;
@@ -227,6 +254,25 @@ export class World {
           if (v === 9) { this.secret[i] = 1; continue; }
           this.lum[i] = v >= 2 ? v - 2 + (s.glow || .1) : v * l;
         }
+      }
+    }
+  }
+  // A flat thing standing in the room: narrow from the side, blank from behind.
+  drawPlane(s, cos, sin, plane, horizon, hs) {
+    const p = this.p, nx = Math.cos(s.ang || 0), ny = Math.sin(s.ang || 0), rx = -ny, ry = nx, half = (s.w || .68) / 2;
+    const dx = s.x - p.x, dy = s.y - p.y, front = (p.x - s.x) * nx + (p.y - s.y) * ny > 0;
+    const sp = SPRITES[front ? s.sprite : `${s.sprite}Back`], tall = (s.h || .72) * s.scale, l = this.light(s.x, s.y, Math.hypot(dx, dy));
+    for (let x = 0; x < W; x++) {
+      const cam = 2 * x / W - 1, ax = cos - sin * plane * cam, ay = sin + cos * plane * cam, det = -ax * ry + rx * ay;
+      if (Math.abs(det) < 1e-5) continue;
+      const t = (-dx * ry + rx * dy) / det, u = (ax * dy - ay * dx) / det;
+      if (t < .08 || Math.abs(u) > half || this.depth[x] < t) continue;
+      const size = hs * 2 / t * tall, y0 = horizon + hs / t - size;
+      let tu = (u / half + 1) / 2; if (!front) tu = 1 - tu;
+      const tx = Math.min(sp.size - 1, tu * sp.size | 0);
+      for (let y = Math.max(0, y0 | 0); y < Math.min(H, y0 + size); y++) {
+        const v = sp.px[Math.min(sp.size - 1, (y - y0) / size * sp.size | 0) * sp.size + tx];
+        if (v >= 0) this.lum[y * W + x] = v * l * 1.5;
       }
     }
   }
