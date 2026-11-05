@@ -19,7 +19,9 @@ const WING = { x: 20.5, y: 12.5 }; // the first cell past the east door
 const ENDINGS = Object.keys(story.endings);
 
 let run, mode = 'title', keys = new Set(), last = 0, stepT = 0, activeNote = null, rootMode = false, confirmRm = false;
-let hunt = null, ghost = null;
+let hunt = null, ghost = null, shifting = null, unseenRun = 0, exitCell = null;
+const SENS_KEY = 'nullpoint.sens';
+let sens = 1; try { sens = Math.min(3, Math.max(.2, +localStorage.getItem(SENS_KEY) || 1)); } catch { /* storage blocked */ }
 
 /* ---------- world setup ---------- */
 const subtitle = (text, ms = 4500) => {
@@ -28,20 +30,30 @@ const subtitle = (text, ms = 4500) => {
 };
 const SPR = { O: ['obey', 'monolith'], E: ['erase', 'typewriter'], R: ['trust', 'intercom'] };
 function loadHub() {
-  world.load(story.maps.hub);
+  world.loadRealms(story.maps.hub, story.maps.other);
   world.sprites = []; world.lights = [];
-  world.rows.forEach((r, y) => r.forEach((c, x) => {
-    const at = { x: x + .5, y: y + .5 };
-    if (c === 'T') { world.sprites.push({ ...at, id: 'terminal', sprite: 'terminal', block: true, glow: .15 }); world.lights.push({ ...at, i: .55, k: .55 }); }
-    if (SPR[c]) { world.sprites.push({ ...at, id: SPR[c][0], sprite: SPR[c][1], block: true, glow: .1 }); world.lights.push({ ...at, i: .3, k: .8 }); }
-    if ('nmp'.includes(c)) world.sprites.push({ ...at, id: 'note', note: c, sprite: 'note', scale: .6 });
-    if (c === 'G') world.sprites.push({ ...at, id: 'pixel', sprite: 'pixel', scale: .5 });
-    if (c === 'F') world.sprites.push({ ...at, id: 'fuse', sprite: 'fuse', scale: .45, hidden: true, glow: .9 });
-    if (c === 'W') world.sprites.push({ ...at, id: 'watcher', sprite: 'watcher', hidden: true, scale: 1.05, home: at });
-    if (c !== '#' && !'1234'.includes(c)) r[x] = '.';
-  }));
+  const seenEchoes = run.flags.echoes ||= [];
+  for (const realm of ['red', 'other']) {
+    world.grids[realm].forEach((r, y) => r.forEach((c, x) => {
+      const at = { x: x + .5, y: y + .5, realm };
+      if (c === 'T') { world.sprites.push({ ...at, realm: null, id: 'terminal', sprite: 'terminal', block: true, glow: .15 }); world.lights.push({ ...at, realm: null, i: .55, k: .55 }); }
+      if (SPR[c]) { world.sprites.push({ ...at, id: SPR[c][0], sprite: SPR[c][1], block: true, glow: .1 }); world.lights.push({ ...at, i: .3, k: .8 }); }
+      if ('nmp'.includes(c)) world.sprites.push({ ...at, id: 'note', note: c, sprite: 'note', scale: .6 });
+      if (c === 'G') world.sprites.push({ ...at, id: 'pixel', sprite: 'pixel', scale: .5 });
+      if (c === 'F') world.sprites.push({ ...at, id: 'fuse', sprite: 'fuse', scale: .45, hidden: true, glow: .9 });
+      if (c === 'W') world.sprites.push({ ...at, id: 'watcher', sprite: 'watcher', hidden: true, scale: 1.05, home: at });
+      if ('uvxy'.includes(c)) { world.sprites.push({ ...at, id: 'echo', echo: c, sprite: 'echo', scale: .8, glow: .8, hidden: seenEchoes.includes(c) }); if (!seenEchoes.includes(c)) world.lights.push({ ...at, i: .35, k: 1 }); }
+      if (c === 'X') exitCell = { x, y };
+      if (c !== '#' && c !== 'X' && !'1234'.includes(c)) r[x] = '.';
+    }));
+  }
   run.doors.forEach(d => world.open(d));
+  if (seenEchoes.length === 4) openExit();
   world.dark = .78; world.falloff = .7; world.sky = false;
+}
+function openExit() {
+  world.open('X');
+  world.lights.push({ x: exitCell.x + .5, y: exitCell.y + .5, realm: 'other', i: 1.1, k: .5 });
 }
 function placeSpawn(name) {
   const [x, y, a] = story.spawn[name];
@@ -54,16 +66,42 @@ const add = (obj, by = 1) => Object.keys(obj).forEach(k => { run.score[k] = (run
 function nearest() {
   const p = world.p; let best = null, bd = 1.35;
   for (const s of world.sprites) {
-    if (s.hidden || !['terminal', 'erase', 'obey', 'trust', 'note', 'pixel'].includes(s.id)) continue;
+    if (s.hidden || !['terminal', 'erase', 'obey', 'trust', 'note', 'pixel', 'echo'].includes(s.id) || !world.inRealm(s)) continue;
     const d = Math.hypot(s.x - p.x, s.y - p.y);
     if (d < bd && world.sees(s.x, s.y)) { bd = d; best = s; }
   }
   return best;
 }
+function startShift() {
+  if (shifting || mode !== 'world' || !run.flags.shift) return;
+  const to = world.realm === 'red' ? 'other' : 'red', p = world.p;
+  if (!world.canBe(to, p.x, p.y)) { audio.bad(); return subtitle(story.shift.blocked, 1800); }
+  shifting = { t: 0, to, swapped: false }; audio.shift(); keys.clear();
+}
+function updateShift(dt) {
+  const s = shifting, p = world.p, D = .38;
+  s.t += dt;
+  if (!s.swapped && s.t >= D) {
+    s.swapped = true; world.setRealm(s.to); audio.setDrone(s.to === 'other' ? .03 : .09);
+    if (s.to === 'other') { unseenRun = 0; if (!run.flags.shifted) { run.flags.shifted = true; subtitle(story.shift.first, 3000); } }
+    else if (unseenRun > 3) subtitle(story.shift.back.replace('{n}', Math.round(unseenRun)), 3000);
+    if (hunt) { hunt.lastRed = s.to === 'other' ? { x: p.x, y: p.y } : null; hunt.step = null; hunt.w.hidden = s.to === 'other'; }
+    save.write();
+  }
+  const f = s.t < D ? s.t / D : (s.t - D) / D;
+  world.fade = s.t < D ? 1 - f : f;
+  p.sink = s.t < D ? -130 * f * f : 130 * (1 - f) * (1 - f);
+  if (s.t >= D * 2) { shifting = null; world.fade = 1; p.sink = 0; }
+}
 function update(dt) {
   const p = world.p;
-  if (keys.has('ArrowLeft')) p.a -= TURN * dt;
-  if (keys.has('ArrowRight')) p.a += TURN * dt;
+  if (shifting) updateShift(dt);
+  if (world.realm === 'other') {
+    unseenRun += dt; run.flags.unseen = (run.flags.unseen || 0) + dt;
+    if (run.flags.echoes.length === 4 && (p.x | 0) === exitCell.x && (p.y | 0) === exitCell.y) return finish('unrecorded');
+  }
+  if (keys.has('ArrowLeft')) p.a -= TURN * sens * dt;
+  if (keys.has('ArrowRight')) p.a += TURN * sens * dt;
   let f = 0, r = 0;
   if (keys.has('KeyW') || keys.has('ArrowUp')) f++;
   if (keys.has('KeyS') || keys.has('ArrowDown')) f--;
@@ -79,7 +117,7 @@ function update(dt) {
     if (p.y < 6) finish('good');
     return;
   }
-  if (run.q === 0 && run.stage === 'test' && !hunt && p.x > 19.2) startHunt();
+  if (run.q === 0 && run.stage === 'test' && !hunt && p.x > 19.2 && world.realm === 'red') startHunt();
   if (hunt) updateHunt(dt);
   updateGhost(dt);
   const n = nearest();
@@ -89,9 +127,10 @@ function update(dt) {
 /* ---------- test one: the Watcher, played in the world itself ---------- */
 function startHunt() {
   const w = world.sprites.find(s => s.id === 'watcher');
-  hunt = { w, got: 0, caught: 0, stared: 0, path: null, repath: 0 };
+  hunt = { w, got: 0, caught: 0, stared: 0, path: null, repath: 0, lastRed: null };
+  run.flags.shift = true;
   w.hidden = false; w.x = w.home.x; w.y = w.home.y;
-  world.sprites.filter(s => s.id === 'fuse').forEach(s => { s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4 }); });
+  world.sprites.filter(s => s.id === 'fuse').forEach(s => { s.hidden = false; world.lights.push({ x: s.x, y: s.y, i: .22, k: 1.4, realm: s.realm }); });
   $('hud').textContent = '0 of 3';
   const box = $('brief'); box.hidden = false; mode = 'brief'; keys.clear();
   brief(box, story.briefs.watcher, story.briefStart).then(() => { box.hidden = true; box.innerHTML = ''; mode = 'world'; last = performance.now(); subtitle(story.watcher.start); });
@@ -108,34 +147,35 @@ function nextStep(from, to) {
     }
     for (const [a, b] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
       const nx = x + a, ny = y + b;
-      if (nx >= 19 && !world.solid(nx, ny) && !prev.has(key(nx, ny))) { prev.set(key(nx, ny), [x, y]); q.push([nx, ny]); }
+      if (nx >= 19 && !world.solidIn('red', nx, ny) && !prev.has(key(nx, ny))) { prev.set(key(nx, ny), [x, y]); q.push([nx, ny]); }
     }
   }
   return null;
 }
 function updateHunt(dt) {
-  const { w } = hunt, p = world.p;
+  const { w } = hunt, p = world.p, away = world.realm === 'other';
   // fuses
   for (const s of world.sprites) {
-    if (s.id !== 'fuse' || s.hidden || Math.hypot(s.x - p.x, s.y - p.y) > .6) continue;
+    if (s.id !== 'fuse' || s.hidden || !world.inRealm(s) || Math.hypot(s.x - p.x, s.y - p.y) > .6) continue;
     s.hidden = true; hunt.got++; audio.fuse();
     world.lights = world.lights.filter(l => !(l.x === s.x && l.y === s.y));
     $('hud').textContent = `${hunt.got} of 3`;
     subtitle(story.watcher.fuse.replace('{n}', hunt.got), 2200);
   }
   if (hunt.got === 3) return endHunt();
-  const inWing = p.x > 19, d = Math.hypot(w.x - p.x, w.y - p.y), seen = inWing && world.sees(w.x, w.y);
+  const inWing = p.x > 19, d = Math.hypot(w.x - p.x, w.y - p.y), seen = !away && inWing && world.sees(w.x, w.y);
   world.staticAmt = seen ? Math.max(.015, .13 - d * .018) : 0;
   audio.setStatic(world.staticAmt);
   if (seen) { hunt.stared += dt; return; }
-  if (!inWing) return;
+  if (!inWing && !away) return;
+  const target = away ? hunt.lastRed : p;
   hunt.repath -= dt;
-  if (hunt.repath <= 0 || !hunt.step) { hunt.step = nextStep(w, p); hunt.repath = .2; }
+  if (hunt.repath <= 0 || !hunt.step) { hunt.step = nextStep(w, target); hunt.repath = .2; }
   if (hunt.step) {
     const tx = hunt.step[0] + .5, ty = hunt.step[1] + .5, l = Math.hypot(tx - w.x, ty - w.y) || 1, v = (1.7 + hunt.got * .25) * dt;
     w.x += (tx - w.x) / l * Math.min(v, l); w.y += (ty - w.y) / l * Math.min(v, l);
   }
-  if (Math.hypot(w.x - p.x, w.y - p.y) < .55) {
+  if (!away && Math.hypot(w.x - p.x, w.y - p.y) < .55) {
     hunt.caught++; audio.sting(); subtitle(story.watcher.caught, 3500);
     Object.assign(p, { x: WING.x, y: WING.y }); w.x = w.home.x; w.y = w.home.y; hunt.step = null;
   }
@@ -152,8 +192,8 @@ function endHunt() {
 }
 function updateGhost(dt) {
   if (run.q !== 2 || run.stage !== 'query' || run.flags.ghost) return;
-  if (!ghost) { ghost = { id: 'ghost', sprite: 'watcher', x: 16.5, y: 8.5, scale: 1.05, seen: 0 }; world.sprites.push(ghost); }
-  if (world.sees(ghost.x, ghost.y)) ghost.seen += dt;
+  if (!ghost) { ghost = { id: 'ghost', realm: 'red', sprite: 'watcher', x: 16.5, y: 8.5, scale: 1.05, seen: 0 }; world.sprites.push(ghost); }
+  if (world.realm === 'red' && world.sees(ghost.x, ghost.y)) ghost.seen += dt;
   else if (ghost.seen > .6) { ghost.hidden = true; run.flags.ghost = true; audio.step(); }
 }
 function completeTest() {
@@ -201,7 +241,14 @@ function interact() {
   if (mode === 'note') { setMode('world'); return; }
   if (mode !== 'world') return;
   const n = nearest(); if (!n) return;
-  if (n.id === 'terminal') openTerminal();
+  if (n.id === 'terminal') { if (world.realm === 'other') return subtitle(story.shift.dead, 2200); openTerminal(); }
+  else if (n.id === 'echo') {
+    const c = story.echoes[n.echo]; n.hidden = true; run.flags.echoes.push(n.echo); audio.fuse();
+    world.lights = world.lights.filter(l => !(l.x === n.x && l.y === n.y));
+    $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note');
+    if (run.flags.echoes.length === 4) { openExit(); setTimeout(() => subtitle(story.shift.exit, 5000), 600); }
+    save.write();
+  }
   else if (n.id === 'note') { const c = story.notes[n.note]; $('noteTitle').textContent = c.title; $('noteText').textContent = c.text; setMode('note'); }
   else if (n.id === 'pixel') secret();
   else station(n.id);
@@ -239,7 +286,7 @@ function command(raw) {
   if (cmd === 'clear') return term.clear();
   if (cmd === 'history') return term.print(run.history.join('\n'));
   if (cmd === 'inventory') return term.print(run.inventory.length ? run.inventory.join('\n') : t.emptyInv);
-  if (cmd === 'status') return term.print(`Queries answered: ${run.answers.length} of 4\nDeviations: recorded\nAttempt: ${save.data.meta.runs}`);
+  if (cmd === 'status') return term.print(`Queries answered: ${run.answers.filter(Boolean).length} of 4\nDeviations: recorded\nTime subject undetected: ${Math.round(run.flags.unseen || 0)} s\nAttempt: ${save.data.meta.runs}`);
   if (cmd === 'root' || cmd === 'sudo su') return term.print(t.root);
   if (cmd === 'use key') {
     if (!run.inventory.includes('key')) return term.print("You don't have a key.");
@@ -294,7 +341,7 @@ function pickEnding() {
 /* ---------- endings ---------- */
 function finish(id) {
   const e = story.endings[id], score = { ...run.score };
-  save.unlock(id); setMode('ending'); term.hide();
+  save.unlock(id); setMode('ending'); term.hide(); $('gear').hidden = true; $('settings').hidden = true; if (document.pointerLockElement) document.exitPointerLock();
   $('stage').hidden = true; audio.setDrone(0); audio.setStatic(0);
   audio.play(e.music, e.vol);
   const el = $('ending'); el.hidden = false; el.classList.toggle('noart', !e.art);
@@ -318,8 +365,10 @@ function finish(id) {
 /* ---------- input ---------- */
 addEventListener('keydown', e => {
   if (e.code === 'KeyM' && mode !== 'terminal' && mode !== 'game') audio.toggleMute();
+  if ((e.code === 'ShiftLeft' || e.code === 'ShiftRight') && !e.repeat) { if (mode === 'world') { e.preventDefault(); startShift(); } return; }
+  if ((e.key === '[' || e.key === ']') && (mode === 'world' || mode === 'outside')) { setSens(sens + (e.key === ']' ? .1 : -.1)); return subtitle(`Mouse sensitivity ${sens.toFixed(1)}x`, 1400); }
   if (mode === 'world' || mode === 'outside' || mode === 'note') {
-    if (e.code === 'KeyE') { e.preventDefault(); interact(); } else keys.add(e.code);
+    if (e.code === 'KeyE') { e.preventDefault(); interact(); } else if (!shifting) keys.add(e.code);
     if (e.code.startsWith('Arrow')) e.preventDefault();
   }
   if (mode === 'terminal' && e.key === 'Escape') leaveTerminal();
@@ -328,15 +377,25 @@ addEventListener('keyup', e => keys.delete(e.code));
 addEventListener('blur', () => keys.clear());
 canvas.addEventListener('click', () => { if (mode === 'world' || mode === 'outside') canvas.requestPointerLock?.()?.catch?.(() => {}); });
 document.addEventListener('pointerlockchange', () => {
-  const on = document.pointerLockElement === canvas; if (on) $('lockhint').hidden = true;
+  const on = document.pointerLockElement === canvas; $('gear').hidden = on; if (on) { $('lockhint').hidden = true; $('settings').hidden = true; }
   else if (mode === 'world' || mode === 'outside') $('lockhint').hidden = false;
 });
 document.addEventListener('mousemove', e => {
   if (document.pointerLockElement !== canvas || mode === 'brief') return;
-  world.p.a += e.movementX * SENS;
-  world.p.pitch = Math.max(-45, Math.min(45, world.p.pitch - e.movementY * .22));
+  world.p.a += e.movementX * SENS * sens;
+  world.p.pitch = Math.max(-45, Math.min(45, world.p.pitch - e.movementY * .22 * sens));
 });
 $('pixel').addEventListener('click', secret);
+function setSens(v) {
+  sens = Math.round(Math.min(3, Math.max(.2, v)) * 10) / 10;
+  $('sens').value = sens; $('sensValue').textContent = `${sens.toFixed(1)}x`;
+  try { localStorage.setItem(SENS_KEY, sens); } catch { /* storage blocked */ }
+}
+const toggleSettings = open => { $('settings').hidden = !open; };
+$('gear').addEventListener('click', () => toggleSettings($('settings').hidden));
+$('settingsDone').addEventListener('click', () => toggleSettings(false));
+$('sens').addEventListener('input', e => setSens(+e.target.value));
+setSens(sens);
 term.onCommand = command;
 
 function loop(t) {
@@ -350,7 +409,7 @@ function loop(t) {
 function begin(fresh) {
   audio.start();
   run = fresh || !save.data.run ? save.newRun() : save.data.run;
-  $('title').hidden = true; loadHub(); placeSpawn('hub'); setMode('world');
+  $('title').hidden = true; $('settings').hidden = true; $('gear').hidden = false; loadHub(); placeSpawn('hub'); setMode('world');
   $('lockhint').hidden = false;
   const lines = save.data.meta.runs > 1 ? [story.returning, story.wake[2]] : story.wake;
   lines.forEach((l, i) => setTimeout(() => subtitle(l, 2800), 300 + i * 3000));
@@ -373,8 +432,9 @@ const acts = $('titleActions');
 const btn = (label, fn) => { const b = document.createElement('button'); b.textContent = label; b.onclick = fn; acts.append(b); };
 if (save.data.run) { btn('Continue', () => begin(false)); btn('Start over', () => begin(true)); }
 else btn('Wake up', () => begin(true));
+btn('Settings', () => { $('settings').hidden = !$('settings').hidden; });
 requestAnimationFrame(loop);
 
 if (new URLSearchParams(location.search).has('dev')) {
-  window.NP = { world, story, save, get run() { return run; }, get mode() { return mode; }, get hunt() { return hunt; }, finish, secret, command };
+  window.NP = { startShift, get sens() { return sens; }, world, story, save, get run() { return run; }, get mode() { return mode; }, get hunt() { return hunt; }, finish, secret, command };
 }

@@ -34,6 +34,8 @@ You wake up in a dark room with no doors. An AI asks you four questions, then te
 | `W` `A` `S` `D` | Walk |
 | Mouse or `←` `→` | Look around |
 | `E` | Use what's in front of you |
+| `Shift` | Sink through the floor into the other side |
+| `[` `]` | Change mouse sensitivity (also in Settings) |
 | `M` | Mute |
 
 At the terminal, type `help`. Progress saves automatically in your browser.

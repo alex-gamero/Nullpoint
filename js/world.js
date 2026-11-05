@@ -1,11 +1,12 @@
 // Dithered first-person raycaster. Everything is drawn into a luminance buffer,
 // then ordered-dithered down to the five colours of the game's artwork.
 const W = 320, H = 180;
-const PAL = [[13, 13, 20], [34, 19, 34], [82, 38, 62], [172, 50, 50], [224, 112, 90], [233, 201, 180]];
+const RED = [[13, 13, 20], [34, 19, 34], [82, 38, 62], [172, 50, 50], [224, 112, 90], [233, 201, 180]];
+const OTHER = [[5, 15, 22], [10, 40, 50], [20, 78, 86], [44, 146, 140], [152, 228, 196], [240, 252, 232]];
 const SECRET = [72, 238, 130];
 const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + .5) / 16);
 const FOV = 1.05, TEX = 64;
-const SOLID = new Set(['#', '1', '2', '3', '4']);
+const SOLID = new Set(['#', '1', '2', '3', '4', 'X']);
 
 function rng(seed) { return () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296; }
 
@@ -74,6 +75,7 @@ const SPRITES = {
     fill(g, rgb(70), 46, 38, 10, 26); fill(g, rgb(110), 48, 34, 6, 4);
   }),
   note: paint(32, g => { fill(g, rgb(230), 9, 26, 14, 5); fill(g, rgb(90), 11, 28, 9, 1); }),
+  echo: paint(32, g => { fill(g, rgb(0, 255), 15, 8, 2, 16); fill(g, rgb(0, 170), 12, 12, 8, 8); fill(g, rgb(0, 90), 9, 15, 14, 2); }),
   fuse: paint(32, g => { fill(g, rgb(60), 13, 18, 6, 12); fill(g, rgb(0, 255), 14, 12, 4, 7); }),
   pixel: paint(32, g => { g.fillStyle = '#00ff00'; g.fillRect(15, 15, 2, 2); }),
   watcher: paint(128, g => {
@@ -92,20 +94,29 @@ export class World {
     this.depth = new Float32Array(W);
     this.wall = makeTexture(.5, .5, 5, 11); this.floor = makeTexture(.28, .5, 2, 23); this.ceil = makeTexture(.16, .6, 2, 37);
     this.p = { x: 0, y: 0, a: 0, pitch: 0, bob: 0 };
-    this.sprites = []; this.lights = []; this.staticAmt = 0; this.dark = 1; this.falloff = .7; this.sky = false; this.moon = null;
+    this.sprites = []; this.lights = []; this.staticAmt = 0; this.dark = 1; this.falloff = .7; this.fade = 1; this.pal = RED; this.realm = 'red'; this.grids = null; this.sky = false; this.moon = null;
   }
   load(rows, sky = false) {
     this.rows = rows.map(r => r.split('')); this.h = rows.length; this.w = rows[0].length; this.sky = sky;
   }
+  // Two versions of the same building. Only one is ever under your feet.
+  loadRealms(red, other) {
+    this.grids = { red: red.map(r => r.split('')), other: other.map(r => r.split('')) };
+    this.h = red.length; this.w = red[0].length; this.sky = false; this.setRealm('red');
+  }
+  setRealm(name) { this.realm = name; this.rows = this.grids[name]; this.pal = name === 'other' ? OTHER : RED; }
+  solidIn(name, x, y) { return SOLID.has((this.grids[name][y | 0] || [])[x | 0] ?? '#'); }
+  canBe(name, x, y, R = .26) { return ![[-R, -R], [R, -R], [-R, R], [R, R]].some(([a, b]) => this.solidIn(name, x + a, y + b)); }
+  inRealm(s) { return !s.realm || s.realm === this.realm; }
   at(x, y) { return (this.rows[y | 0] || [])[x | 0] ?? '#'; }
   solid(x, y) { return SOLID.has(this.at(x, y)); }
-  open(ch) { for (const r of this.rows) for (let i = 0; i < r.length; i++) if (r[i] === ch) r[i] = '.'; }
+  open(ch) { for (const g of this.grids ? Object.values(this.grids) : [this.rows]) for (const r of g) for (let i = 0; i < r.length; i++) if (r[i] === ch) r[i] = '.'; }
   find(ch) { const o = []; this.rows.forEach((r, y) => r.forEach((c, x) => { if (c === ch) o.push([x + .5, y + .5]); })); return o; }
 
   move(dx, dy) {
     const R = .24, p = this.p;
     const clear = (x, y) => !this.solid(x - R, y - R) && !this.solid(x + R, y - R) && !this.solid(x - R, y + R) && !this.solid(x + R, y + R)
-      && !this.sprites.some(s => s.block && Math.hypot(s.x - x, s.y - y) < .42);
+      && !this.sprites.some(s => s.block && this.inRealm(s) && Math.hypot(s.x - x, s.y - y) < .42);
     if (clear(p.x + dx, p.y)) p.x += dx;
     if (clear(p.x, p.y + dy)) p.y += dy;
   }
@@ -122,12 +133,12 @@ export class World {
   }
   light(x, y, d) {
     let l = this.dark / (1 + d * d * this.falloff);
-    for (const s of this.lights) { const q = (s.x - x) ** 2 + (s.y - y) ** 2; if (q < 40) l += s.i / (1 + q * s.k); }
+    for (const s of this.lights) { if (!this.inRealm(s)) continue; const q = (s.x - x) ** 2 + (s.y - y) ** 2; if (q < 40) l += s.i / (1 + q * s.k); }
     return l;
   }
   render(t) {
     const { lum, secret, depth, p } = this, cos = Math.cos(p.a), sin = Math.sin(p.a);
-    const plane = Math.tan(FOV / 2), horizon = (H >> 1) + (p.pitch | 0) + (Math.sin(p.bob) * 1.6 | 0);
+    const plane = Math.tan(FOV / 2), horizon = (H >> 1) + (p.pitch | 0) + (Math.sin(p.bob) * 1.6 | 0) + (p.sink | 0);
     const dl = [cos + sin * plane, sin - cos * plane], dr = [cos - sin * plane, sin + cos * plane];
     const hs = W / (4 * plane);
     secret.fill(0);
@@ -171,7 +182,7 @@ export class World {
     if (this.sky && this.moon && this.moon.complete) this.drawMoon(horizon, plane);
   }
   drawSprites(cos, sin, plane, horizon, hs) {
-    const p = this.p, list = this.sprites.filter(s => !s.hidden && s.sprite)
+    const p = this.p, list = this.sprites.filter(s => !s.hidden && s.sprite && this.inRealm(s))
       .map(s => ({ s, d: (s.x - p.x) * cos + (s.y - p.y) * sin })).filter(o => o.d > .15).sort((a, b) => b.d - a.d);
     for (const { s, d } of list) {
       const lat = -(s.x - p.x) * sin + (s.y - p.y) * cos, sp = SPRITES[s.sprite];
@@ -192,7 +203,7 @@ export class World {
     }
   }
   compose(t) {
-    const { lum, secret, staticAmt } = this, d = this.img.data, last = PAL.length - 1;
+    const { lum, secret, staticAmt, fade } = this, PAL = this.pal, d = this.img.data, last = PAL.length - 1;
     const nS = staticAmt > 0 ? rng(t * 1000 | 0) : null;
     for (let y = 0, i = 0; y < H; y++) for (let x = 0; x < W; x++, i++) {
       const o = i * 4; let c;
@@ -200,7 +211,7 @@ export class World {
       else {
         let v = lum[i];
         if (nS && nS() < staticAmt) v = nS() * .5;
-        v = Math.pow(Math.max(0, v), .85) * last;
+        v = Math.pow(Math.max(0, v * fade), .85) * last;
         const lo = Math.min(last, v | 0), f = v - lo;
         c = PAL[Math.min(last, lo + (f > BAYER[(y & 3) * 4 + (x & 3)] ? 1 : 0))];
       }

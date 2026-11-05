@@ -32,6 +32,13 @@
   <p class="warn">Best with headphones. Contains flickering static, a figure that follows you, and questions about hurting people.</p>
   <nav><a href="https://github.com/alex-gamero" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/alex-gamero" target="_blank" rel="noopener">LinkedIn</a></nav>
 </section>
+<button id="gear" hidden aria-label="Open settings">Settings</button>
+<div id="settings" hidden>
+  <label for="sens">Mouse sensitivity <span id="sensValue">1.0x</span></label>
+  <input id="sens" type="range" min="0.2" max="3" step="0.1" value="1">
+  <p>Change it anytime with [ and ]. Press Esc to free the mouse.</p>
+  <button id="settingsDone">Done</button>
+</div>
 <section id="touch"><p>Nullpoint needs a keyboard and a mouse. Open it on a laptop or PC.</p></section>
 <script type="module" src="js/main.js"></script>
 </body>

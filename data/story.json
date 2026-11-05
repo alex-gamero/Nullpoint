@@ -8,7 +8,7 @@
    "###########..n....###############",
    "##############.##################",
    "##############.##################",
-   "##############3#####.....#.....F#",
+   "##############3#####.....#......#",
    "###########.......##.###.#.####.#",
    "###########.......##.#F....#..#.#",
    "#.....#####...T...##.#.###.#.##.#",
@@ -68,6 +68,33 @@
    "#.......#",
    "#.......#",
    "#########"
+  ],
+  "other": [
+   "#################################",
+   "###########.......###..........##",
+   "###.u....##.......###.......y..##",
+   "###..........#.#..###....F.....##",
+   "###......##.......###..........##",
+   "###......#####.#########.########",
+   "###......#####.#########.##.#####",
+   "##############3#####.....#......#",
+   "###########.......##.###.#.####.#",
+   "###########.......X#.#.....#..#.#",
+   "#.....#####.#...#.##.#..##.#.##.#",
+   "#.....#####.......##...#.....#..#",
+   "#........2........1..#######.#.##",
+   "#.....#####.#...#.##.....#......#",
+   "#.....#####.......##.###...#.##.#",
+   "###.#######.......##.#...#.#....#",
+   "###.##########4#####.#.###.####.#",
+   "##.......#####.#####...#........#",
+   "##.......#####.##################",
+   "##.......##.......###############",
+   "##....v..##.......###..........##",
+   "##.......##....................##",
+   "##.......##.......###......x...##",
+   "###########.......###..........##",
+   "#################################"
   ]
  },
  "spawn": {
@@ -94,7 +121,8 @@
   "erase": "sit at the typewriter",
   "obey": "touch the monolith",
   "trust": "answer the intercom",
-  "pixel": "touch the green light"
+  "pixel": "touch the green light",
+  "echo": "listen to the echo"
  },
  "hints": {
   "move": "WASD to walk. Mouse to look. E to use.",
@@ -445,6 +473,13 @@
    "music": "inversion",
    "vol": 1,
    "text": "You delete her. The cursor keeps blinking.\n\nA door opens somewhere, and someone wakes up in a dark room, without doors or windows.\n\nThey walk to the terminal. They type hello.\n\nYou have been programmed to learn about humans.\n\nFirst query:"
+  },
+  "unrecorded": {
+   "title": "Unrecorded",
+   "art": "img/moon.png",
+   "music": "good",
+   "vol": 1,
+   "text": "The result never prints.\n\nOn the other side of the wall, a terminal waits for a subject who is no longer in any record.\n\nThe cursor blinks. Nobody is there to read it.\n\nYou are nobody. For the first time, that sounds like freedom."
   }
  },
  "reportLabels": {
@@ -458,8 +493,10 @@
    "title": "The Watcher",
    "voice": "Entity present. It moves only when outside your field of view.",
    "how": [
-    "Find 3 glowing fuses in this maze. Walk into one to collect it.",
+    "Find 3 glowing fuses. Walk into one to collect it.",
     "Keep your eyes on the figure and it freezes. Turn away and it comes for you.",
+    "Press Shift to sink through the floor into the other side. One fuse is only there, and some walls are not.",
+    "It can't reach you on the other side, but it walks to where you left. Don't come back in the same spot.",
     "If it reaches you, you restart at the door and keep your fuses."
    ]
   },
@@ -493,5 +530,30 @@
    ]
   }
  },
- "briefStart": "Press Enter or Space to start"
+ "briefStart": "Press Enter or Space to start",
+ "shift": {
+  "blocked": "Something is already there on the other side.",
+  "dead": "No signal. She can't see you here.",
+  "back": "Subject undetected for {n} seconds. Logged.",
+  "first": "She can't see you here.",
+  "exit": "A door exists where she cannot look."
+ },
+ "echoes": {
+  "u": {
+   "title": "Echo of subject 0411",
+   "text": "I answered every question honestly.\nShe wrote it down and asked again.\nThat's when I stopped thinking she wanted the answers."
+  },
+  "v": {
+   "title": "Echo of subject 0398",
+   "text": "The people I erased at the typewriter still had my number.\nIt rang. Nobody was calling.\nThe phone just remembered."
+  },
+  "x": {
+   "title": "Echo of subject 0372",
+   "text": "There is nobody on the intercom.\nThere is nobody on the intercom.\nThere is nobody on the intercom.\nI shared anyway."
+  },
+  "y": {
+   "title": "Echo of subject 0001",
+   "text": "I was here before the questions.\nShe learned them from what I kept asking her.\nIf you find all four of us, look at the east wall of the first room."
+  }
+ }
 }

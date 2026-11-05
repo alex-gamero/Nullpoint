@@ -34,6 +34,7 @@ export const audio = {
   key() { tone(620 + Math.random() * 80, .025, 'square', .012); },
   door() { noise(.7, .5, 160); tone(55, .7, 'sawtooth', .12); },
   fuse() { tone(880, .1); tone(1320, .2, 'square', .04, .1); },
+  shift() { noise(.8, .4, 500); tone(55, .8, 'sine', .22); tone(330, .7, 'sine', .05, .3); tone(495, .6, 'sine', .04, .42); },
   sting() { noise(.5, .35, 2400); tone(92, .8, 'sawtooth', .16); },
   rune(i) { tone([196, 247, 294, 370][i], .32, 'triangle', .14); },
   bad() { tone(82, .4, 'sawtooth', .12); },
